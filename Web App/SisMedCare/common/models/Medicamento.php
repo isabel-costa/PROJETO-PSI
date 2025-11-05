@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "medicamentos".
  *
- * @property int $medicamento_id
+ * @property int $id
  * @property string $nome
  * @property string|null $descricao
  * @property string|null $dosagem
@@ -48,9 +48,9 @@ class Medicamento extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'medicamento_id' => 'Medicamento ID',
+            'id' => 'ID Medicamento',
             'nome' => 'Nome',
-            'descricao' => 'Descricao',
+            'descricao' => 'Descrição',
             'dosagem' => 'Dosagem',
             'fabricante' => 'Fabricante',
         ];
@@ -63,7 +63,7 @@ class Medicamento extends \yii\db\ActiveRecord
      */
     public function getPrescricoesMedicamentos()
     {
-        return $this->hasMany(PrescricoesMedicamento::class, ['medicamento_id' => 'medicamento_id']);
+        return $this->hasMany(PrescricoesMedicamentos::class, ['medicamento_id' => 'id']);
     }
 
 }

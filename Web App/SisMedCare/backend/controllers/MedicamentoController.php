@@ -46,7 +46,7 @@ class MedicamentoController extends Controller
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'medicamento_id' => SORT_DESC,
+                    'id' => SORT_DESC,
                 ]
             ],
             */
@@ -59,14 +59,14 @@ class MedicamentoController extends Controller
 
     /**
      * Displays a single Medicamento model.
-     * @param int $medicamento_id Medicamento ID
+     * @param int $id ID Medicamento
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($medicamento_id)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($medicamento_id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -81,7 +81,7 @@ class MedicamentoController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'medicamento_id' => $model->medicamento_id]);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -95,16 +95,16 @@ class MedicamentoController extends Controller
     /**
      * Updates an existing Medicamento model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $medicamento_id Medicamento ID
+     * @param int $id ID Medicamento
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($medicamento_id)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($medicamento_id);
+        $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'medicamento_id' => $model->medicamento_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -115,13 +115,13 @@ class MedicamentoController extends Controller
     /**
      * Deletes an existing Medicamento model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $medicamento_id Medicamento ID
+     * @param int $id ID Medicamento
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($medicamento_id)
+    public function actionDelete($id)
     {
-        $this->findModel($medicamento_id)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -129,13 +129,13 @@ class MedicamentoController extends Controller
     /**
      * Finds the Medicamento model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $medicamento_id Medicamento ID
+     * @param int $id ID Medicamento
      * @return Medicamento the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($medicamento_id)
+    protected function findModel($id)
     {
-        if (($model = Medicamento::findOne(['medicamento_id' => $medicamento_id])) !== null) {
+        if (($model = Medicamento::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

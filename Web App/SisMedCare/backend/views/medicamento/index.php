@@ -14,19 +14,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="medicamento-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Medicamento', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'medicamento_id',
+            'id',
             'nome',
             'descricao',
             'dosagem',
@@ -34,11 +28,17 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Medicamento $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'medicamento_id' => $model->medicamento_id]);
+                    return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
         ],
     ]); ?>
+
+    <br>
+
+    <p>
+        <?= Html::a('Criar Medicamento', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
 
 </div>

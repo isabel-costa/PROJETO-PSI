@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "prescricoes".
  *
- * @property int $prescricao_id
+ * @property int $id
  * @property int|null $consulta_id
  * @property int|null $medico_id
  * @property int|null $paciente_id
@@ -17,7 +17,7 @@ use Yii;
  * @property Consulta $consulta
  * @property Medico $medico
  * @property Paciente $paciente
- * @property PrescricaoMedicamento[] $prescricaoMedicamento
+ * @property PrescricaoMedicamento[] $prescricoesMedicamentos
  */
 class Prescricao extends \yii\db\ActiveRecord
 {
@@ -41,9 +41,9 @@ class Prescricao extends \yii\db\ActiveRecord
             [['consulta_id', 'medico_id', 'paciente_id'], 'integer'],
             [['data_prescricao'], 'safe'],
             [['observacoes'], 'string', 'max' => 255],
-            [['consulta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Consulta::class, 'targetAttribute' => ['consulta_id' => 'consulta_id']],
-            [['medico_id'], 'exist', 'skipOnError' => true, 'targetClass' => Medico::class, 'targetAttribute' => ['medico_id' => 'medico_id']],
-            [['paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::class, 'targetAttribute' => ['paciente_id' => 'paciente_id']],
+            [['consulta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Consultas::class, 'targetAttribute' => ['consulta_id' => 'id']],
+            [['medico_id'], 'exist', 'skipOnError' => true, 'targetClass' => Medicos::class, 'targetAttribute' => ['medico_id' => 'id']],
+            [['paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pacientes::class, 'targetAttribute' => ['paciente_id' => 'id']],
         ];
     }
 
@@ -53,7 +53,7 @@ class Prescricao extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'prescricao_id' => 'Prescricao ID',
+            'id' => 'ID',
             'consulta_id' => 'Consulta ID',
             'medico_id' => 'Medico ID',
             'paciente_id' => 'Paciente ID',
@@ -69,7 +69,7 @@ class Prescricao extends \yii\db\ActiveRecord
      */
     public function getConsulta()
     {
-        return $this->hasOne(Consulta::class, ['consulta_id' => 'consulta_id']);
+        return $this->hasOne(Consultas::class, ['id' => 'consulta_id']);
     }
 
     /**
@@ -79,7 +79,7 @@ class Prescricao extends \yii\db\ActiveRecord
      */
     public function getMedico()
     {
-        return $this->hasOne(Medico::class, ['medico_id' => 'medico_id']);
+        return $this->hasOne(Medicos::class, ['id' => 'medico_id']);
     }
 
     /**
@@ -89,7 +89,7 @@ class Prescricao extends \yii\db\ActiveRecord
      */
     public function getPaciente()
     {
-        return $this->hasOne(Paciente::class, ['paciente_id' => 'paciente_id']);
+        return $this->hasOne(Pacientes::class, ['id' => 'paciente_id']);
     }
 
     /**
@@ -99,7 +99,7 @@ class Prescricao extends \yii\db\ActiveRecord
      */
     public function getPrescricoesMedicamentos()
     {
-        return $this->hasMany(PrescricaoMedicamento::class, ['prescricao_id' => 'prescricao_id']);
+        return $this->hasMany(PrescricoesMedicamentos::class, ['prescricao_id' => 'id']);
     }
 
 }
