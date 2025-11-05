@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "registos_tomas".
  *
- * @property int $registo_toma_id
+ * @property int $id
  * @property int $paciente_id
  * @property int $prescricao_medicamento_id
  * @property string|null $data_toma
@@ -16,7 +16,7 @@ use Yii;
  * @property Paciente $paciente
  * @property PrescricaoMedicamento $prescricaoMedicamento
  */
-class RegistosToma extends \yii\db\ActiveRecord
+class RegistoToma extends \yii\db\ActiveRecord
 {
 
 
@@ -39,8 +39,8 @@ class RegistosToma extends \yii\db\ActiveRecord
             [['paciente_id', 'prescricao_medicamento_id'], 'required'],
             [['paciente_id', 'prescricao_medicamento_id', 'foi_tomado'], 'integer'],
             [['data_toma'], 'safe'],
-            [['paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::class, 'targetAttribute' => ['paciente_id' => 'paciente_id']],
-            [['prescricao_medicamento_id'], 'exist', 'skipOnError' => true, 'targetClass' => PrescricoesMedicamento::class, 'targetAttribute' => ['prescricao_medicamento_id' => 'prescricao_medicamento_id']],
+            [['paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pacientes::class, 'targetAttribute' => ['paciente_id' => 'id']],
+            [['prescricao_medicamento_id'], 'exist', 'skipOnError' => true, 'targetClass' => PrescricoesMedicamentos::class, 'targetAttribute' => ['prescricao_medicamento_id' => 'id']],
         ];
     }
 
@@ -50,7 +50,7 @@ class RegistosToma extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'registo_toma_id' => 'Registo Toma ID',
+            'id' => 'ID',
             'paciente_id' => 'Paciente ID',
             'prescricao_medicamento_id' => 'Prescricao Medicamento ID',
             'data_toma' => 'Data Toma',
@@ -65,7 +65,7 @@ class RegistosToma extends \yii\db\ActiveRecord
      */
     public function getPaciente()
     {
-        return $this->hasOne(Paciente::class, ['paciente_id' => 'paciente_id']);
+        return $this->hasOne(Pacientes::class, ['id' => 'paciente_id']);
     }
 
     /**
@@ -75,7 +75,7 @@ class RegistosToma extends \yii\db\ActiveRecord
      */
     public function getPrescricaoMedicamento()
     {
-        return $this->hasOne(PrescricoesMedicamento::class, ['prescricao_medicamento_id' => 'prescricao_medicamento_id']);
+        return $this->hasOne(PrescricoesMedicamentos::class, ['id' => 'prescricao_medicamento_id']);
     }
 
 }

@@ -46,7 +46,7 @@ class PrescricaoController extends Controller
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'prescricao_id' => SORT_DESC,
+                    'id' => SORT_DESC,
                 ]
             ],
             */
@@ -59,14 +59,14 @@ class PrescricaoController extends Controller
 
     /**
      * Displays a single Prescricao model.
-     * @param int $prescricao_id Prescricao ID
+     * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($prescricao_id)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($prescricao_id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -81,7 +81,7 @@ class PrescricaoController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'prescricao_id' => $model->prescricao_id]);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -95,16 +95,16 @@ class PrescricaoController extends Controller
     /**
      * Updates an existing Prescricao model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $prescricao_id Prescricao ID
+     * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($prescricao_id)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($prescricao_id);
+        $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'prescricao_id' => $model->prescricao_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -115,13 +115,13 @@ class PrescricaoController extends Controller
     /**
      * Deletes an existing Prescricao model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $prescricao_id Prescricao ID
+     * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($prescricao_id)
+    public function actionDelete($id)
     {
-        $this->findModel($prescricao_id)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -129,13 +129,13 @@ class PrescricaoController extends Controller
     /**
      * Finds the Prescricao model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $prescricao_id Prescricao ID
+     * @param int $id ID
      * @return Prescricao the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($prescricao_id)
+    protected function findModel($id)
     {
-        if (($model = Prescricao::findOne(['prescricao_id' => $prescricao_id])) !== null) {
+        if (($model = Prescricao::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

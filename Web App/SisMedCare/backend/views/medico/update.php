@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\Medico $model */
 
-$this->title = 'Update Medico: ' . $model->medico_id;
+$this->title = 'Update Medico: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Medicos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->medico_id, 'url' => ['view', 'medico_id' => $model->medico_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="medico-update">

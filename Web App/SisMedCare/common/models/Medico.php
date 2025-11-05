@@ -2,12 +2,13 @@
 
 namespace common\models;
 
+use common\models\User;
 use Yii;
 
 /**
  * This is the model class for table "medicos".
  *
- * @property int $medico_id
+ * @property int $id
  * @property int $user_id
  * @property string $nome_completo
  * @property string|null $especialidade
@@ -17,8 +18,8 @@ use Yii;
  * @property string|null $cedula_numero
  * @property string|null $horario_trabalho
  *
- * @property Consulta[] $consultas
- * @property Prescricao[] $prescricoes
+ * @property Consulta[] $consulta
+ * @property Prescricao[] $prescricao
  * @property User $user
  */
 class Medico extends \yii\db\ActiveRecord
@@ -58,7 +59,7 @@ class Medico extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'medico_id' => 'Medico ID',
+            'id' => 'ID',
             'user_id' => 'User ID',
             'nome_completo' => 'Nome Completo',
             'especialidade' => 'Especialidade',
@@ -77,17 +78,17 @@ class Medico extends \yii\db\ActiveRecord
      */
     public function getConsultas()
     {
-        return $this->hasMany(Consulta::class, ['medico_id' => 'medico_id']);
+        return $this->hasMany(Consultas::class, ['medico_id' => 'id']);
     }
 
     /**
-     * Gets query for [[Prescricos]].
+     * Gets query for [[Prescricoes]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPrescricos()
+    public function getPrescricoes()
     {
-        return $this->hasMany(Prescrico::class, ['medico_id' => 'medico_id']);
+        return $this->hasMany(Prescricoes::class, ['medico_id' => 'id']);
     }
 
     /**

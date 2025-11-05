@@ -2,12 +2,13 @@
 
 namespace common\models;
 
+use common\models\Medico;
 use Yii;
 
 /**
  * This is the model class for table "consultas".
  *
- * @property int $consulta_id
+ * @property int $id
  * @property int|null $paciente_id
  * @property int|null $medico_id
  * @property string|null $data_consulta
@@ -17,7 +18,7 @@ use Yii;
  *
  * @property Medico $medico
  * @property Paciente $paciente
- * @property Prescricao[] $prescricos
+ * @property Prescricao[] $prescricao
  */
 class Consulta extends \yii\db\ActiveRecord
 {
@@ -42,8 +43,8 @@ class Consulta extends \yii\db\ActiveRecord
             [['data_consulta', 'criado_em'], 'safe'],
             [['estado'], 'string', 'max' => 20],
             [['observacoes'], 'string', 'max' => 255],
-            [['medico_id'], 'exist', 'skipOnError' => true, 'targetClass' => Medico::class, 'targetAttribute' => ['medico_id' => 'medico_id']],
-            [['paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::class, 'targetAttribute' => ['paciente_id' => 'paciente_id']],
+            [['medico_id'], 'exist', 'skipOnError' => true, 'targetClass' => Medicos::class, 'targetAttribute' => ['medico_id' => 'id']],
+            [['paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pacientes::class, 'targetAttribute' => ['paciente_id' => 'id']],
         ];
     }
 
@@ -53,7 +54,7 @@ class Consulta extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'consulta_id' => 'Consulta ID',
+            'id' => 'ID',
             'paciente_id' => 'Paciente ID',
             'medico_id' => 'Medico ID',
             'data_consulta' => 'Data Consulta',
@@ -70,7 +71,7 @@ class Consulta extends \yii\db\ActiveRecord
      */
     public function getMedico()
     {
-        return $this->hasOne(Medico::class, ['medico_id' => 'medico_id']);
+        return $this->hasOne(Medicos::class, ['id' => 'medico_id']);
     }
 
     /**
@@ -80,17 +81,17 @@ class Consulta extends \yii\db\ActiveRecord
      */
     public function getPaciente()
     {
-        return $this->hasOne(Paciente::class, ['paciente_id' => 'paciente_id']);
+        return $this->hasOne(Pacientes::class, ['id' => 'paciente_id']);
     }
 
     /**
-     * Gets query for [[Prescricos]].
+     * Gets query for [[Prescricoes]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPrescricos()
+    public function getPrescricoes()
     {
-        return $this->hasMany(Prescrico::class, ['consulta_id' => 'consulta_id']);
+        return $this->hasMany(Prescricoes::class, ['consulta_id' => 'id']);
     }
 
 }

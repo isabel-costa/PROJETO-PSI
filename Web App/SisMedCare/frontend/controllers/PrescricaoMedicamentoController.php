@@ -46,7 +46,7 @@ class PrescricaoMedicamentoController extends Controller
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'prescricao_medicamento_id' => SORT_DESC,
+                    'id' => SORT_DESC,
                 ]
             ],
             */
@@ -59,14 +59,14 @@ class PrescricaoMedicamentoController extends Controller
 
     /**
      * Displays a single PrescricaoMedicamento model.
-     * @param int $prescricao_medicamento_id Prescricao Medicamento ID
+     * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($prescricao_medicamento_id)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($prescricao_medicamento_id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -81,7 +81,7 @@ class PrescricaoMedicamentoController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'prescricao_medicamento_id' => $model->prescricao_medicamento_id]);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -95,16 +95,16 @@ class PrescricaoMedicamentoController extends Controller
     /**
      * Updates an existing PrescricaoMedicamento model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $prescricao_medicamento_id Prescricao Medicamento ID
+     * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($prescricao_medicamento_id)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($prescricao_medicamento_id);
+        $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'prescricao_medicamento_id' => $model->prescricao_medicamento_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -115,13 +115,13 @@ class PrescricaoMedicamentoController extends Controller
     /**
      * Deletes an existing PrescricaoMedicamento model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $prescricao_medicamento_id Prescricao Medicamento ID
+     * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($prescricao_medicamento_id)
+    public function actionDelete($id)
     {
-        $this->findModel($prescricao_medicamento_id)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -129,13 +129,13 @@ class PrescricaoMedicamentoController extends Controller
     /**
      * Finds the PrescricaoMedicamento model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $prescricao_medicamento_id Prescricao Medicamento ID
+     * @param int $id ID
      * @return PrescricaoMedicamento the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($prescricao_medicamento_id)
+    protected function findModel($id)
     {
-        if (($model = PrescricaoMedicamento::findOne(['prescricao_medicamento_id' => $prescricao_medicamento_id])) !== null) {
+        if (($model = PrescricaoMedicamento::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

@@ -2,19 +2,17 @@
 
 namespace common\models;
 
-use common\models\Consulta;
-use common\models\User;
 use Yii;
 
 /**
  * This is the model class for table "pacientes".
  *
- * @property int $paciente_id
+ * @property int $id
  * @property int $user_id
  * @property string $nome_completo
  * @property string|null $data_nascimento
  * @property string|null $sexo
- * @property string|null $nif
+ * @property string|null $numero_utente
  * @property string|null $email
  * @property string|null $telemovel
  * @property string|null $morada
@@ -24,9 +22,9 @@ use Yii;
  * @property string|null $doencas_cronicas
  * @property string|null $data_registo
  *
- * @property Consulta[] $consultas
- * @property Prescricao[] $prescricos
- * @property RegistosToma[] $registosTomas
+ * @property Consulta[] $consulta
+ * @property Prescricao[] $prescricao
+ * @property RegistoToma[] $registoToma
  * @property User $user
  */
 class Paciente extends \yii\db\ActiveRecord
@@ -47,14 +45,14 @@ class Paciente extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['data_nascimento', 'sexo', 'nif', 'email', 'telemovel', 'morada', 'altura', 'peso', 'alergias', 'doencas_cronicas'], 'default', 'value' => null],
+            [['data_nascimento', 'sexo', 'numero_utente', 'email', 'telemovel', 'morada', 'altura', 'peso', 'alergias', 'doencas_cronicas'], 'default', 'value' => null],
             [['user_id', 'nome_completo'], 'required'],
             [['user_id'], 'integer'],
             [['data_nascimento', 'data_registo'], 'safe'],
             [['altura', 'peso'], 'number'],
             [['nome_completo', 'morada'], 'string', 'max' => 150],
             [['sexo'], 'string', 'max' => 1],
-            [['nif'], 'string', 'max' => 9],
+            [['numero_utente'], 'string', 'max' => 9],
             [['email'], 'string', 'max' => 100],
             [['telemovel'], 'string', 'max' => 15],
             [['alergias', 'doencas_cronicas'], 'string', 'max' => 255],
@@ -68,12 +66,12 @@ class Paciente extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'paciente_id' => 'Paciente ID',
+            'id' => 'ID',
             'user_id' => 'User ID',
             'nome_completo' => 'Nome Completo',
             'data_nascimento' => 'Data Nascimento',
             'sexo' => 'Sexo',
-            'nif' => 'Nif',
+            'numero_utente' => 'Numero Utente',
             'email' => 'Email',
             'telemovel' => 'Telemovel',
             'morada' => 'Morada',
@@ -92,17 +90,17 @@ class Paciente extends \yii\db\ActiveRecord
      */
     public function getConsultas()
     {
-        return $this->hasMany(Consulta::class, ['paciente_id' => 'paciente_id']);
+        return $this->hasMany(Consultas::class, ['paciente_id' => 'id']);
     }
 
     /**
-     * Gets query for [[Prescricos]].
+     * Gets query for [[Prescricoes]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPrescricos()
+    public function getPrescricoes()
     {
-        return $this->hasMany(Prescricao::class, ['paciente_id' => 'paciente_id']);
+        return $this->hasMany(Prescricoes::class, ['paciente_id' => 'id']);
     }
 
     /**
@@ -112,7 +110,7 @@ class Paciente extends \yii\db\ActiveRecord
      */
     public function getRegistosTomas()
     {
-        return $this->hasMany(RegistosToma::class, ['paciente_id' => 'paciente_id']);
+        return $this->hasMany(RegistosTomas::class, ['paciente_id' => 'id']);
     }
 
     /**
