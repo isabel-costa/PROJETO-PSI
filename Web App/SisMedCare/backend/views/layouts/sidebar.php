@@ -4,6 +4,10 @@ use yii\helpers\Html;
 
 $user = Yii::$app->user->identity;
 $username = $user ? Html::encode($user->username) : 'Visitante';
+
+$auth = Yii::$app->authManager;
+$userRoles = $user ? $auth->getRolesByUser($user->id) : [];
+$roleNames = array_keys($userRoles);
 ?>
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -32,25 +36,42 @@ $username = $user ? Html::encode($user->username) : 'Visitante';
 
         <!-- Menu -->
         <nav class="mt-2">
-            <?= \hail812\adminlte\widgets\Menu::widget([
-                'items' => [
-                    [
-                        'label' => 'Médicos',
-                        'icon'  => 'user-md',
-                        'url'   => ['medicos/index'],
+            <?php
+            // Sidebar específica para cada role
+            if (in_array('admin', $roleNames)) {
+                echo \hail812\adminlte\widgets\Menu::widget([
+                    'items' => [
+                        [
+                            'label' => 'Médicos',
+                            'icon'  => 'user-md',
+                            'url'   => ['medico/index'],
+                        ],
+                        [
+                            'label' => 'Secretárias',
+                            'icon'  => 'user-tie',
+                            'url'   => ['secretaria/index'],
+                        ],
+                        [
+                            'label' => 'Medicamentos',
+                            'icon'  => 'pills',
+                            'url'   => ['medicamento/index'],
+                        ],
                     ],
-                    [
-                        'label' => 'Secretárias',
-                        'icon'  => 'user-tie',
-                        'url'   => ['secretarias/index'],
+                ]);
+            } elseif (in_array('secretary', $roleNames)) {
+                echo \hail812\adminlte\widgets\Menu::widget([
+                    'items' => [
+                        [
+                            'label' => 'Pedidos de Consulta',
+                            'icon'  => 'calendar-check',
+                            'url'   => ['pedido-consulta/index'],
+                        ],
                     ],
-                    [
-                        'label' => 'Medicamentos',
-                        'icon'  => 'pills',
-                        'url'   => ['medicamento/index'],
-                    ],
-                ],
-            ]) ?>
+                ]);
+            } else {
+                echo '<p class="text-center text-muted">Sem permissões</p>';
+            }
+            ?>
         </nav>
     </div>
 </aside>

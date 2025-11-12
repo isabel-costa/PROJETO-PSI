@@ -80,7 +80,20 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+
+            $auth = Yii::$app->authManager;
+            $roles = $auth->getRolesByUser(Yii::$app->user->id);
+            $roleNames = array_keys($roles);
+
+            // Permitir apenas admins e secretárias
+            if (in_array('admin', $roleNames) || in_array('secretary', $roleNames)) {
+                return $this->goHome();
+            }
+
+            // Se não for admin nem secretaria → logout e erro
+            Yii::$app->user->logout();
+            Yii::$app->session->setFlash('error', 'Apenas administradores e secretárias podem aceder ao Backend.');
+            return $this->redirect(['login']);
         }
 
         $model->password = '';

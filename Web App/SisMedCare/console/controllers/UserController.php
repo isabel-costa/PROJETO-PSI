@@ -40,4 +40,32 @@ class UserController extends Controller
             print_r($user->getErrors());
         }
     }
+
+    public function actionCreateSecretary($username, $email, $password)
+    {
+        $user = new \common\models\User();
+        $user->username = $username;
+        $user->email = $email;
+        $user->setPassword($password);
+        $user->generateAuthKey();
+        $user->status = 10; // ativo
+        $user->created_at = time();
+        $user->updated_at = time();
+
+        if ($user->save()) {
+            echo "✅ Secretária criada com sucesso!\n";
+
+            // Atribuir role 'secretary'
+            $auth = Yii::$app->authManager;
+            $role = $auth->getRole('secretary');
+            if ($role) {
+                $auth->assign($role, $user->id);
+                echo "✅ Role 'secretary' atribuída.\n";
+            } else {
+                echo "⚠️ Role 'secretary' não existe. Corre 'php yii rbac/init'\n";
+            }
+        } else {
+            print_r($user->getErrors());
+        }
+    }
 }
