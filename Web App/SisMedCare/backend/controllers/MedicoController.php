@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Medico;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -21,8 +22,27 @@ class MedicoController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => \yii\filters\AccessControl::class,
+                    'only' => ['index', 'view', 'create', 'update', 'delete'],
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'], // apenas utilizadores autenticados
+                            'matchCallback' => function ($rule, $action) {
+                                $auth = Yii::$app->authManager;
+                                $roles = $auth->getRolesByUser(Yii::$app->user->id);
+                                return isset($roles['admin']); // só admins
+                            },
+                        ],
+                    ],
+                    'denyCallback' => function () {
+                        Yii::$app->session->setFlash('error', 'Acesso negado. Apenas administradores podem gerir médicos.');
+                        return Yii::$app->response->redirect(['site/index']);
+                    },
+                ],
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
