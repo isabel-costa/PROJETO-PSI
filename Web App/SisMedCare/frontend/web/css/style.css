@@ -4,6 +4,9 @@
     --secondary: #354F8E;
     --light: #EFF5F9;
     --dark: #1D2A4D;
+    --primaria-smc: #1D2A4D;
+    --secundaria-smc: #46B69E;
+    --nav-fotter-smc: #f2f2f2;
 }
 
 .btn {
@@ -53,6 +56,60 @@
     z-index: 99;
 }
 
+/* smc = sismedcare */
+.cor-nav-e-footer-smc {
+    color: var(--nav-fotter-smc);
+}
+
+.cor-primaria-smc {
+    color: var(--primaria-smc);
+}
+
+.cor-secundaria-smc {
+    color: var(--secundaria-smc);
+}
+
+.btn-cor-secundaria-smc:hover {
+    background-color: var(--secundaria-smc);
+    border-color: var(--secundaria-smc);
+    color: #fff;
+}
+
+/* navbar smc = sismedcare + cor de fundo */
+nav.navbar-smc {
+    background-color: var(--nav-fotter-smc);
+}
+
+/* Cor dos botões de navegação da navbar */
+.navbar-smc .navbar-nav .nav-link {
+    color: var(--primaria-smc);
+    transition: color 0.3s ease;
+}
+
+/* Cor do botão de página ativa e de hover dos restantes botões de navegação da navbar */
+.navbar-smc .navbar-nav .nav-link:hover,
+.navbar-smc .navbar-nav .nav-link.active{
+    color: var(--secundaria-smc);
+}
+
+/* Botão de login da navbar normal sem nenhuma ação */
+.button-login {
+    background-color: var(--secundaria-smc);
+    color: #fff;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+/* Botão de login da navbar com hover / rato pressionado */
+.button-login:hover,
+.navbar-smc .btn.button-login:hover,
+.navbar-smc .btn.button-login:active {
+    background-color: #3da78f;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
 .navbar-light .navbar-nav .nav-link {
     font-family: 'Jost', sans-serif;
     position: relative;
@@ -99,6 +156,10 @@
 .hero-header {
     background: url(../img/hero.jpg) top right no-repeat;
     background-size: cover;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: -5px;
 }
 
 .service-item {
@@ -184,6 +245,17 @@
     }
 }
 
+.team-carousel .owl-nav .owl-prev,
+.team-carousel .owl-nav .owl-next {
+    background: var(--primaria-smc) !important;
+}
+
+.team-carousel .owl-nav .owl-prev:hover,
+.team-carousel .owl-nav .owl-next:hover {
+    background: #31467e !important;
+}
+
+
 .team-carousel .owl-nav {
     position: absolute;
     padding: 0 45px;
@@ -243,4 +315,28 @@
 .testimonial-carousel .owl-item img {
     width: 150px;
     height: 150px;
+}
+
+/* Footer */
+.footer-smc {
+    background-color: var(--nav-fotter-smc);
+}
+
+.footer-img {
+    max-width: 80px;
+    object-fit: contain;
+}
+
+.separator-rights-reserved {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    opacity: 0.6;
+}
+
+.separador-centrar-footer {
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    padding-left: 40px;
+    margin-left: calc(100% / 4);
 }
