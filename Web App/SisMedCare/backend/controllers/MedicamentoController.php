@@ -8,7 +8,6 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 
 /**
  * MedicamentoController implements the CRUD actions for Medicamento model.
@@ -24,48 +23,21 @@ class MedicamentoController extends Controller
             parent::behaviors(),
             [
                 'access' => [
-                    'class' => AccessControl::class,
+                    'class' => \yii\filters\AccessControl::class,
                     'only' => ['index', 'view', 'create', 'update', 'delete'],
                     'rules' => [
-                        // --- Ver ---
                         [
                             'allow' => true,
-                            'actions' => ['index', 'view'],
-                            'roles' => ['@'],
-                            'matchCallback' => function () {
-                                return Yii::$app->user->can('viewMedicines');
-                            },
-                        ],
-                        // --- Criar ---
-                        [
-                            'allow' => true,
-                            'actions' => ['create'],
-                            'roles' => ['@'],
-                            'matchCallback' => function () {
-                                return Yii::$app->user->can('createMedicine');
-                            },
-                        ],
-                        // --- Editar ---
-                        [
-                            'allow' => true,
-                            'actions' => ['update'],
-                            'roles' => ['@'],
-                            'matchCallback' => function () {
-                                return Yii::$app->user->can('updateMedicine');
-                            },
-                        ],
-                        // --- Apagar ---
-                        [
-                            'allow' => true,
-                            'actions' => ['delete'],
-                            'roles' => ['@'],
-                            'matchCallback' => function () {
-                                return Yii::$app->user->can('deleteMedicine');
+                            'roles' => ['@'], // apenas utilizadores autenticados
+                            'matchCallback' => function ($rule, $action) {
+                                $auth = Yii::$app->authManager;
+                                $roles = $auth->getRolesByUser(Yii::$app->user->id);
+                                return isset($roles['admin']); // só admins
                             },
                         ],
                     ],
                     'denyCallback' => function () {
-                        Yii::$app->session->setFlash('error', 'Não tem permissões para aceder a esta funcionalidade.');
+                        Yii::$app->session->setFlash('error', 'Acesso negado. Apenas administradores podem gerir médicos.');
                         return Yii::$app->response->redirect(['site/index']);
                     },
                 ],
