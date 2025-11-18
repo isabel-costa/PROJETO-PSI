@@ -29,19 +29,23 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup'],
+                'except' => ['login', 'error', 'captcha', 'request-password-reset', 'reset-password'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                        'matchCallback' => function () {
+                            $auth = Yii::$app->authManager;
+                            $roles = $auth->getRolesByUser(Yii::$app->user->id);
+                            return isset($roles['doctor']);
+                        }
                     ],
                 ],
+                'denyCallback' => function () {
+                    Yii::$app->user->logout();
+                    Yii::$app->session->setFlash('error', 'Apenas médicos podem aceder ao Frontend.');
+                    return Yii::$app->response->redirect(['site/login']);
+                }
             ],
             'verbs' => [
                 'class' => VerbFilter::class,
@@ -91,26 +95,13 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-
-            // --- Verificar Role ---
-            $auth = Yii::$app->authManager;
-            $roles = $auth->getRolesByUser(Yii::$app->user->id);
-            $roleNames = array_keys($roles);
-
-            // Permitir apenas médicos
-            if (in_array('doctor', $roleNames)) {
-                return $this->goHome();
-            }
-
-            //  Se não for médico → logout e erro
-            Yii::$app->user->logout();
-            Yii::$app->session->setFlash('error', 'Apenas médicos podem aceder ao Frontend.');
-            return $this->redirect(['login']);
+            return $this->goBack();
         }
 
         $model->password = '';
+
         return $this->render('login', [
-            'model' => $model
+            'model' => $model,
         ]);
     }
 

@@ -27,14 +27,14 @@ class UserController extends Controller
         if ($user->save()) {
             echo "✅ Utilizador criado com sucesso!\n";
 
-            // Atribuir a role admin (se já existe o RBAC)
+            // Atribuir role admin
             $auth = Yii::$app->authManager;
             $adminRole = $auth->getRole('admin');
             if ($adminRole) {
                 $auth->assign($adminRole, $user->id);
-                echo "✅ Role 'admin' atribuída com sucesso.\n";
+                echo "✅ Role 'admin' atribuída.\n";
             } else {
-                echo "⚠️ Role 'admin' ainda não existe. Corre 'php yii rbac/init'\n";
+                echo "⚠️ Role 'admin' não existe. Corre 'php yii rbac/init'\n";
             }
         } else {
             print_r($user->getErrors());
@@ -55,7 +55,7 @@ class UserController extends Controller
         if ($user->save()) {
             echo "✅ Secretária criada com sucesso!\n";
 
-            // Atribuir role 'secretary'
+            // Atribuir role secretary
             $auth = Yii::$app->authManager;
             $role = $auth->getRole('secretary');
             if ($role) {
