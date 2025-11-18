@@ -63,7 +63,7 @@ class Medicamento extends \yii\db\ActiveRecord
      */
     public function getPrescricoesMedicamentos()
     {
-        return $this->hasMany(PrescricoesMedicamentos::class, ['medicamento_id' => 'id']);
+        return $this->hasMany(PrescricaoMedicamento::class, ['medicamento_id' => 'id']);
     }
 
 }

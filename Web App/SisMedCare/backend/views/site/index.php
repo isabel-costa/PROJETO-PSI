@@ -40,14 +40,6 @@ $roleNames = array_keys($userRoles);
                     'icon' => 'fas fa-pills',
                 ]) ?>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                <?= \hail812\adminlte\widgets\SmallBox::widget([
-                    'title' => '5',
-                    'text' => 'Novos registos',
-                    'icon' => 'fas fa-user-plus',
-                    'theme' => 'gradient-success',
-                ]) ?>
-            </div>
         </div>
     <?php elseif (in_array('secretary', $roleNames)): ?>
         <div class="row mt-4">
@@ -69,18 +61,10 @@ $roleNames = array_keys($userRoles);
             </div>
             <div class="col-md-4 col-sm-6 col-12">
                 <?= \hail812\adminlte\widgets\InfoBox::widget([
-                    'text' => 'Pacientes registados',
-                    'number' => '4',
-                    'theme' => 'gradient-success',
-                    'icon' => 'fas fa-user',
-                ]) ?>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                <?= \hail812\adminlte\widgets\SmallBox::widget([
-                    'title' => '3',
                     'text' => 'Pedidos pendentes',
-                    'icon' => 'fas fa-calendar-check',
+                    'number' => '4',
                     'theme' => 'warning',
+                    'icon' => 'fas fa-calendar-check',
                 ]) ?>
             </div>
         </div>

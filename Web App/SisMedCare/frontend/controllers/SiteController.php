@@ -29,19 +29,23 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup'],
+                'except' => ['login', 'index', 'error', 'captcha', 'request-password-reset', 'reset-password'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                        'matchCallback' => function () {
+                            $auth = Yii::$app->authManager;
+                            $roles = $auth->getRolesByUser(Yii::$app->user->id);
+                            return isset($roles['doctor']);
+                        }
                     ],
                 ],
+                'denyCallback' => function () {
+                    Yii::$app->user->logout();
+                    Yii::$app->session->setFlash('error', 'Apenas médicos podem aceder ao Frontend.');
+                    return Yii::$app->response->redirect(['site/login']);
+                }
             ],
             'verbs' => [
                 'class' => VerbFilter::class,

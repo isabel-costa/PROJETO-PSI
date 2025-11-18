@@ -28,16 +28,16 @@ class MedicamentoController extends Controller
                     'rules' => [
                         [
                             'allow' => true,
-                            'roles' => ['@'],
+                            'roles' => ['@'], // apenas utilizadores autenticados
                             'matchCallback' => function ($rule, $action) {
                                 $auth = Yii::$app->authManager;
                                 $roles = $auth->getRolesByUser(Yii::$app->user->id);
-                                return isset($roles['admin']); // apenas admin
+                                return isset($roles['admin']); // só admins
                             },
                         ],
                     ],
                     'denyCallback' => function () {
-                        Yii::$app->session->setFlash('error', 'Acesso negado. Apenas administradores podem gerir medicamentos.');
+                        Yii::$app->session->setFlash('error', 'Acesso negado. Apenas administradores podem gerir medicação.');
                         return Yii::$app->response->redirect(['site/index']);
                     },
                 ],
