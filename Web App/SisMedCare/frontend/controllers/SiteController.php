@@ -91,13 +91,26 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+
+            // --- Verificar Role ---
+            $auth = Yii::$app->authManager;
+            $roles = $auth->getRolesByUser(Yii::$app->user->id);
+            $roleNames = array_keys($roles);
+
+            // Permitir apenas médicos
+            if (in_array('doctor', $roleNames)) {
+                return $this->goHome();
+            }
+
+            //  Se não for médico → logout e erro
+            Yii::$app->user->logout();
+            Yii::$app->session->setFlash('error', 'Apenas médicos podem aceder ao Frontend.');
+            return $this->redirect(['login']);
         }
 
         $model->password = '';
-
         return $this->render('login', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
 
