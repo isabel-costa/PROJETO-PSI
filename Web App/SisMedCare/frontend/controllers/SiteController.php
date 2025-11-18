@@ -29,7 +29,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'except' => ['login', 'error', 'captcha', 'request-password-reset', 'reset-password'],
+                'except' => ['login', 'index', 'error', 'captcha', 'request-password-reset', 'reset-password'],
                 'rules' => [
                     [
                         'allow' => true,

@@ -37,7 +37,7 @@ class MedicamentoController extends Controller
                         ],
                     ],
                     'denyCallback' => function () {
-                        Yii::$app->session->setFlash('error', 'Acesso negado. Apenas administradores podem gerir médicos.');
+                        Yii::$app->session->setFlash('error', 'Acesso negado. Apenas administradores podem gerir medicação.');
                         return Yii::$app->response->redirect(['site/index']);
                     },
                 ],
