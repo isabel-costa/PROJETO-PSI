@@ -94,4 +94,21 @@ class Consulta extends \yii\db\ActiveRecord
         return $this->hasMany(Prescricao::class, ['consulta_id' => 'id']);
     }
 
+    public static function countEstado($estado)
+    {
+        return self::find()->where(['estado' => $estado])->count();
+    }
+
+    public static function consultasPorMes()
+    {
+        return self::find()
+            ->select([
+                "mes" => "DATE_FORMAT(data_consulta, '%Y-%b')",
+                "count" => "COUNT(*)"
+            ])
+            ->groupBy("YEAR(data_consulta), MONTH(data_consulta)")
+            ->orderBy("MIN(data_consulta)")
+            ->asArray()
+            ->all();
+    }
 }

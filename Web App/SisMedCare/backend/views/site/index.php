@@ -1,11 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\web\JsExpression;
-use common\models\User;
-use common\models\Consulta;
-use common\models\Medicamento;
 
 $this->title = 'Painel de Administração';
 $this->params['breadcrumbs'] = [['label' => $this->title]];
@@ -15,51 +10,14 @@ $auth = Yii::$app->authManager;
 $userRoles = $user ? $auth->getRolesByUser($user->id) : [];
 $roleNames = array_keys($userRoles);
 
-/* ===========================
-   CONTAGENS PARA O DASHBOARD
-   =========================== */
-
-// Médicos
-$medicosCount = Yii::$app->authManager
-    ->getUserIdsByRole('doctor');
-$medicosCount = count($medicosCount);
-
-// Secretárias
-$secretariasCount = Yii::$app->authManager
-    ->getUserIdsByRole('secretary');
-$secretariasCount = count($secretariasCount);
-
-// Medicamentos registados
-$medicamentosCount = \common\models\Medicamento::find()->count();
-
-// Estado das consultas
-$pedidosAprovados = Consulta::find()->where(['estado' => 'aprovado'])->count();
-$pedidosRejeitados = Consulta::find()->where(['estado' => 'rejeitado'])->count();
-$pedidosPendentes = Consulta::find()->where(['estado' => 'pendente'])->count();
-
-/* ===========================
-   CONSULTAS POR MÊS (GRÁFICO)
-   =========================== */
-
-$consultasPorMes = Consulta::find()
-    ->select([
-        "mes" => "DATE_FORMAT(data_consulta, '%Y-%b')",
-        "count" => "COUNT(*)"
-    ])
-    ->groupBy("YEAR(data_consulta), MONTH(data_consulta)")
-    ->orderBy("MIN(data_consulta)")
-    ->asArray()
-    ->all();
-
-$labels = array_column($consultasPorMes, 'mes');
-$values = array_column($consultasPorMes, 'count');
-
 ?>
 <div class="container-fluid">
 
     <h5 class="mb-4">Bem-vindo(a), <?= Html::encode($user->username) ?> 👋</h5>
 
     <?php if (in_array('admin', $roleNames)): ?>
+
+        <!-- INFOBOXES ADMIN -->
         <div class="row mt-4">
             <div class="col-md-4 col-sm-6 col-12">
                 <?= \hail812\adminlte\widgets\InfoBox::widget([
@@ -69,6 +27,7 @@ $values = array_column($consultasPorMes, 'count');
                     'theme' => 'primary',
                 ]) ?>
             </div>
+
             <div class="col-md-4 col-sm-6 col-12">
                 <?= \hail812\adminlte\widgets\InfoBox::widget([
                     'text' => 'Secretárias registadas',
@@ -77,6 +36,7 @@ $values = array_column($consultasPorMes, 'count');
                     'icon' => 'fas fa-user-tie',
                 ]) ?>
             </div>
+
             <div class="col-md-4 col-sm-6 col-12">
                 <?= \hail812\adminlte\widgets\InfoBox::widget([
                     'text' => 'Medicamentos registados',
@@ -88,6 +48,8 @@ $values = array_column($consultasPorMes, 'count');
         </div>
 
     <?php elseif (in_array('secretary', $roleNames)): ?>
+
+        <!-- INFOBOXES SECRETARIA -->
         <div class="row mt-4">
             <div class="col-md-4 col-sm-6 col-12">
                 <?= \hail812\adminlte\widgets\InfoBox::widget([
@@ -97,6 +59,7 @@ $values = array_column($consultasPorMes, 'count');
                     'icon' => 'fas fa-check',
                 ]) ?>
             </div>
+
             <div class="col-md-4 col-sm-6 col-12">
                 <?= \hail812\adminlte\widgets\InfoBox::widget([
                     'text' => 'Pedidos rejeitados',
@@ -105,17 +68,18 @@ $values = array_column($consultasPorMes, 'count');
                     'icon' => 'fas fa-times',
                 ]) ?>
             </div>
+
             <div class="col-md-4 col-sm-6 col-12">
                 <?= \hail812\adminlte\widgets\InfoBox::widget([
                     'text' => 'Pedidos pendentes',
                     'number' => $pedidosPendentes,
-                    'theme' => 'primary',
+                    'theme' => 'warning',
                     'icon' => 'fas fa-calendar-check',
                 ]) ?>
             </div>
         </div>
 
-        <!-- GRÁFICO CONSULTAS POR MÊS -->
+        <!-- GRÁFICO – CONSULTAS POR MÊS -->
         <div class="card mt-4">
             <div class="card-header">
                 <h5 class="card-title">Consultas realizadas por mês</h5>
@@ -132,26 +96,29 @@ $values = array_column($consultasPorMes, 'count');
     <?php endif; ?>
 </div>
 
-<!-- SCRIPT DO GRÁFICO -->
+<!-- SCRIPT DO CHART.JS -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script>
-    const ctx = document.getElementById('graficoConsultas').getContext('2d');
+<?php if (in_array('admin', $roleNames) || in_array('secretary', $roleNames)): ?>
+    <script>
+        const ctx = document.getElementById('graficoConsultas').getContext('2d');
 
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: <?= json_encode($labels) ?>,
-            datasets: [{
-                label: 'Consultas',
-                data: <?= json_encode($values) ?>,
-                borderWidth: 2,
-                tension: 0.3
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false
-        }
-    });
-</script>
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: <?= json_encode($labels) ?>,
+                datasets: [{
+                    label: 'Consultas',
+                    data: <?= json_encode($values) ?>,
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+<?php endif; ?>

@@ -2,7 +2,10 @@
 
 namespace backend\controllers;
 
+use common\models\Consulta;
 use common\models\LoginForm;
+use common\models\Medicamento;
+use common\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -62,7 +65,53 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        // --- PROTEÇÃO DO DASHBOARD ADMIN ---
+        if (Yii::$app->user->can('viewDoctors')) {
+            $medicosCount = User::countByRole('doctor');
+        } else {
+            $medicosCount = null;
+        }
+
+        if (Yii::$app->user->can('viewSecretaries')) {
+            $secretariasCount = User::countByRole('secretary');
+        } else {
+            $secretariasCount = null;
+        }
+
+        if (Yii::$app->user->can('viewMedicines')) {
+            $medicamentosCount = Medicamento::find()->count();
+        } else {
+            $medicamentosCount = null;
+        }
+
+        // --- PROTEÇÃO DO DASHBOARD SECRETÁRIA ---
+        if (Yii::$app->user->can('viewAppointmentRequests')) {
+            $pedidosAprovados   = Consulta::countEstado('aprovado');
+            $pedidosRejeitados  = Consulta::countEstado('rejeitado');
+            $pedidosPendentes   = Consulta::countEstado('pendente');
+        } else {
+            $pedidosAprovados = $pedidosRejeitados = $pedidosPendentes = null;
+        }
+
+        // --- GRÁFICO ---
+        if (Yii::$app->user->can('viewAppointmentRequests')) {
+            $consultasPorMes = Consulta::consultasPorMes();
+            $labels = array_column($consultasPorMes, 'mes');
+            $values = array_column($consultasPorMes, 'count');
+        } else {
+            $labels = $values = [];
+        }
+
+        return $this->render('index', compact(
+            'medicosCount',
+            'secretariasCount',
+            'medicamentosCount',
+            'pedidosAprovados',
+            'pedidosRejeitados',
+            'pedidosPendentes',
+            'labels',
+            'values'
+        ));
     }
 
     /**
