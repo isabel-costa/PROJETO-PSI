@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Medico;
+use common\models\User;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -99,12 +100,32 @@ class MedicoController extends Controller
     {
         $model = new Medico();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            // Criar utilizador
+            $user = new User();
+            $user->username = $model->username;
+            $user->email = $model->email;
+            $user->setPassword($model->password);
+            $user->generateAuthKey();
+            $user->status = 10;
+
+            if ($user->save()) {
+
+                Yii::$app->authManager->assign(
+                    Yii::$app->authManager->getRole('doctor'),
+                    $user->id
+                );
+
+                // Associar ao médico
+                $model->user_id = $user->id;
+
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
-        } else {
-            $model->loadDefaultValues();
+
+            Yii::$app->session->setFlash('error', 'Erro ao criar o médico.');
         }
 
         return $this->render('create', [
@@ -122,13 +143,26 @@ class MedicoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $user = $model->user; // vai buscar o User associado
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            $post = Yii::$app->request->post();
+
+            // Atualizar Medico
+            if ($model->load($post) && $model->save()) {
+
+                // Atualizar User associado
+                if ($user && $user->load($post)) {
+                    $user->save(false);
+                }
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'user' => $user,
         ]);
     }
 
@@ -141,7 +175,15 @@ class MedicoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        // Apagar o user associado
+        if ($model->user) {
+            $model->user->delete();
+        }
+
+        // Apagar o médico
+        $model->delete();
 
         return $this->redirect(['index']);
     }

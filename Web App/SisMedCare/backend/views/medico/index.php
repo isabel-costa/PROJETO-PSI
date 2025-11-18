@@ -9,37 +9,43 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Medicos';
+$this->title = 'Médicos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="medico-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Create Medico', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Criar Médico', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
-            'user_id',
+            [
+                'label' => 'Username',
+                'value' => function($model) {
+                    return $model->user ? $model->user->username : '(sem username)';
+                },
+            ],
+            [
+                'label' => 'Email',
+                'value' => function($model) {
+                    return $model->user ? $model->user->email : '(sem email)';
+                },
+            ],
             'nome_completo',
             'especialidade',
             'nif',
-            //'email:email',
-            //'telemovel',
-            //'cedula_numero',
-            //'horario_trabalho',
+            'telemovel',
+            'cedula_numero',
+            'horario_trabalho',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Medico $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>
