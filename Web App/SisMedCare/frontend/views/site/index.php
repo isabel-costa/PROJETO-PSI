@@ -78,7 +78,7 @@
         <div class="row gx-5">
             <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
                 <div class="position-relative h-100">
-                    <img class="position-absolute w-100 h-100 rounded" src="img/Exemplo_de_app.png" alt="Exemplo de mobile" style="object-fit: contain; object-position: right center;">
+                    <img class="position-absolute w-100 h-100 rounded" src="img/prototipo_mobile.png" alt="Exemplo de mobile" style="object-fit: contain; object-position: right center;">
                 </div>
             </div>
             <div class="col-lg-7">
