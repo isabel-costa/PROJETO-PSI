@@ -42,10 +42,10 @@ class UserController extends Controller
         $auth = Yii::$app->authManager;
 
         // Vai buscar os IDs dos utilizadores que têm a role secretary -> função do authManager
-        $secretaryIds = $auth->getUserIdsByRole('secretary');
+        $secretary = $auth->getUserIdsByRole('secretary');
 
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find()->where(['id' => $secretaryIds]),
+            'query' => User::find()->where(['id' => $secretary]),
         ]);
 
         return $this->render('index', [
@@ -82,18 +82,27 @@ class UserController extends Controller
             $model->generateAuthKey();
             $model->status = User::STATUS_ACTIVE;
 
-            if ($model->save()) {
-                // atribuir role
-                $auth = Yii::$app->authManager;
-                $role = $auth->getRole('secretary');
-                if ($role) {
-                    $auth->assign($role, $model->id);
-                }
-                return $this->redirect(['view', 'id' => $model->id]);
+            if (!$model->save()) {
+                Yii::$app->session->setFlash('error', 'Erro ao criar a conta da secretária.');
+                return $this->redirect(['index']);
             }
-        } else {
-            $model->loadDefaultValues();
+
+            // Atribuir role
+            $auth = Yii::$app->authManager;
+            $role = $auth->getRole('secretary');
+
+            if ($role) {
+                if (!$auth->assign($role, $model->id)) {
+                    Yii::$app->session->setFlash('error', 'Erro ao atribuir role à secretária.');
+                }
+            } else {
+                Yii::$app->session->setFlash('error', 'Role "secretary" não encontrada.');
+            }
+
+            return $this->redirect(['view', 'id' => $model->id]);
         }
+
+        $model->loadDefaultValues();
 
         return $this->render('create', ['model' => $model]);
     }
@@ -109,7 +118,18 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost) {
+
+            if (!$model->load($this->request->post())) {
+                Yii::$app->session->setFlash('error', 'Erro ao carregar dados da secretária.');
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            if (!$model->save()) {
+                Yii::$app->session->setFlash('error', 'Erro ao atualizar secretária.');
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -127,7 +147,12 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if (!$model->delete()) {
+            Yii::$app->session->setFlash('error', 'Erro ao apagar secretária.');
+            return $this->redirect(['index']);
+        }
 
         return $this->redirect(['index']);
     }

@@ -64,7 +64,7 @@ $roleNames = array_keys($userRoles);
                         [
                             'label' => 'Pedidos de Consulta',
                             'icon'  => 'calendar-check',
-                            'url'   => ['pedido-consulta/index'],
+                            'url'   => ['consulta/index'],
                         ],
                     ],
                 ]);

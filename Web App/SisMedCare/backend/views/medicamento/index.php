@@ -13,9 +13,11 @@ $this->title = 'Medicamentos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="medicamento-index">
+    <p>
+        <?= Html::a('Criar Medicamento', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+    <br>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -33,12 +35,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
-    <br>
-
-    <p>
-        <?= Html::a('Criar Medicamento', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
 
 </div>

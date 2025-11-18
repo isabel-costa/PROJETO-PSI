@@ -90,7 +90,7 @@ class Paciente extends \yii\db\ActiveRecord
      */
     public function getConsultas()
     {
-        return $this->hasMany(Consultas::class, ['paciente_id' => 'id']);
+        return $this->hasMany(Consulta::class, ['paciente_id' => 'id']);
     }
 
     /**
@@ -100,7 +100,7 @@ class Paciente extends \yii\db\ActiveRecord
      */
     public function getPrescricoes()
     {
-        return $this->hasMany(Prescricoes::class, ['paciente_id' => 'id']);
+        return $this->hasMany(Prescricao::class, ['paciente_id' => 'id']);
     }
 
     /**
@@ -110,7 +110,7 @@ class Paciente extends \yii\db\ActiveRecord
      */
     public function getRegistosTomas()
     {
-        return $this->hasMany(RegistosTomas::class, ['paciente_id' => 'id']);
+        return $this->hasMany(RegistoToma::class, ['paciente_id' => 'id']);
     }
 
     /**

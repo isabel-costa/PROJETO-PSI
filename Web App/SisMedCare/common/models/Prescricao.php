@@ -69,7 +69,7 @@ class Prescricao extends \yii\db\ActiveRecord
      */
     public function getConsulta()
     {
-        return $this->hasOne(Consultas::class, ['id' => 'consulta_id']);
+        return $this->hasOne(Consulta::class, ['id' => 'consulta_id']);
     }
 
     /**
@@ -79,7 +79,7 @@ class Prescricao extends \yii\db\ActiveRecord
      */
     public function getMedico()
     {
-        return $this->hasOne(Medicos::class, ['id' => 'medico_id']);
+        return $this->hasOne(Medico::class, ['id' => 'medico_id']);
     }
 
     /**
@@ -89,7 +89,7 @@ class Prescricao extends \yii\db\ActiveRecord
      */
     public function getPaciente()
     {
-        return $this->hasOne(Pacientes::class, ['id' => 'paciente_id']);
+        return $this->hasOne(Paciente::class, ['id' => 'paciente_id']);
     }
 
     /**
@@ -99,7 +99,7 @@ class Prescricao extends \yii\db\ActiveRecord
      */
     public function getPrescricoesMedicamentos()
     {
-        return $this->hasMany(PrescricoesMedicamentos::class, ['prescricao_id' => 'id']);
+        return $this->hasMany(PrescricaoMedicamento::class, ['prescricao_id' => 'id']);
     }
 
 }

@@ -14,6 +14,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
 
+    <p>
+        <?= Html::a('Criar Secretária', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <br>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -29,12 +35,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
-    <br>
-
-    <p>
-        <?= Html::a('Criar Secretária', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
 
 </div>

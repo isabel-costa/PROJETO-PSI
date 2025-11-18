@@ -100,8 +100,17 @@ class MedicamentoController extends Controller
         $model = new Medicamento();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('success', 'Medicamento criado com sucesso.');
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Erro ao criar medicamento.');
+                }
+
+            } else {
+                Yii::$app->session->setFlash('error', 'Erro ao carregar os dados do formulário.');
             }
         } else {
             $model->loadDefaultValues();
@@ -123,8 +132,20 @@ class MedicamentoController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+
+            if ($model->load($this->request->post())) {
+
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('success', 'Medicamento atualizado com sucesso.');
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Erro ao atualizar medicamento.');
+                }
+
+            } else {
+                Yii::$app->session->setFlash('error', 'Erro ao carregar os dados do formulário.');
+            }
         }
 
         return $this->render('update', [
@@ -141,7 +162,12 @@ class MedicamentoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        try {
+            $this->findModel($id)->delete();
+            Yii::$app->session->setFlash('success', 'Medicamento apagado com sucesso.');
+        } catch (\Throwable $e) {
+            Yii::$app->session->setFlash('error', 'Erro ao apagar medicamento.');
+        }
 
         return $this->redirect(['index']);
     }

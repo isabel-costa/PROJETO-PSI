@@ -108,24 +108,33 @@ class MedicoController extends Controller
             $user->email = $model->email;
             $user->setPassword($model->password);
             $user->generateAuthKey();
-            $user->status = 10;
+            $user->status = 10; // Ativo
 
-            if ($user->save()) {
-
-                Yii::$app->authManager->assign(
-                    Yii::$app->authManager->getRole('doctor'),
-                    $user->id
-                );
-
-                // Associar ao médico
-                $model->user_id = $user->id;
-
-                if ($model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
+            if (!$user->save()) {
+                Yii::$app->session->setFlash('error', 'Erro ao criar a conta de utilizador.');
+                return $this->redirect(['index']);
             }
 
-            Yii::$app->session->setFlash('error', 'Erro ao criar o médico.');
+            // Atribuir role
+            if (!Yii::$app->authManager->assign(
+                Yii::$app->authManager->getRole('doctor'),
+                $user->id
+            )) {
+                Yii::$app->session->setFlash('error', 'Erro ao atribuir role ao médico.');
+                $user->delete();
+                return $this->redirect(['index']);
+            }
+
+            // Associar ao médico
+            $model->user_id = $user->id;
+
+            if (!$model->save()) {
+                Yii::$app->session->setFlash('error', 'Erro ao guardar dados do médico.');
+                $user->delete(); // Para não deixar nenhum user órfão
+                return $this->redirect(['index']);
+            }
+
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -143,21 +152,27 @@ class MedicoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $user = $model->user; // vai buscar o User associado
+        $user = $model->user;
 
         if ($this->request->isPost) {
             $post = Yii::$app->request->post();
 
-            // Atualizar Medico
-            if ($model->load($post) && $model->save()) {
-
-                // Atualizar User associado
-                if ($user && $user->load($post)) {
-                    $user->save(false);
-                }
-
+            if (!($model->load($post) && $model->save())) {
+                Yii::$app->session->setFlash('error', 'Erro ao atualizar dados do médico.');
                 return $this->redirect(['view', 'id' => $model->id]);
             }
+
+            if ($user && !$user->load($post)) {
+                Yii::$app->session->setFlash('error', 'Erro ao carregar dados do utilizador associado.');
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            if ($user && !$user->save(false)) {
+                Yii::$app->session->setFlash('error', 'Erro ao atualizar dados do utilizador associado.');
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -177,13 +192,15 @@ class MedicoController extends Controller
     {
         $model = $this->findModel($id);
 
-        // Apagar o user associado
-        if ($model->user) {
-            $model->user->delete();
+        if ($model->user && !$model->user->delete()) {
+            Yii::$app->session->setFlash('error', 'Erro ao apagar o utilizador associado.');
+            return $this->redirect(['index']);
         }
 
-        // Apagar o médico
-        $model->delete();
+        if (!$model->delete()) {
+            Yii::$app->session->setFlash('error', 'Erro ao apagar o médico.');
+            return $this->redirect(['index']);
+        }
 
         return $this->redirect(['index']);
     }

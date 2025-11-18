@@ -65,7 +65,7 @@ class RegistoToma extends \yii\db\ActiveRecord
      */
     public function getPaciente()
     {
-        return $this->hasOne(Pacientes::class, ['id' => 'paciente_id']);
+        return $this->hasOne(Paciente::class, ['id' => 'paciente_id']);
     }
 
     /**
@@ -75,7 +75,7 @@ class RegistoToma extends \yii\db\ActiveRecord
      */
     public function getPrescricaoMedicamento()
     {
-        return $this->hasOne(PrescricoesMedicamentos::class, ['id' => 'prescricao_medicamento_id']);
+        return $this->hasOne(PrescricaoMedicamento::class, ['id' => 'prescricao_medicamento_id']);
     }
 
 }

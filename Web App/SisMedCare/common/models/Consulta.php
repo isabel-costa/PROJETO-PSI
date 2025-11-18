@@ -71,7 +71,7 @@ class Consulta extends \yii\db\ActiveRecord
      */
     public function getMedico()
     {
-        return $this->hasOne(Medicos::class, ['id' => 'medico_id']);
+        return $this->hasOne(Medico::class, ['id' => 'medico_id']);
     }
 
     /**
@@ -81,7 +81,7 @@ class Consulta extends \yii\db\ActiveRecord
      */
     public function getPaciente()
     {
-        return $this->hasOne(Pacientes::class, ['id' => 'paciente_id']);
+        return $this->hasOne(Paciente::class, ['id' => 'paciente_id']);
     }
 
     /**
@@ -91,7 +91,7 @@ class Consulta extends \yii\db\ActiveRecord
      */
     public function getPrescricoes()
     {
-        return $this->hasMany(Prescricoes::class, ['consulta_id' => 'id']);
+        return $this->hasMany(Prescricao::class, ['consulta_id' => 'id']);
     }
 
 }

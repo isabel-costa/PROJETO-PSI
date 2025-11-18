@@ -61,14 +61,14 @@ class Medico extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'user_id' => 'User ID',
+            'id' => 'ID Médico',
+            'user_id' => 'ID Utilizador',
             'nome_completo' => 'Nome Completo',
             'especialidade' => 'Especialidade',
-            'nif' => 'Nif',
-            'telemovel' => 'Telemovel',
-            'cedula_numero' => 'Cedula Numero',
-            'horario_trabalho' => 'Horario Trabalho',
+            'nif' => 'NIF',
+            'telemovel' => 'Telemóvel',
+            'cedula_numero' => 'Número de Cédula',
+            'horario_trabalho' => 'Horário de Trabalho',
         ];
     }
 

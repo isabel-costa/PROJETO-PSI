@@ -70,7 +70,7 @@ class PrescricaoMedicamento extends \yii\db\ActiveRecord
      */
     public function getMedicamento()
     {
-        return $this->hasOne(Medicamentos::class, ['id' => 'medicamento_id']);
+        return $this->hasOne(Medicamento::class, ['id' => 'medicamento_id']);
     }
 
     /**
@@ -80,7 +80,7 @@ class PrescricaoMedicamento extends \yii\db\ActiveRecord
      */
     public function getPrescricao()
     {
-        return $this->hasOne(Prescricoes::class, ['id' => 'prescricao_id']);
+        return $this->hasOne(Prescricao::class, ['id' => 'prescricao_id']);
     }
 
     /**
@@ -90,7 +90,7 @@ class PrescricaoMedicamento extends \yii\db\ActiveRecord
      */
     public function getRegistosTomas()
     {
-        return $this->hasMany(RegistosTomas::class, ['prescricao_medicamento_id' => 'id']);
+        return $this->hasMany(RegistoToma::class, ['prescricao_medicamento_id' => 'id']);
     }
 
 }
