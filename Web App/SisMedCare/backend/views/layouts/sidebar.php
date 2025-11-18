@@ -49,7 +49,7 @@ $roleNames = array_keys($userRoles);
                         [
                             'label' => 'Secretárias',
                             'icon'  => 'user-tie',
-                            'url'   => ['secretaria/index'],
+                            'url'   => ['user/index'],
                         ],
                         [
                             'label' => 'Medicamentos',

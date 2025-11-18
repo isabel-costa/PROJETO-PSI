@@ -13,7 +13,6 @@ use Yii;
  * @property string $nome_completo
  * @property string|null $especialidade
  * @property string|null $nif
- * @property string|null $email
  * @property string|null $telemovel
  * @property string|null $cedula_numero
  * @property string|null $horario_trabalho
@@ -24,7 +23,9 @@ use Yii;
  */
 class Medico extends \yii\db\ActiveRecord
 {
-
+    public $username;
+    public $email;
+    public $password;
 
     /**
      * {@inheritdoc}
@@ -40,15 +41,16 @@ class Medico extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['especialidade', 'nif', 'email', 'telemovel', 'cedula_numero', 'horario_trabalho'], 'default', 'value' => null],
+            [['especialidade', 'nif', 'telemovel', 'cedula_numero', 'horario_trabalho'], 'default', 'value' => null],
             [['user_id', 'nome_completo'], 'required'],
             [['user_id'], 'integer'],
             [['nome_completo'], 'string', 'max' => 150],
-            [['especialidade', 'email'], 'string', 'max' => 100],
+            [['especialidade'], 'string', 'max' => 100],
             [['nif'], 'string', 'max' => 9],
             [['telemovel'], 'string', 'max' => 15],
             [['cedula_numero'], 'string', 'max' => 20],
             [['horario_trabalho'], 'string', 'max' => 50],
+            [['username', 'email', 'password'], 'safe'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -64,7 +66,6 @@ class Medico extends \yii\db\ActiveRecord
             'nome_completo' => 'Nome Completo',
             'especialidade' => 'Especialidade',
             'nif' => 'Nif',
-            'email' => 'Email',
             'telemovel' => 'Telemovel',
             'cedula_numero' => 'Cedula Numero',
             'horario_trabalho' => 'Horario Trabalho',
@@ -78,7 +79,7 @@ class Medico extends \yii\db\ActiveRecord
      */
     public function getConsultas()
     {
-        return $this->hasMany(Consultas::class, ['medico_id' => 'id']);
+        return $this->hasMany(Consulta::class, ['medico_id' => 'id']);
     }
 
     /**
@@ -88,7 +89,7 @@ class Medico extends \yii\db\ActiveRecord
      */
     public function getPrescricoes()
     {
-        return $this->hasMany(Prescricoes::class, ['medico_id' => 'id']);
+        return $this->hasMany(Prescricao::class, ['medico_id' => 'id']);
     }
 
     /**
@@ -101,4 +102,26 @@ class Medico extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if ($this->user) {
+
+            // Atualiza username e email
+            $this->user->username = $this->username;
+            $this->user->email = $this->email;
+
+            // Se a password foi preenchida → gera hash
+            if (!empty($this->password)) {
+                $this->user->setPassword($this->password);
+            }
+
+            $this->user->save(false);
+        }
+
+        return true;
+    }
 }
