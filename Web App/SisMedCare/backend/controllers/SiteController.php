@@ -32,7 +32,6 @@ class SiteController extends Controller
                         'matchCallback' => function () {
                             $auth = Yii::$app->authManager;
                             $roles = $auth->getRolesByUser(Yii::$app->user->id);
-
                             return isset($roles['admin']) || isset($roles['secretary']);
                         }
                     ],

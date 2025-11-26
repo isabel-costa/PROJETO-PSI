@@ -29,14 +29,18 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'except' => ['login', 'contact', 'error', 'captcha', 'request-password-reset', 'reset-password'],
+                'only' => ['index','contact','about','logout'],
                 'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'contact'],
+                        'roles' => ['?'],
+                    ],
                     [
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function () {
-                            $auth = Yii::$app->authManager;
-                            $roles = $auth->getRolesByUser(Yii::$app->user->id);
+                            $roles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
                             return isset($roles['doctor']);
                         }
                     ],
@@ -95,10 +99,17 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+            $roles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+
+            if (!isset($roles['doctor'])) {
+                Yii::$app->user->logout();
+                Yii::$app->session->setFlash('error', 'Apenas médicos podem aceder ao Frontend.');
+                return $this->redirect(['site/login']);
+            }
+
             return $this->goBack();
         }
-
-        $model->password = '';
 
         return $this->render('login', [
             'model' => $model,
