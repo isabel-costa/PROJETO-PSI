@@ -45,7 +45,7 @@ class UserController extends Controller
         $secretary = $auth->getUserIdsByRole('secretary');
 
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find()->where(['id' => $secretary]),
+            'query' => User::find()->where(['id' => $secretary, 'status' => User::STATUS_ACTIVE]),
         ]);
 
         return $this->render('index', [
@@ -148,14 +148,17 @@ class UserController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+        $model->status = User::STATUS_INACTIVE;
 
-        if (!$model->delete()) {
-            Yii::$app->session->setFlash('error', 'Erro ao apagar secretária.');
-            return $this->redirect(['index']);
+        if (!$model->save(false)) {
+            Yii::$app->session->setFlash('error', 'Erro ao apagar a secretária.');
+        } else {
+            Yii::$app->session->setFlash('success', 'Secretária apagada com sucesso.');
         }
 
         return $this->redirect(['index']);
     }
+
 
     /**
      * Finds the User model based on its primary key value.

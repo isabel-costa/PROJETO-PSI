@@ -60,17 +60,7 @@ class MedicoController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Medico::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
+            'query' => Medico::find()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE]),
         ]);
 
         return $this->render('index', [
@@ -191,17 +181,18 @@ class MedicoController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+        $user = $model->user;
 
-        if ($model->user && !$model->user->delete()) {
-            Yii::$app->session->setFlash('error', 'Erro ao apagar o utilizador associado.');
-            return $this->redirect(['index']);
+        if ($user) {
+            $user->status = User::STATUS_INACTIVE;
+
+            if (!$user->save(false)) {
+                Yii::$app->session->setFlash('error', 'Erro ao apagar o utilizador associado.');
+                return $this->redirect(['index']);
+            }
         }
 
-        if (!$model->delete()) {
-            Yii::$app->session->setFlash('error', 'Erro ao apagar o médico.');
-            return $this->redirect(['index']);
-        }
-
+        Yii::$app->session->setFlash('success', 'Médico apagado com sucesso.');
         return $this->redirect(['index']);
     }
 

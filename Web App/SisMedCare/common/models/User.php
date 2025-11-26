@@ -225,6 +225,13 @@ class User extends ActiveRecord implements IdentityInterface
 
     public static function countByRole($roleName)
     {
-        return count(Yii::$app->authManager->getUserIdsByRole($roleName));
+        $auth = Yii::$app->authManager;
+        $userIds = $auth->getUserIdsByRole($roleName);
+
+        if (empty($userIds)) {
+            return 0;
+        }
+
+        return static::find()->where(['id' => $userIds, 'status' => self::STATUS_ACTIVE])->count();
     }
 }
