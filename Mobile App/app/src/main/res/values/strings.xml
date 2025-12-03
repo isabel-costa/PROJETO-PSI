@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">SisMedCare</string>
+    <string name="tv_redirecionar_iniciar_sessao">Iniciar sessão</string>
+    <string name="tv_ja_tem_conta">Já tem uma conta?</string>
+    <string name="btn_registar">Registar</string>
+    <string name="tv_palavra_passe">Palavra-passe</string>
+    <string name="tf_hint_email">paciente@my.ipleiria.pt</string>
+    <string name="tv_email">Email</string>
+    <string name="tv_morada">Morada</string>
+    <string name="tv_telemovel">Telemóvel</string>
+    <string name="tv_numero_utente">Nº de utente</string>
+    <string name="rb_genero_outros">Outros</string>
+    <string name="rb_genero_feminino">Feminino</string>
+    <string name="rb_genero_masculino">Masculino</string>
+    <string name="tv_sexo">Sexo</string>
+    <string name="tv_data_nascimento">Data de nascimento</string>
+    <string name="tv_nome_completo">Nome completo</string>
+    <string name="tv_titulo_registar">Registar</string>
 </resources>
