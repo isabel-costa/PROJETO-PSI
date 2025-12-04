@@ -16,4 +16,22 @@
     <string name="tv_data_nascimento">Data de nascimento</string>
     <string name="tv_nome_completo">Nome completo</string>
     <string name="tv_titulo_registar">Registar</string>
+    <string name="btn_terminar_sessao">Terminar sessão</string>
+    <string name="tv_perfil_email">Email</string>
+    <string name="tv_perfil_telemovel">Telemóvel</string>
+    <string name="tv_perfil_contactos">Contactos</string>
+    <string name="tv_perfil_morada">Morada</string>
+    <string name="tv_perfil_n_utente">Nº de utente</string>
+    <string name="tv_perfil_sexo">Sexo</string>
+    <string name="tv_perfil_data_nascimento">Data de Nascimento</string>
+    <string name="tv_perfil_nome">Nome</string>
+    <string name="iv_login_logo">Logo</string>
+    <string name="tv_login_iniciar_sessao">Iniciar Sessão</string>
+    <string name="tv_login_email">E-mail</string>
+    <string name="et_login_hint_email">nome@exemplo.com</string>
+    <string name="tv_login_password">Password</string>
+    <string name="et_login_hint_password">**************</string>
+    <string name="bt_login_iniciar_sessao">Iniciar Sessão</string>
+    <string name="tv_login_nao_tem_conta">Não tem conta?</string>
+    <string name="tv_login_registe_se">Registe-se</string>
 </resources>
