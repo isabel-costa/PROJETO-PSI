@@ -11,10 +11,17 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'api' => [
+            'class' => 'backend\modules\api\ModuleAPI',
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -48,6 +55,59 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['api/auth'],
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'POST login' => 'login',
+                        'POST registar' => 'registar',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['api/consulta'],
+                    'pluralize' => true,
+                    'extraPatterns' => [
+                        'GET {id}' => 'view',
+                        'GET futuras' => 'futuras',
+                        'GET passadas' => 'passadas',
+                        'POST solicitar' => 'solicitar',
+                        'DELETE {id}' => 'delete'
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['api/paciente'],
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET' => 'view',
+                        'PUT' => 'update',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['api/medico'],
+                    'pluralize' => true,
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['api/prescricao'],
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET' => 'index',
+                        'GET {id}' => 'view',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['api/registotoma'],
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET pendentes/{id}' => 'pendentes',
+                        'GET tomadas/{id}' => 'tomadas',
+                    ],
+                ],
             ],
         ],
     ],

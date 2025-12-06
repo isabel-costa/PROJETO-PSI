@@ -37,13 +37,13 @@ class Prescricao extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['consulta_id', 'medico_id', 'paciente_id', 'data_prescricao', 'observacoes'], 'default', 'value' => null],
+            [['consulta_id', 'medico_id', 'paciente_id', 'data_prescricao', 'observacoes'], 'required'],
             [['consulta_id', 'medico_id', 'paciente_id'], 'integer'],
             [['data_prescricao'], 'safe'],
             [['observacoes'], 'string', 'max' => 255],
-            [['consulta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Consultas::class, 'targetAttribute' => ['consulta_id' => 'id']],
-            [['medico_id'], 'exist', 'skipOnError' => true, 'targetClass' => Medicos::class, 'targetAttribute' => ['medico_id' => 'id']],
-            [['paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pacientes::class, 'targetAttribute' => ['paciente_id' => 'id']],
+            [['consulta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Consulta::class, 'targetAttribute' => ['consulta_id' => 'id']],
+            [['medico_id'], 'exist', 'skipOnError' => true, 'targetClass' => Medico::class, 'targetAttribute' => ['medico_id' => 'id']],
+            [['paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::class, 'targetAttribute' => ['paciente_id' => 'id']],
         ];
     }
 
@@ -53,12 +53,12 @@ class Prescricao extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'consulta_id' => 'Consulta ID',
-            'medico_id' => 'Medico ID',
-            'paciente_id' => 'Paciente ID',
-            'data_prescricao' => 'Data Prescricao',
-            'observacoes' => 'Observacoes',
+            'id' => 'ID Prescrição',
+            'consulta_id' => 'ID Consulta',
+            'medico_id' => 'ID Médico',
+            'paciente_id' => 'ID Paciente',
+            'data_prescricao' => 'Data Prescrição',
+            'observacoes' => 'Observações',
         ];
     }
 

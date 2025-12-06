@@ -234,4 +234,9 @@ class User extends ActiveRecord implements IdentityInterface
 
         return static::find()->where(['id' => $userIds, 'status' => self::STATUS_ACTIVE])->count();
     }
+
+    public function getPaciente()
+    {
+        return $this->hasOne(Paciente::class, ['user_id' => 'id']);
+    }
 }
