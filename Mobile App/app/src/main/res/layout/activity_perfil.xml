@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- TOPO -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/ic_voltar" />
+
+            <ImageView
+                android:id="@+id/btnAvatar"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="264dp"
+                android:src="@drawable/ic_perfil" />
+        </LinearLayout>
+
+
+        <!-- NOME -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_perfil_nome"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:layout_marginStart="20dp"
+            android:textColor="#666" />
+
+
+
+        <!-- DATA NASCIMENTO -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_perfil_data_nascimento"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:layout_marginStart="20dp"
+            android:textColor="#666" />
+
+
+
+        <!-- SEXO -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_perfil_sexo"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:layout_marginStart="20dp"
+            android:textColor="#666" />
+
+
+
+        <!-- Nº UTENTE -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_perfil_n_utente"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:layout_marginStart="20dp"
+            android:textColor="#666" />
+
+
+
+        <!-- CAIXA -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:radius="100dp"
+            android:background="@drawable/bg_redondo"
+            android:padding="20dp"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical"
+            android:clipToOutline="true">
+
+            <!-- MORADA -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_perfil_morada"
+                android:textStyle="bold"
+                android:textSize="17sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_editar" />
+            </LinearLayout>
+
+
+
+            <!-- CONTACTOS -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_perfil_contactos"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:layout_marginTop="15dp"/>
+
+            <!-- Telemóvel -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_perfil_telemovel"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_marginStart="10dp"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_editar" />
+            </LinearLayout>
+
+            <!-- Email -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_perfil_email"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_marginStart="10dp"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_editar" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+        <!-- BOTÃO TERMINAR SESSÃO -->
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="184dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#4fb0af"
+            android:text="@string/btn_terminar_sessao"
+            android:drawableLeft="@drawable/ic_terminar_sessao"
+            android:padding="13dp" />
+
+    </LinearLayout>
+
+</ScrollView>
