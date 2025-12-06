@@ -8,12 +8,12 @@ use Yii;
  * This is the model class for table "prescricoes_medicamentos".
  *
  * @property int $id
- * @property int|null $prescricao_id
- * @property int|null $medicamento_id
- * @property string|null $posologia
- * @property string|null $frequencia
- * @property int|null $duracao_dias
- * @property string|null $instrucoes
+ * @property int $prescricao_id
+ * @property int $medicamento_id
+ * @property string $posologia
+ * @property string $frequencia
+ * @property int $duracao_dias
+ * @property string $instrucoes
  *
  * @property Medicamento $medicamento
  * @property Prescricao $prescricao
@@ -37,13 +37,13 @@ class PrescricaoMedicamento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['prescricao_id', 'medicamento_id', 'posologia', 'frequencia', 'duracao_dias', 'instrucoes'], 'default', 'value' => null],
+            [['prescricao_id', 'medicamento_id', 'posologia', 'frequencia', 'duracao_dias', 'instrucoes'], 'required'],
             [['prescricao_id', 'medicamento_id', 'duracao_dias'], 'integer'],
-            [['posologia'], 'string'],
+            [['posologia'], 'string', 'max' => 500],
             [['frequencia'], 'string', 'max' => 50],
             [['instrucoes'], 'string', 'max' => 255],
-            [['medicamento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Medicamentos::class, 'targetAttribute' => ['medicamento_id' => 'id']],
-            [['prescricao_id'], 'exist', 'skipOnError' => true, 'targetClass' => Prescricoes::class, 'targetAttribute' => ['prescricao_id' => 'id']],
+            [['medicamento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Medicamento::class, 'targetAttribute' => ['medicamento_id' => 'id']],
+            [['prescricao_id'], 'exist', 'skipOnError' => true, 'targetClass' => Prescricao::class, 'targetAttribute' => ['prescricao_id' => 'id']],
         ];
     }
 
@@ -54,12 +54,12 @@ class PrescricaoMedicamento extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'prescricao_id' => 'Prescricao ID',
-            'medicamento_id' => 'Medicamento ID',
+            'prescricao_id' => 'ID Prescrição',
+            'medicamento_id' => 'ID Medicamento',
             'posologia' => 'Posologia',
-            'frequencia' => 'Frequencia',
-            'duracao_dias' => 'Duracao Dias',
-            'instrucoes' => 'Instrucoes',
+            'frequencia' => 'Frequência',
+            'duracao_dias' => 'Duração (Dias)',
+            'instrucoes' => 'Instruções',
         ];
     }
 

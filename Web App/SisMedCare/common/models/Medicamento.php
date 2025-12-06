@@ -9,9 +9,9 @@ use Yii;
  *
  * @property int $id
  * @property string $nome
- * @property string|null $descricao
- * @property string|null $dosagem
- * @property string|null $fabricante
+ * @property string $descricao
+ * @property string $dosagem
+ * @property string $fabricante
  *
  * @property PrescricaoMedicamento[] $prescricaoMedicamento
  */
@@ -33,8 +33,7 @@ class Medicamento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['descricao', 'dosagem', 'fabricante'], 'default', 'value' => null],
-            [['nome'], 'required'],
+            [['nome', 'descricao', 'dosagem', 'fabricante'], 'required'],
             [['nome'], 'string', 'max' => 150],
             [['descricao'], 'string', 'max' => 255],
             [['dosagem'], 'string', 'max' => 50],

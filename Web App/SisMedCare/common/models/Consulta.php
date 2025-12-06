@@ -11,10 +11,10 @@ use Yii;
  * @property int $id
  * @property int|null $paciente_id
  * @property int|null $medico_id
- * @property string|null $data_consulta
- * @property string|null $estado
+ * @property string $data_consulta
+ * @property string $estado
  * @property string|null $observacoes
- * @property string|null $criado_em
+ * @property string $criado_em
  *
  * @property Medico $medico
  * @property Paciente $paciente
@@ -38,13 +38,14 @@ class Consulta extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['paciente_id', 'medico_id', 'data_consulta', 'estado', 'observacoes'], 'default', 'value' => null],
+            [['paciente_id', 'medico_id', 'observacoes'], 'default', 'value' => null],
+            [['data_consulta', 'estado'], 'required'],
             [['paciente_id', 'medico_id'], 'integer'],
             [['data_consulta', 'criado_em'], 'safe'],
             [['estado'], 'string', 'max' => 20],
             [['observacoes'], 'string', 'max' => 255],
-            [['medico_id'], 'exist', 'skipOnError' => true, 'targetClass' => Medicos::class, 'targetAttribute' => ['medico_id' => 'id']],
-            [['paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pacientes::class, 'targetAttribute' => ['paciente_id' => 'id']],
+            [['medico_id'], 'exist', 'skipOnError' => true, 'targetClass' => Medico::class, 'targetAttribute' => ['medico_id' => 'id']],
+            [['paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::class, 'targetAttribute' => ['paciente_id' => 'id']],
         ];
     }
 
@@ -54,12 +55,12 @@ class Consulta extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'paciente_id' => 'Paciente ID',
-            'medico_id' => 'Medico ID',
-            'data_consulta' => 'Data Consulta',
+            'id' => 'ID Consulta',
+            'paciente_id' => 'ID Paciente',
+            'medico_id' => 'ID Médico',
+            'data_consulta' => 'Data da Consulta',
             'estado' => 'Estado',
-            'observacoes' => 'Observacoes',
+            'observacoes' => 'Observações',
             'criado_em' => 'Criado Em',
         ];
     }

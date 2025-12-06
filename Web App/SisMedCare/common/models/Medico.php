@@ -11,11 +11,11 @@ use Yii;
  * @property int $id
  * @property int $user_id
  * @property string $nome_completo
- * @property string|null $especialidade
- * @property string|null $nif
- * @property string|null $telemovel
- * @property string|null $cedula_numero
- * @property string|null $horario_trabalho
+ * @property string $especialidade
+ * @property string $nif
+ * @property string $telemovel
+ * @property string $cedula_numero
+ * @property string $horario_trabalho
  *
  * @property Consulta[] $consulta
  * @property Prescricao[] $prescricao
@@ -41,8 +41,7 @@ class Medico extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['especialidade', 'nif', 'telemovel', 'cedula_numero', 'horario_trabalho'], 'default', 'value' => null],
-            [['user_id', 'nome_completo'], 'required'],
+            [['user_id', 'nome_completo', 'especialidade', 'nif', 'telemovel', 'cedula_numero', 'horario_trabalho'], 'required'],
             [['user_id'], 'integer'],
             [['nome_completo'], 'string', 'max' => 150],
             [['especialidade'], 'string', 'max' => 100],

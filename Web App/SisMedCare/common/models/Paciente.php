@@ -10,17 +10,16 @@ use Yii;
  * @property int $id
  * @property int $user_id
  * @property string $nome_completo
- * @property string|null $data_nascimento
- * @property string|null $sexo
- * @property string|null $numero_utente
- * @property string|null $email
- * @property string|null $telemovel
- * @property string|null $morada
+ * @property string $data_nascimento
+ * @property string $sexo
+ * @property string $numero_utente
+ * @property string $telemovel
+ * @property string $morada
  * @property float|null $altura
  * @property float|null $peso
  * @property string|null $alergias
  * @property string|null $doencas_cronicas
- * @property string|null $data_registo
+ * @property string $data_registo
  *
  * @property Consulta[] $consulta
  * @property Prescricao[] $prescricao
@@ -45,16 +44,14 @@ class Paciente extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['data_nascimento', 'sexo', 'numero_utente', 'email', 'telemovel', 'morada', 'altura', 'peso', 'alergias', 'doencas_cronicas'], 'default', 'value' => null],
-            [['user_id', 'nome_completo'], 'required'],
-            [['user_id'], 'integer'],
-            [['data_nascimento', 'data_registo'], 'safe'],
+            [['user_id', 'nome_completo', 'data_nascimento', 'sexo', 'numero_utente', 'telemovel', 'morada'], 'required'],
+            [['altura', 'peso', 'alergias', 'doencas_cronicas'], 'default', 'value' => null],
+            [['user_id', 'numero_utente'], 'integer'],
             [['altura', 'peso'], 'number'],
-            [['nome_completo', 'morada'], 'string', 'max' => 150],
+            [['data_nascimento', 'data_registo'], 'safe'],
+            [['nome_completo', 'morada'], 'string', 'max' => 255],
             [['sexo'], 'string', 'max' => 1],
-            [['numero_utente'], 'string', 'max' => 9],
-            [['email'], 'string', 'max' => 100],
-            [['telemovel'], 'string', 'max' => 15],
+            [['telemovel'], 'string', 'max' => 20],
             [['alergias', 'doencas_cronicas'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -66,20 +63,19 @@ class Paciente extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'user_id' => 'User ID',
+            'id' => 'ID Paciente',
+            'user_id' => 'ID Utilizador',
             'nome_completo' => 'Nome Completo',
-            'data_nascimento' => 'Data Nascimento',
+            'data_nascimento' => 'Data de Nascimento',
             'sexo' => 'Sexo',
-            'numero_utente' => 'Numero Utente',
-            'email' => 'Email',
-            'telemovel' => 'Telemovel',
+            'numero_utente' => 'Numero de Utente',
+            'telemovel' => 'Telemóvel',
             'morada' => 'Morada',
             'altura' => 'Altura',
             'peso' => 'Peso',
             'alergias' => 'Alergias',
-            'doencas_cronicas' => 'Doencas Cronicas',
-            'data_registo' => 'Data Registo',
+            'doencas_cronicas' => 'Doenças Crónicas',
+            'data_registo' => 'Data de Registo',
         ];
     }
 

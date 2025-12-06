@@ -10,8 +10,8 @@ use Yii;
  * @property int $id
  * @property int $paciente_id
  * @property int $prescricao_medicamento_id
- * @property string|null $data_toma
- * @property int|null $foi_tomado
+ * @property string $data_toma
+ * @property int $foi_tomado
  *
  * @property Paciente $paciente
  * @property PrescricaoMedicamento $prescricaoMedicamento
@@ -34,13 +34,12 @@ class RegistoToma extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['data_toma'], 'default', 'value' => null],
             [['foi_tomado'], 'default', 'value' => 0],
-            [['paciente_id', 'prescricao_medicamento_id'], 'required'],
+            [['paciente_id', 'prescricao_medicamento_id', 'data_toma'], 'required'],
             [['paciente_id', 'prescricao_medicamento_id', 'foi_tomado'], 'integer'],
             [['data_toma'], 'safe'],
-            [['paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pacientes::class, 'targetAttribute' => ['paciente_id' => 'id']],
-            [['prescricao_medicamento_id'], 'exist', 'skipOnError' => true, 'targetClass' => PrescricoesMedicamentos::class, 'targetAttribute' => ['prescricao_medicamento_id' => 'id']],
+            [['paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::class, 'targetAttribute' => ['paciente_id' => 'id']],
+            [['prescricao_medicamento_id'], 'exist', 'skipOnError' => true, 'targetClass' => PrescricaoMedicamento::class, 'targetAttribute' => ['prescricao_medicamento_id' => 'id']],
         ];
     }
 
@@ -50,11 +49,11 @@ class RegistoToma extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'paciente_id' => 'Paciente ID',
-            'prescricao_medicamento_id' => 'Prescricao Medicamento ID',
-            'data_toma' => 'Data Toma',
-            'foi_tomado' => 'Foi Tomado',
+            'id' => 'ID Registo Toma',
+            'paciente_id' => 'ID Paciente',
+            'prescricao_medicamento_id' => 'ID Prescrição Medicamento',
+            'data_toma' => 'Data da Toma',
+            'foi_tomado' => 'Foi Tomado?',
         ];
     }
 

@@ -15,10 +15,12 @@ class RbacController extends Controller
         $admin = $auth->createRole('admin');
         $doctor = $auth->createRole('doctor');
         $secretary = $auth->createRole('secretary');
+        $pacient = $auth->createRole('pacient');
 
         $auth->add($admin);
         $auth->add($doctor);
         $auth->add($secretary);
+        $auth->add($pacient);
 
         // --- PERMISSIONS (Admin) ---
         $createDoctor = $auth->createPermission('createDoctor');
