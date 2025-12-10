@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
     tools:context=".LoginActivity">
 
-    <!-- LOGO CIRCULAR -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="228dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical">
+
+    <!-- LOGO -->
     <ImageView
         android:id="@+id/logo"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="90dp"
+        android:layout_gravity="center_horizontal"
         android:background="@drawable/logo_sismedcare"
-        android:contentDescription="Logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:contentDescription="Logo" />
 
     <!-- TÍTULO -->
     <TextView
@@ -26,109 +34,92 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
+        android:layout_gravity="center_horizontal"
         android:text="Iniciar Sessão"
         android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo" />
+        android:textStyle="bold" />
 
     <!-- LABEL EMAIL -->
     <TextView
         android:id="@+id/lb_Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="E-mail"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtTitle" />
+        android:textSize="14sp" />
 
     <!-- INPUT EMAIL -->
     <EditText
         android:id="@+id/txt_Email"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/bg_txtlogin"
         android:hint="nome@exemplo.com"
         android:inputType="textEmailAddress"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lb_Email" />
+        android:padding="10dp" />
 
     <!-- LABEL PASSWORD -->
     <TextView
         android:id="@+id/lb_Password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:text="Password"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_Email" />
+        android:textSize="14sp" />
 
     <!-- INPUT PASSWORD -->
     <EditText
         android:id="@+id/txt_Password"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/bg_txtlogin"
         android:drawableEnd="@drawable/ic_reverlarpass"
         android:drawablePadding="10dp"
         android:hint="**************"
         android:inputType="textPassword"
+        android:focusable="true"
+        android:clickable="true"
         android:padding="10dp"
-        android:paddingEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lb_Password" />
+        android:paddingStart="0dp"
+        android:paddingEnd="20dp" />
 
-    <!-- BOTÃO SIGN IN -->
+    <!-- BOTÃO -->
     <Button
         android:id="@+id/btn_IniciarSessao"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginHorizontal="20dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="#4fb0af"
         android:text="Iniciar Sessão"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_Password" />
+        android:textAllCaps="false" />
 
-    <!-- TEXTO ESQUERDA -->
-    <TextView
-        android:id="@+id/txt_semConta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="16dp"
-        android:text="Não tem conta?"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_IniciarSessao" />
-
-    <!-- TEXTO DIREITA -->
-    <TextView
-        android:id="@+id/txt_Registar"
+    <!-- TEXTO EM LINHA -->
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="132dp"
-        android:text="Registe-se"
-        android:textColor="#083d6b"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_IniciarSessao" />
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/txt_semConta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Não tem conta?"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txt_Registar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="Registe-se"
+            android:textColor="#083d6b"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>
+
+</LinearLayout>
