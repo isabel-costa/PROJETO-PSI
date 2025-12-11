@@ -6,236 +6,251 @@
     android:padding="24dp"
     android:orientation="vertical">
 
-    <!-- Título -->
-    <TextView
-        android:id="@+id/tituloRegistar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_titulo_registar"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="12dp"
-        android:layout_gravity="center_horizontal"/>
-
-    <!-- Nome completo -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_nome_completo"
-        android:textStyle="bold"
-        android:layout_marginTop="12dp"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:paddingVertical="4dp"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Data de nascimento -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_data_nascimento"
-        android:textStyle="bold"
-        android:layout_marginTop="12dp"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/campoData"
-        android:layout_width="175dp"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputData"
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:focusable="true"
-            android:clickable="true"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Sexo -->
-    <TextView
-        android:id="@+id/txtSexo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_sexo"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"/>
-
-    <RadioGroup
-        android:id="@+id/radioSexo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <!-- Masculino/Feminino/Outros -->
-        <RadioButton android:text="@string/rb_genero_masculino" android:layout_height="wrap_content" android:layout_width="wrap_content"/>
-        <RadioButton android:text="@string/rb_genero_feminino" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <RadioButton android:text="@string/rb_genero_outros" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-    </RadioGroup>
-
-    <!-- LinearLayout para ter Nº utente + Telemóvel lado a lado -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="4dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical">
 
-        <!-- Nº de utente -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_numero_utente"
-                android:textStyle="bold"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="34dp"
-                    android:paddingVertical="4dp"
-                    android:inputType="number"/>
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-        <!-- Telemóvel -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_telemovel"
-                android:textStyle="bold"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="34dp"
-                    android:paddingVertical="4dp"
-                    android:inputType="phone"/>
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <!-- Morada -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_morada"
-        android:textStyle="bold"
-        android:layout_marginTop="12dp"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/campoMorada"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:paddingVertical="4dp"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Email -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_email"
-        android:textStyle="bold"
-        android:layout_marginTop="12dp"/>
-
-    <!-- Hint no email -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/campoEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/tf_hint_email"
-        android:layout_marginTop="1dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:paddingVertical="4dp"
-            android:inputType="textEmailAddress"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Palavra passe -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_palavra_passe"
-        android:textStyle="bold"
-        android:layout_marginTop="12dp"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:paddingVertical="4dp"
-            android:inputType="textPassword"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Botão Registar -->
-    <Button
-        android:id="@+id/btnRegistar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="@string/btn_registar"
-        android:textAllCaps="false"
-        android:backgroundTint="#4fb0af"
-        android:layout_marginTop="24dp" />
-
-    <!-- Redirecionar iniciar sessão -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-
-        <!-- Texto "Já tem uma conta?" -->
+        <!-- Título -->
         <TextView
-            android:id="@+id/txtJaTemConta"
+            android:id="@+id/tituloRegistar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tv_ja_tem_conta"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/txtRedirecionarIniciarSessao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_redirecionar_iniciar_sessao"
-            android:textSize="14sp"
+            android:text="@string/tv_titulo_registar"
+            android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="#4fb0af"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_marginStart="96dp"/>
+            android:layout_marginBottom="36dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <!-- Nome completo -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_nome_completo"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:paddingVertical="4dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Data de nascimento -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/tv_data_nascimento"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/campoData"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputData"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:drawableEnd="@drawable/ic_registarconta_calendar"
+                android:focusable="true"
+                android:clickable="true"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Sexo -->
+        <TextView
+            android:id="@+id/txtSexo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_sexo"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioSexo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Masculino/Feminino/Outros -->
+            <RadioButton android:text="@string/rb_genero_masculino" android:layout_height="wrap_content" android:layout_width="wrap_content"/>
+            <RadioButton android:text="@string/rb_genero_feminino" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <RadioButton android:text="@string/rb_genero_outros" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        </RadioGroup>
+
+        <!-- LinearLayout para ter Nº utente + Telemóvel lado a lado -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <!-- Nº de utente -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_numero_utente"
+                    android:textStyle="bold"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="34dp"
+                        android:paddingVertical="4dp"
+                        android:inputType="number"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <!-- Telemóvel -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_telemovel"
+                    android:textStyle="bold"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="34dp"
+                        android:paddingVertical="4dp"
+                        android:inputType="phone"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Morada -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_morada"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/campoMorada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:paddingVertical="4dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Email -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_email"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"/>
+
+        <!-- Hint no email -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/campoEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tf_hint_email"
+            android:layout_marginTop="1dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:paddingVertical="4dp"
+                android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Palavra passe -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_palavra_passe"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:paddingVertical="4dp"
+                android:hint=""
+                android:drawableEnd="@drawable/ic_reverlarpass"
+                android:inputType="textPassword"
+                android:focusable="true"
+                android:clickable="true"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Botão Registar -->
+        <Button
+            android:id="@+id/btnRegistar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/btn_registar"
+            android:textAllCaps="false"
+            android:backgroundTint="#4fb0af"
+            android:layout_marginTop="24dp" />
+
+        <!-- Redirecionar iniciar sessão -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <!-- Texto "Já tem uma conta?" -->
+            <TextView
+                android:id="@+id/txtJaTemConta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_ja_tem_conta"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/txtRedirecionarIniciarSessao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_redirecionar_iniciar_sessao"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#4fb0af"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginStart="96dp"/>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
