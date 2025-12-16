@@ -34,4 +34,7 @@
     <string name="bt_login_iniciar_sessao">Iniciar Sessão</string>
     <string name="tv_login_nao_tem_conta">Não tem conta?</string>
     <string name="tv_login_registe_se">Registe-se</string>
+    <string name="tv_consultas_consultas">Consultas</string>
+    <string name="tv_consultas_marcacaodeconsultas">Marcação de\nConsultas</string>
+    <string name="tv_consultas_verconsultas">Ver\nConsultas</string>
 </resources>
