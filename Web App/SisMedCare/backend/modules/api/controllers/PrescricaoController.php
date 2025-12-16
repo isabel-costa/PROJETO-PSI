@@ -56,10 +56,6 @@ class PrescricaoController extends ActiveController
                 'id' => $id,
                 'paciente_id' => $pacienteId
             ])
-            ->with([
-                'prescricoesMedicamentos',
-                'prescricoesMedicamentos.medicamento'
-            ])
             ->one();
 
         if (!$prescricao) {
