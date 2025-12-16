@@ -90,7 +90,30 @@ class PrescricaoMedicamento extends \yii\db\ActiveRecord
      */
     public function getRegistosTomas()
     {
-        return $this->hasMany(RegistoToma::class, ['prescricao_medicamento_id' => 'id']);
+        return $this->hasMany(RegistoToma::class, ['registo_toma_id' => 'id']);
     }
 
+    public function fields()
+    {
+        $fields = parent::fields();
+        unset($fields['medicamento_id'], $fields['prescricao_id']);
+
+        $fields['medicamento'] = function ($model) {
+            return $model->medicamento ? [
+                'nome' => $model->medicamento->nome,
+                'descricao' => $model->medicamento->descricao,
+                'dosagem' => $model->medicamento->dosagem,
+                'fabricante' => $model->medicamento->fabricante,
+            ] : null;
+        };
+
+        $fields['prescricao'] = function ($model) {
+            return $model->prescricao ? [
+                'data_prescricao' => $model->prescricao->data_prescricao,
+                'observacoes' => $model->prescricao->observacoes,
+            ] : null;
+        };
+
+        return $fields;
+    }
 }

@@ -61,7 +61,7 @@ return [
                     'pluralize' => false,
                     'extraPatterns' => [
                         'POST login' => 'login',
-                        'POST registar' => 'registar',
+                        'POST registar' => 'registar'
                     ],
                 ],
                 [
@@ -82,13 +82,13 @@ return [
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET' => 'view',
-                        'PUT' => 'update',
+                        'PUT' => 'update'
                     ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['api/medico'],
-                    'pluralize' => true,
+                    'pluralize' => true
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
@@ -96,16 +96,27 @@ return [
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET' => 'index',
-                        'GET {id}' => 'view',
+                        'GET {id}' => 'view'
                     ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['api/registotoma'],
+                    'controller' => ['api/prescricao-medicamento'],
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET' => 'index',
+                        'GET {id}' => 'view',
+                        'GET prescricao/<prescricao_id>' => 'prescricao'
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['api/registo-toma'],
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET pendentes/{id}' => 'pendentes',
                         'GET tomadas/{id}' => 'tomadas',
+                        'POST marcar/{id}' => 'marcar'
                     ],
                 ],
             ],

@@ -14,7 +14,7 @@ class RegistoTomaController extends Controller
 
         $behaviors['authenticator'] = [
             'class' => \yii\filters\auth\HttpBasicAuth::class,
-            'only' => ['pendentes', 'tomadas'],
+            'only' => ['pendentes', 'tomadas', 'marcar'],
             'auth' => function ($username, $password) {
                 $user = \common\models\User::findByUsername($username);
                 if ($user && $user->validatePassword($password)) {
@@ -33,8 +33,7 @@ class RegistoTomaController extends Controller
     public function actionPendentes()
     {
         $pacienteId = Yii::$app->user->identity->paciente->id;
-        $hoje = date('Y-m-d');
-        $tomas = RegistoToma::find()->where(['paciente_id' => $pacienteId, 'foi_tomado' => 0])->andWhere(['data_toma' => $hoje])->all();
+        $tomas = RegistoToma::find()->where(['paciente_id' => $pacienteId, 'foi_tomado' => 0])->orderBy(['data_toma' => SORT_DESC])->all();
 
         return $tomas;
     }
@@ -50,17 +49,12 @@ class RegistoTomaController extends Controller
         return $tomas;
     }
 
-    public function actionMarcar()
+    public function actionMarcar($id)
     {
-        $pacienteId = Yii::$app->user->identity->id;
-        $params = Yii::$app->request->post();
-
-        if (!isset($params['registo_toma_id'])) {
-            throw new \yii\web\BadRequestHttpException('registo_toma_id é obrigatório');
-        }
+        $pacienteId = Yii::$app->user->identity->paciente->id;
 
         $toma = RegistoToma::findOne([
-            'id' => $params['registo_toma_id'],
+            'id' => $id,
             'paciente_id' => $pacienteId
         ]);
 
@@ -70,10 +64,10 @@ class RegistoTomaController extends Controller
 
         $toma->foi_tomado = 1;
 
-        if ($toma->save()) {
+        if ($toma->save(false)) {
             return ['success' => true];
-        } else {
-            return ['success' => false, 'errors' => $toma->errors];
         }
+
+        return ['success' => false];
     }
 }
