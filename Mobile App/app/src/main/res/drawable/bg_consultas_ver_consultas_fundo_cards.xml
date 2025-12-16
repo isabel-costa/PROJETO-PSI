@@ -1,0 +1,21 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Retângulo arredondado -->
+    <item>
+        <shape android:shape="rectangle">
+            <stroke android:width="2dp" android:color="#666666"/>
+            <corners android:radius="16dp"/>
+        </shape>
+    </item>
+
+    <!-- Linha vertical -->
+    <item android:gravity="start"> <!-- posiciona a linha relativa ao retângulo -->
+        <inset android:insetLeft="60dp">>
+        <shape android:shape="rectangle">
+            <size android:width="2dp" android:height="80dp"/>
+            <solid android:color="#666666"/>
+        </shape>
+        </inset>
+    </item>
+
+</layer-list>

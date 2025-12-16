@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".ConsultasActivity">
+
+    <View
+        android:id="@+id/bg_consultas_topopagina"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="#0a936d"
+        android:layout_alignParentTop="true"/>
+
+    <!-- Puxa o drawable bg_consultas_topoarredondado -->
+    <View
+        android:id="@+id/consultas_topo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/bg_topoactivityarredondado"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="60dp"/>
+
+    <!-- Título da página -->
+    <TextView
+        android:id="@+id/tv_consultas_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_consultas_consultas"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="30dp"/>
+
+    <!-- Ícone do perfil -->
+    <ImageView
+        android:id="@+id/btn_consultas_Perfil"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-5dp"
+        android:layout_marginEnd="30dp"
+        android:layout_alignTop="@id/tv_consultas_titulo"
+        android:src="@drawable/ic_perfil"/>
+
+    <!-- Botão marcação de consultas -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_consultas_MarcacaoConsultas"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_consultas_titulo"
+        android:layout_marginTop="170dp"
+        app:cardCornerRadius="12dp"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_consultas_marcacaodeconsultas"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Botão ver consultas -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_consultas_VerConsultas"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btn_consultas_MarcacaoConsultas"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="12dp"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_consultas_verconsultas"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
