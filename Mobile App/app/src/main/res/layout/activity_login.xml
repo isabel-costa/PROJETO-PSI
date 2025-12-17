@@ -91,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
-            android:backgroundTint="#0a936d"
+            android:backgroundTint="@color/Cor_Padrao"
             android:text="Iniciar Sessão"
             android:textAllCaps="false" />
 

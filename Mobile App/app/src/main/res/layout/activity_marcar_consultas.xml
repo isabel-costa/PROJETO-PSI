@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <!-- Top Bar (fundo verde) -->
+    <View
+        android:id="@+id/bg_topo"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/Cor_Padrao"
+        android:layout_alignParentTop="true" />
+
+    <!-- Drawable arredondado -->
+    <View
+        android:id="@+id/topo_marcar_consultas_arredondado"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_topoactivityarredondado"
+        android:layout_marginTop="60dp" />
+
+    <!-- Conteúdo da Top Bar (em cima do fundo) -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_voltar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Marcação de Consultas"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/Cor_Textos"
+            android:layout_centerInParent="true"
+            android:paddingTop="16dp" />
+    </RelativeLayout>
+
+    <!-- CONTEÚDO PRINCIPAL (por cima do arredondado) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nova Marcação"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Vamos marcar a sua consulta"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerTipo"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_txt_redondo"
+            android:padding="12dp" />
+
+        <Spinner
+            android:id="@+id/spinnerProf"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_txt_redondo"
+            android:padding="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Data"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/inputData"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_txt_redondo"
+            android:drawableEnd="@drawable/ic_calendario"
+            android:focusable="false"
+            android:hint="Selecionar"
+            android:padding="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Hora"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/inputHora"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_txt_redondo"
+            android:drawableEnd="@drawable/ic_relogio"
+            android:focusable="false"
+            android:hint="Selecionar"
+            android:padding="12dp" />
+
+        <Button
+            android:id="@+id/btnMarcar"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="52dp"
+            android:backgroundTint="@color/Cor_Padrao"
+            android:text="Marcar Consulta"
+            android:textAllCaps="false"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</RelativeLayout>
