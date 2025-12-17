@@ -15,9 +15,6 @@
             android:name=".ConsultasVerConsultasActivity"
             android:exported="false" />
         <activity
-            android:name=".ConsultasActivity"
-            android:exported="false" />
-        <activity
             android:name=".PerfilActivity"
             android:exported="false" />
         <activity

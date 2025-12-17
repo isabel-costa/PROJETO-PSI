@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".ConsultasActivity">
+    tools:context=".ConsultasFragment">
 
     <View
         android:id="@+id/bg_consultas_topopagina"
@@ -16,7 +16,6 @@
         android:background="#0a936d"
         android:layout_alignParentTop="true"/>
 
-    <!-- Puxa o drawable bg_consultas_topoarredondado -->
     <View
         android:id="@+id/consultas_topo"
         android:layout_width="match_parent"
@@ -25,7 +24,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="60dp"/>
 
-    <!-- Título da página -->
     <TextView
         android:id="@+id/tv_consultas_titulo"
         android:layout_width="wrap_content"
@@ -37,7 +35,6 @@
         android:layout_marginTop="15dp"
         android:layout_marginStart="30dp"/>
 
-    <!-- Ícone do perfil -->
     <ImageView
         android:id="@+id/btn_consultas_Perfil"
         android:layout_width="40dp"
@@ -48,7 +45,6 @@
         android:layout_alignTop="@id/tv_consultas_titulo"
         android:src="@drawable/ic_perfil"/>
 
-    <!-- Botão marcação de consultas -->
     <androidx.cardview.widget.CardView
         android:id="@+id/btn_consultas_MarcacaoConsultas"
         android:layout_width="300dp"
@@ -69,7 +65,6 @@
             android:layout_gravity="center"/>
     </androidx.cardview.widget.CardView>
 
-    <!-- Botão ver consultas -->
     <androidx.cardview.widget.CardView
         android:id="@+id/btn_consultas_VerConsultas"
         android:layout_width="300dp"
