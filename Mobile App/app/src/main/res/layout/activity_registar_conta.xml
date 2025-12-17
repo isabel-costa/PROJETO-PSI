@@ -62,7 +62,7 @@
                 android:id="@+id/inputData"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:drawableEnd="@drawable/ic_registarconta_calendar"
+                android:drawableEnd="@drawable/ic_calendario"
                 android:focusable="true"
                 android:clickable="true"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -221,7 +221,7 @@
             android:layout_height="50dp"
             android:text="@string/btn_registar"
             android:textAllCaps="false"
-            android:backgroundTint="#4fb0af"
+            android:backgroundTint="@color/Cor_Padrao"
             android:layout_marginTop="24dp" />
 
         <!-- Redirecionar iniciar sessão -->
@@ -247,7 +247,7 @@
                 android:text="@string/tv_redirecionar_iniciar_sessao"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="#4fb0af"
+                android:textColor="#83ccb1"
                 android:clickable="true"
                 android:focusable="true"
                 android:layout_marginStart="96dp"/>

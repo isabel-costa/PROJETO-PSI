@@ -91,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
-            android:backgroundTint="#4fb0af"
+            android:backgroundTint="@color/Cor_Padrao"
             android:text="Iniciar Sessão"
             android:textAllCaps="false" />
 
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:text="Registe-se"
-                android:textColor="#083d6b"
+                android:textColor="#83ccb1"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>

@@ -234,10 +234,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:backgroundTint="#4fb0af"
-            android:text="@string/btn_terminar_sessao"
+            android:backgroundTint="@color/Cor_Padrao"
             android:drawableLeft="@drawable/ic_terminar_sessao"
-            android:padding="13dp" />
+            android:padding="13dp"
+            android:text="@string/btn_terminar_sessao" />
 
     </LinearLayout>
 
