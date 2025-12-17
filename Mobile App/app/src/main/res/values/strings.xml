@@ -37,4 +37,7 @@
     <string name="tv_consultas_consultas">Consultas</string>
     <string name="tv_consultas_marcacaodeconsultas">Marcação de\nConsultas</string>
     <string name="tv_consultas_verconsultas">Ver\nConsultas</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_consultas">Consultas</string>
+    <string name="menu_prescricoes">Prescrições</string>
 </resources>
