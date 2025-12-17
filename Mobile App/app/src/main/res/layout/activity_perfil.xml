@@ -30,9 +30,8 @@
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_marginStart="264dp"
-                android:src="@drawable/ic_perfil" />
+                android:src="@drawable/ic_perfil_verde" />
         </LinearLayout>
-
 
         <!-- NOME -->
         <TextView
@@ -50,6 +49,7 @@
             android:text=""
             android:textSize="14sp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
             android:textColor="#666" />
 
 
@@ -70,6 +70,7 @@
             android:text=""
             android:textSize="14sp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
             android:textColor="#666" />
 
 
@@ -90,6 +91,7 @@
             android:text=""
             android:textSize="14sp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
             android:textColor="#666" />
 
 
@@ -110,6 +112,7 @@
             android:text=""
             android:textSize="14sp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
             android:textColor="#666" />
 
 
@@ -121,6 +124,8 @@
             android:radius="100dp"
             android:background="@drawable/bg_redondo"
             android:padding="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="25dp"
             android:orientation="vertical"
             android:clipToOutline="true">
@@ -230,7 +235,7 @@
         <!-- BOTÃO TERMINAR SESSÃO -->
         <Button
             android:id="@+id/btnLogout"
-            android:layout_width="184dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
