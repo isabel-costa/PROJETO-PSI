@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SisMedCare" >
         <activity
+            android:name=".ConsultasVerConsultasActivity"
+            android:exported="false" />
+        <activity
             android:name=".MedicacaoTomadaActivity"
             android:exported="false" />
         <activity
