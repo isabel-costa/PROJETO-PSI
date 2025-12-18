@@ -82,9 +82,7 @@
             android:inputType="textPassword"
             android:focusable="true"
             android:clickable="true"
-            android:padding="10dp"
-            android:paddingStart="0dp"
-            android:paddingEnd="20dp" />
+            android:padding="10dp" />
 
         <!-- BOTÃO -->
         <Button
