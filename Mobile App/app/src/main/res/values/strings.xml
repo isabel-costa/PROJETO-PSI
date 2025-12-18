@@ -40,4 +40,6 @@
     <string name="menu_home">Home</string>
     <string name="menu_consultas">Consultas</string>
     <string name="menu_prescricoes">Prescrições</string>
+    <string name="tv_titulo_atividade_doencas_cronicas">Doenças Crónicas</string>
+    <string name="tv_titulo_atividade_alergias">Alergias</string>
 </resources>
