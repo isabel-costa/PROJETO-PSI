@@ -10,7 +10,7 @@
         android:id="@+id/bg_topo"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@color/Cor_Padrao"
+        android:background="@drawable/bg_gradiente_topo_activity"
         android:layout_alignParentTop="true" />
 
     <!-- Drawable arredondado -->

@@ -1,20 +1,34 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Retângulo arredondado -->
-    <item>
+    <!-- Fundo à esquerda -->
+    <item android:gravity="start">
         <shape android:shape="rectangle">
-            <stroke android:width="2dp" android:color="#666666"/>
-            <corners android:radius="16dp"/>
+            <size
+                android:width="60dp" />
+            <solid android:color="@color/Cor_Padrao" />
+            <corners
+                android:topLeftRadius="16dp"
+                android:bottomLeftRadius="16dp" />
         </shape>
     </item>
 
-    <!-- Linha vertical -->
-    <item android:gravity="start"> <!-- posiciona a linha relativa ao retângulo -->
-        <inset android:insetLeft="60dp">>
+    <!-- Borda -->
+    <item>
         <shape android:shape="rectangle">
-            <size android:width="2dp" android:height="80dp"/>
-            <solid android:color="#666666"/>
+            <stroke android:width="2dp" android:color="#666666" />
+            <corners android:radius="16dp" />
         </shape>
+    </item>
+
+    <!-- Linha divisória do retangulo -->
+    <item android:gravity="start">
+        <inset android:insetLeft="60dp">
+            <shape android:shape="rectangle">
+                <size
+                    android:width="2dp"
+                    android:height="80dp" />
+                <solid android:color="#666666" />
+            </shape>
         </inset>
     </item>
 

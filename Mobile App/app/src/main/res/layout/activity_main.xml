@@ -21,7 +21,8 @@ tools:context=".MainActivity">
     android:background="@color/Cor_Padrao"
     app:itemIconTint="@color/menu_icons_color"
     app:itemTextColor="@color/menu_icons_color"
-    app:itemBackground="@android:color/transparent"
+    app:itemBackground="@drawable/bg_menu_efeito_de_clique"
     app:menu="@menu/menu_inferior_activitys"
+    app:itemActiveIndicatorStyle="@null"
     app:labelVisibilityMode="unlabeled"/>
 </LinearLayout>
