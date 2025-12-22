@@ -13,7 +13,7 @@
         android:id="@+id/bg_consultas_topopagina"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:background="#0a936d"
+        android:background="@drawable/bg_gradiente_topo_activity"
         android:layout_alignParentTop="true"/>
 
     <View

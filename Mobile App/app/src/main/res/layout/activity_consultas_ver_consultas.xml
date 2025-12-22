@@ -13,7 +13,7 @@
         android:id="@+id/bg_consultas_topopagina"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="#0a936d"
+        android:background="@drawable/bg_gradiente_topo_activity"
         android:layout_alignParentTop="true"/>
 
     <!-- Puxa o drawable bg_consultas_topoarredondado -->
@@ -82,9 +82,9 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:text="Maio"
+                    android:text="Mai."
                     android:textStyle="bold"
-                    android:textColor="#000"
+                    android:textColor="@color/white"
                     android:gravity="center"
                     android:textSize="16dp"
                     android:layout_width="match_parent"
@@ -93,7 +93,7 @@
                 <TextView
                     android:text="25"
                     android:textStyle="bold"
-                    android:textColor="#000"
+                    android:textColor="@color/white"
                     android:gravity="center"
                     android:textSize="20dp"
                     android:layout_width="match_parent"
@@ -102,7 +102,7 @@
                 <TextView
                     android:text="2026"
                     android:textStyle="bold"
-                    android:textColor="#000"
+                    android:textColor="@color/white"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -204,9 +204,9 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="Abril"
+                        android:text="Abr."
                         android:textStyle="bold"
-                        android:textColor="#000"
+                        android:textColor="@color/white"
                         android:gravity="center"
                         android:textSize="16dp"
                         android:layout_width="match_parent"
@@ -215,7 +215,7 @@
                     <TextView
                         android:text="12"
                         android:textStyle="bold"
-                        android:textColor="#000"
+                        android:textColor="@color/white"
                         android:gravity="center"
                         android:textSize="20dp"
                         android:layout_width="match_parent"
@@ -224,7 +224,7 @@
                     <TextView
                         android:text="2025"
                         android:textStyle="bold"
-                        android:textColor="#000"
+                        android:textColor="@color/white"
                         android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
