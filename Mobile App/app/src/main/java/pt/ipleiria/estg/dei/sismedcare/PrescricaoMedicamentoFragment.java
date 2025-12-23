@@ -9,9 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class PrescricoesFragment extends Fragment {
+public class PrescricaoMedicamentoFragment extends Fragment {
 
-    public PrescricoesFragment() {
+    public PrescricaoMedicamentoFragment() {
         // Construtor vazio obrigatório
     }
 
@@ -21,6 +21,6 @@ public class PrescricoesFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_prescricoes, container, false);
+        return inflater.inflate(R.layout.fragment_prescricao_medicamento, container, false);
     }
 }
