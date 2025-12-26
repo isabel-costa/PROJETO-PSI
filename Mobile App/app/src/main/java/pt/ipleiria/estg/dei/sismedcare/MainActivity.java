@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (itemId == R.id.menu_consultas) {
                 selectedFragment = new ConsultasFragment();
             } else if (itemId == R.id.menu_prescricoes) {
-                selectedFragment = new PrescricoesFragment();
+                selectedFragment = new PrescricaoMedicamentoFragment();
             }
 
             if (selectedFragment != null) {
