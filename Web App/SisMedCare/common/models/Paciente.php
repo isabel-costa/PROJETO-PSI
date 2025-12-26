@@ -68,7 +68,7 @@ class Paciente extends \yii\db\ActiveRecord
             'nome_completo' => 'Nome Completo',
             'data_nascimento' => 'Data de Nascimento',
             'sexo' => 'Sexo',
-            'numero_utente' => 'Numero de Utente',
+            'numero_utente' => 'Número de Utente',
             'telemovel' => 'Telemóvel',
             'morada' => 'Morada',
             'altura' => 'Altura',

@@ -73,7 +73,7 @@ $roleNames = array_keys($userRoles);
                 <?= \hail812\adminlte\widgets\InfoBox::widget([
                     'text' => 'Pedidos pendentes',
                     'number' => $pedidosPendentes,
-                    'theme' => 'warning',
+                    'theme' => 'info',
                     'icon' => 'fas fa-calendar-check',
                 ]) ?>
             </div>

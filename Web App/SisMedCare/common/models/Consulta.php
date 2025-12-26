@@ -113,6 +113,40 @@ class Consulta extends \yii\db\ActiveRecord
             ->all();
     }
 
+    public static function countEstadoPorMedico($estado, $medicoId)
+    {
+        return self::find()
+            ->where([
+                'estado' => $estado,
+                'medico_id' => $medicoId
+            ])
+            ->count();
+    }
+
+    public static function countHojePorMedico($medicoId)
+    {
+        return self::find()
+            ->where([
+                'medico_id' => $medicoId,
+                'DATE(data_consulta)' => date('Y-m-d')
+            ])
+            ->count();
+    }
+
+    public static function consultasPorMesPorMedico($medicoId)
+    {
+        return self::find()
+            ->select([
+                "mes" => "DATE_FORMAT(data_consulta, '%Y-%b')",
+                "count" => "COUNT(*)"
+            ])
+            ->where(['medico_id' => $medicoId])
+            ->groupBy("YEAR(data_consulta), MONTH(data_consulta)")
+            ->orderBy("MIN(data_consulta)")
+            ->asArray()
+            ->all();
+    }
+
     public function fields()
     {
         $fields = parent::fields();

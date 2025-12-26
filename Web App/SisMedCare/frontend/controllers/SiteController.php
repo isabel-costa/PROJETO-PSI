@@ -15,6 +15,9 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\models\Consulta;
+use common\models\Paciente;
+use common\models\Prescricao;
 
 /**
  * Site controller
@@ -83,7 +86,36 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $user = Yii::$app->user->identity;
+        $roles = Yii::$app->authManager->getRolesByUser($user->id);
+
+        // Se não for médico → homepage normal
+        if (!isset($roles['doctor'])) {
+            return $this->render('index');
+        }
+
+        // Médico associado ao user
+        $medicoId = $user->medico->id;
+
+        // --- CARDS ---
+        $consultasHoje       = Consulta::countHojePorMedico($medicoId);
+        $consultasAgendadas  = Consulta::countEstadoPorMedico('agendada', $medicoId);
+        $consultasConcluidas = Consulta::countEstadoPorMedico('concluida', $medicoId);
+        $prescricoesCount    = Prescricao::countPorMedico($medicoId);
+
+        // --- GRÁFICO ---
+        $consultasPorMes = Consulta::consultasPorMesPorMedico($medicoId);
+        $labels = array_column($consultasPorMes, 'mes');
+        $values = array_column($consultasPorMes, 'count');
+
+        return $this->render('index', compact(
+            'consultasHoje',
+            'consultasAgendadas',
+            'consultasConcluidas',
+            'prescricoesCount',
+            'labels',
+            'values'
+        ));
     }
 
     /**

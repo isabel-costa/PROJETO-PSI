@@ -32,7 +32,7 @@ class PrescricaoMedicamentoController extends ActiveController
 
     /**
      * GET /prescricaomedicamento
-     * Lista todas as prescrições-medicamentos do paciente logado
+     * Mostra todas as prescrições-medicamentos do paciente autenticado
      */
     public function actionIndex()
     {

@@ -27,9 +27,6 @@ class RegistoTomaController extends Controller
         return $behaviors;
     }
 
-    /**
-     * Retorna as tomas pendentes (foi_tomado = 0) do paciente
-     */
     public function actionPendentes()
     {
         $pacienteId = Yii::$app->user->identity->paciente->id;
@@ -38,9 +35,6 @@ class RegistoTomaController extends Controller
         return $tomas;
     }
 
-    /**
-     * Retorna as tomas já tomadas (foi_tomado = 1) do paciente
-     */
     public function actionTomadas()
     {
         $pacienteId = Yii::$app->user->identity->paciente->id;

@@ -12,18 +12,16 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'consulta_id')->textInput() ?>
-
-    <?= $form->field($model, 'medico_id')->textInput() ?>
-
-    <?= $form->field($model, 'paciente_id')->textInput() ?>
-
     <?= $form->field($model, 'data_prescricao')->textInput() ?>
+
+    <br>
 
     <?= $form->field($model, 'observacoes')->textInput(['maxlength' => true]) ?>
 
+    <br>
+
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

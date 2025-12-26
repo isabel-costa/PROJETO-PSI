@@ -6,34 +6,39 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var common\models\Prescricao $model */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Prescricaos', 'url' => ['index']];
+$this->title = $model->data_prescricao . ' - ' . $model->observacoes;
+$this->params['breadcrumbs'][] = ['label' => 'Prescrições', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="prescricao-view">
 
+    <br>
+
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    <br>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'consulta_id',
-            'medico_id',
-            'paciente_id',
-            'data_prescricao',
+            //'id',
+            [
+                'label' => 'Data da Consulta',
+                'value' => $model->consulta->data_consulta,
+            ],
+            [
+                'label' => 'Nome do Médico',
+                'value' => $model->medico->nome_completo,
+            ],
+            [
+                'label' => 'Nome do Paciente',
+                'value' => $model->paciente->nome_completo,
+            ],
+            [
+                'label' => 'Data da Prescrição',
+                'value' => Yii::$app->formatter->asDatetime($model->data_prescricao),
+            ],
             'observacoes',
         ],
     ]) ?>

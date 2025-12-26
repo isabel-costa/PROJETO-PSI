@@ -85,8 +85,8 @@ class SiteController extends Controller
 
         // --- PROTEÇÃO DO DASHBOARD SECRETÁRIA ---
         if (Yii::$app->user->can('viewAppointmentRequests')) {
-            $pedidosAprovados   = Consulta::countEstado('aprovado');
-            $pedidosRejeitados  = Consulta::countEstado('rejeitado');
+            $pedidosAprovados   = Consulta::countEstado('agendada');
+            $pedidosRejeitados  = Consulta::countEstado('rejeitada');
             $pedidosPendentes   = Consulta::countEstado('pendente');
         } else {
             $pedidosAprovados = $pedidosRejeitados = $pedidosPendentes = null;

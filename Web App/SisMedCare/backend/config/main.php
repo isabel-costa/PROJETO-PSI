@@ -17,6 +17,13 @@ return [
         ],
     ],
     'components' => [
+        'formatter' => [
+            'class' => yii\i18n\Formatter::class,
+            'dateFormat' => 'php:d-m-Y',
+            'datetimeFormat' => 'php:d-m-Y H:i',
+            'timeFormat' => 'php:H:i',
+            'defaultTimeZone' => 'Europe/Lisbon',
+        ],
         'request' => [
             'csrfParam' => '_csrf-backend',
             'parsers' => [
@@ -82,7 +89,9 @@ return [
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET' => 'view',
-                        'PUT' => 'update'
+                        'PUT' => 'update',
+                        'GET alergias' => 'alergias',
+                        'GET doencas' => 'doencas'
                     ],
                 ],
                 [

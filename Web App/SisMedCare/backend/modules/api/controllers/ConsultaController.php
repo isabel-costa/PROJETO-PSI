@@ -12,9 +12,6 @@ class ConsultaController extends ActiveController
 {
     public $modelClass = 'common\models\Consulta';
 
-    /**
-     * Comportamento para autenticação via HttpBasicAuth
-     */
     public function behaviors()
     {
         $behaviors = parent::behaviors();

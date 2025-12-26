@@ -6,36 +6,35 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var common\models\Consulta $model */
 
-$this->title = $model->id;
+$this->title = $model->data_consulta . ' - ' . $model->observacoes;
 $this->params['breadcrumbs'][] = ['label' => 'Consultas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="consulta-view">
 
+    <br>
+
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    <br>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'paciente_id',
-            'medico_id',
-            'data_consulta',
+            //'id',
+            [
+                'label' => 'Nome do Paciente',
+                'value' => $model->paciente->nome_completo,
+            ],
+            //'medico_id',
+            [
+                'label' => 'Data da Consulta',
+                'value' => Yii::$app->formatter->asDatetime($model->data_consulta),
+            ],
             'estado',
             'observacoes',
-            'criado_em',
+            //'criado_em',
         ],
     ]) ?>
 

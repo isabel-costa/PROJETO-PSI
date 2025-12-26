@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use Yii;
+
 use common\models\Prescricao;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -36,24 +38,27 @@ class PrescricaoController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($consulta_id)
     {
+        $query = Prescricao::find()->where(['consulta_id' => $consulta_id]);
+
         $dataProvider = new ActiveDataProvider([
-            'query' => Prescricao::find(),
-            /*
+            'query' => $query,
             'pagination' => [
-                'pageSize' => 50
+                'pageSize' => 20,
             ],
             'sort' => [
                 'defaultOrder' => [
                     'id' => SORT_DESC,
-                ]
+                ],
             ],
-            */
         ]);
+
+        $consulta = \common\models\Consulta::findOne($consulta_id);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'consulta' => $consulta,
         ]);
     }
 
@@ -75,13 +80,24 @@ class PrescricaoController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($consulta_id)
     {
-        $model = new Prescricao();
+        $model = new \common\models\Prescricao();
+        
+        $consulta = \common\models\Consulta::findOne($consulta_id);
+        if (!$consulta) {
+            throw new \yii\web\NotFoundHttpException('Consulta não encontrada.');
+        }
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $model->medico_id = $consulta->medico_id;
+                $model->paciente_id = $consulta->paciente_id;
+                $model->consulta_id = $consulta->id;
+
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -89,43 +105,10 @@ class PrescricaoController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'consulta' => $consulta,
         ]);
     }
-
-    /**
-     * Updates an existing Prescricao model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Prescricao model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
+    
     /**
      * Finds the Prescricao model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

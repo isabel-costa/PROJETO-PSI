@@ -239,4 +239,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(Paciente::class, ['user_id' => 'id']);
     }
+
+    public function getMedico()
+    {
+        return $this->hasOne(Medico::class, ['user_id' => 'id']);
+    }
 }
