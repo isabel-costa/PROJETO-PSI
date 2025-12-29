@@ -86,13 +86,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $user = Yii::$app->user->identity;
-        $roles = Yii::$app->authManager->getRolesByUser($user->id);
-
-        // Se não for médico → homepage normal
-        if (!isset($roles['doctor'])) {
+        if (Yii::$app->user->isGuest) {
             return $this->render('index');
         }
+
+        $user = Yii::$app->user->identity;
+        $roles = Yii::$app->authManager->getRolesByUser($user->id);
 
         // Médico associado ao user
         $medicoId = $user->medico->id;
