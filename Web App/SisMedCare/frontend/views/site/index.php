@@ -1,5 +1,7 @@
 <?php
 use yii\helpers\Html;
+$labels = $labels ?? [];
+$values = $values ?? [];
 /* Register external CSS/JS via Yii view methods */
 $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css');
 $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css');
