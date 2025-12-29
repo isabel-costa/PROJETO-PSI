@@ -12,6 +12,13 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'formatter' => [
+            'class' => yii\i18n\Formatter::class,
+            'dateFormat' => 'php:d-m-Y',
+            'datetimeFormat' => 'php:d-m-Y H:i',
+            'timeFormat' => 'php:H:i',
+            'defaultTimeZone' => 'Europe/Lisbon',
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],

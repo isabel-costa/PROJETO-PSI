@@ -57,7 +57,7 @@ class Prescricao extends \yii\db\ActiveRecord
             'consulta_id' => 'ID Consulta',
             'medico_id' => 'ID Médico',
             'paciente_id' => 'ID Paciente',
-            'data_prescricao' => 'Data Prescrição',
+            'data_prescricao' => 'Data da Prescrição',
             'observacoes' => 'Observações',
         ];
     }
@@ -102,6 +102,11 @@ class Prescricao extends \yii\db\ActiveRecord
         return $this->hasMany(PrescricaoMedicamento::class, ['prescricao_medicamento_id' => 'id']);
     }
 
+    public static function countPorMedico($medicoId)
+    {
+        return self::find()->where(['medico_id' => $medicoId])->count();
+    }
+
     public function fields()
     {
         $fields = parent::fields();
@@ -131,4 +136,23 @@ class Prescricao extends \yii\db\ActiveRecord
 
         return $fields;
     }
+
+    /*public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($insert) {
+                $this->medico_id = Yii::$app->user->identity->medico->id;
+
+                if (!$this->paciente_id && Yii::$app->request->post('paciente_id')) {
+                    $this->paciente_id = Yii::$app->request->post('paciente_id');
+                }
+
+                if (!$this->consulta_id && Yii::$app->request->post('consulta_id')) {
+                    $this->consulta_id = Yii::$app->request->post('consulta_id');
+                }
+            }
+            return true;
+        }
+        return false;
+    }*/
 }

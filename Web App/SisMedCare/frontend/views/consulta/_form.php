@@ -12,20 +12,21 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'paciente_id')->textInput() ?>
+    <?= $form->field($model, 'estado')->radioList([
+    'concluida' => 'Concluída',
+    'cancelada' => 'Cancelada',
+    ], [
+    'itemOptions' => ['class' => 'form-check-input'],
+    ]) ?>
 
-    <?= $form->field($model, 'medico_id')->textInput() ?>
-
-    <?= $form->field($model, 'data_consulta')->textInput() ?>
-
-    <?= $form->field($model, 'estado')->textInput(['maxlength' => true]) ?>
+    <br>
 
     <?= $form->field($model, 'observacoes')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'criado_em')->textInput() ?>
+    <br>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

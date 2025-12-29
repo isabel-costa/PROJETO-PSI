@@ -9,9 +9,7 @@ use common\models\Paciente;
 
 class AuthController extends Controller
 {
-    /**
-     * Comportamento para autenticação via auth_key nos outros endpoints da API
-     */
+
     public function behaviors()
     {
         $behaviors = parent::behaviors();

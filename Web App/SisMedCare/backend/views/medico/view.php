@@ -17,18 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            [
-                'attribute' => 'Username',
-                'value' => function($model) {
-                    return $model->user ? $model->user->username : '(sem username)';
-                },
-            ],
-            [
-                'attribute' => 'Email',
-                'value' => function($model) {
-                    return $model->user ? $model->user->email : '(sem email)';
-                },
-            ],
             'nome_completo',
             'especialidade',
             'nif',

@@ -15,7 +15,7 @@ class PacienteController extends Controller
 
         $behaviors['authenticator'] = [
             'class' => \yii\filters\auth\HttpBasicAuth::class,
-            'only' => ['view', 'update'],
+            'only' => ['view', 'update', 'alergias', 'doencas'],
             'auth' => function ($username, $password) {
                 $user = User::findOne(['username' => $username]);
                 if ($user && $user->validatePassword($password)) {
@@ -85,5 +85,41 @@ class PacienteController extends Controller
         }
 
         return ['success' => true, 'message' => 'Perfil atualizado com sucesso'];
+    }
+
+    /**
+    * GET /api/paciente/alergias
+    * Retorna apenas as alergias do paciente autenticado
+    */
+    public function actionAlergias()
+    {
+        $user = Yii::$app->user->identity;
+        $paciente = $user->paciente;
+
+        if (!$paciente) {
+            return ['error' => 'Paciente não encontrado'];
+        }
+
+        return [
+            'alergias' => $paciente->alergias
+        ];
+    }
+
+    /**
+    * GET /api/paciente/doencas
+    * Retorna apenas as doenças crónicas do paciente autenticado
+    */
+    public function actionDoencas()
+    {
+        $user = Yii::$app->user->identity;
+        $paciente = $user->paciente;
+
+        if (!$paciente) {
+            return ['error' => 'Paciente não encontrado'];
+        }
+
+        return [
+            'doencas_cronicas' => $paciente->doencas_cronicas
+        ];
     }
 }

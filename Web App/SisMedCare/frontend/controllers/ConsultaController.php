@@ -2,7 +2,11 @@
 
 namespace frontend\controllers;
 
+use Yii;
+
 use common\models\Consulta;
+use common\models\Medico;
+use yii\web\ForbiddenHttpException;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -38,18 +42,18 @@ class ConsultaController extends Controller
      */
     public function actionIndex()
     {
+        $userId = Yii::$app->user->id;
+
+        $medico = Medico::find()
+            ->where(['user_id' => $userId])
+            ->one();
+
+        if (!$medico) {
+            throw new NotFoundHttpException('Médico não encontrado para este utilizador.');
+        }
+
         $dataProvider = new ActiveDataProvider([
-            'query' => Consulta::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
+            'query' => Consulta::find()->where(['medico_id' => $medico->id]),
         ]);
 
         return $this->render('index', [
@@ -67,28 +71,6 @@ class ConsultaController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Consulta model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-        $model = new Consulta();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
         ]);
     }
 
@@ -111,21 +93,7 @@ class ConsultaController extends Controller
             'model' => $model,
         ]);
     }
-
-    /**
-     * Deletes an existing Consulta model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
+    
     /**
      * Finds the Consulta model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

@@ -10,9 +10,6 @@ class PrescricaoController extends ActiveController
 {
     public $modelClass = 'common\models\Prescricao';
 
-    /**
-     * Autenticação básica apenas para os endpoints necessários
-     */
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -34,7 +31,7 @@ class PrescricaoController extends ActiveController
 
     /**
      * GET /prescricoes
-     * Lista todas as prescrições do paciente logado
+     * Mostra todas as prescrições do paciente autenticado
      */
     public function actionIndex()
     {
@@ -45,7 +42,7 @@ class PrescricaoController extends ActiveController
 
     /**
      * GET /prescricoes/{id}
-     * Detalhes de 1 prescrição + medicamentos associados
+     * Detalhes de 1 prescrição
      */
     public function actionView($id)
     {

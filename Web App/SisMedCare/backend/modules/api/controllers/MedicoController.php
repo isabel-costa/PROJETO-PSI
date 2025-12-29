@@ -28,7 +28,7 @@ class MedicoController extends Controller
     }
 
     /**
-     * Lista de médicos por especialidade
+     * Mostra médicos por especialidade
      * GET /medico?especialidade=Cardiologia
      */
     public function actionIndex($especialidade = null)

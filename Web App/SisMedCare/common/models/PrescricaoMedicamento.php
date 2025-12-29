@@ -55,7 +55,7 @@ class PrescricaoMedicamento extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'prescricao_id' => 'ID Prescrição',
-            'medicamento_id' => 'ID Medicamento',
+            'medicamento_id' => 'Nome do Medicamento',
             'posologia' => 'Posologia',
             'frequencia' => 'Frequência',
             'duracao_dias' => 'Duração (Dias)',
@@ -101,16 +101,12 @@ class PrescricaoMedicamento extends \yii\db\ActiveRecord
         $fields['medicamento'] = function ($model) {
             return $model->medicamento ? [
                 'nome' => $model->medicamento->nome,
-                'descricao' => $model->medicamento->descricao,
-                'dosagem' => $model->medicamento->dosagem,
-                'fabricante' => $model->medicamento->fabricante,
             ] : null;
         };
 
         $fields['prescricao'] = function ($model) {
             return $model->prescricao ? [
                 'data_prescricao' => $model->prescricao->data_prescricao,
-                'observacoes' => $model->prescricao->observacoes,
             ] : null;
         };
 

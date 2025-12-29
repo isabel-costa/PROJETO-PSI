@@ -14,30 +14,45 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="consulta-index">
 
+    <br>
+
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Consulta', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <br>
 
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'paciente_id',
-            'medico_id',
-            'data_consulta',
+            //'id',
+            [
+                'label' => 'Nome do Paciente',
+                'value' => 'paciente.nome_completo',
+            ],
+            //'medico_id',
+            [
+                'attribute' => 'data_consulta',
+                'value' => 'data_consulta',
+                'format' => 'datetime',
+            ],
             'estado',
-            //'observacoes',
+            'observacoes',
             //'criado_em',
             [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Consulta $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                'class' => ActionColumn::class,
+                'template' => '{view} {update}',
+            ],
+            [
+                'label' => 'Prescrições',
+                'format' => 'raw',
+                'value' => function (Consulta $model) {
+                    return Html::a(
+                        'Ver prescrições',
+                        ['prescricao/index', 'consulta_id' => $model->id],
+                        ['class' => 'btn btn-sm btn-primary']
+                    );
+                },
             ],
         ],
     ]); ?>
