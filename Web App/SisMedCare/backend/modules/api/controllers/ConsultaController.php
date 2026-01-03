@@ -92,7 +92,6 @@ class ConsultaController extends ActiveController
         $consulta->paciente_id = Yii::$app->user->identity->paciente->id;
         $consulta->medico_id = $medico->id;
         $consulta->data_consulta = $request['data_consulta'];
-        $consulta->estado = 'pendente';
 
         if (!$consulta->save()) {
             return ['error' => $consulta->getErrors()];
@@ -121,7 +120,7 @@ class ConsultaController extends ActiveController
         $consulta = Consulta::findOne([
             'id' => $id,
             'paciente_id' => Yii::$app->user->identity->paciente->id,
-            'estado' => 'pendente'
+            'estado' => Consulta::ESTADO_PENDENTE
         ]);
 
         if (!$consulta) {
