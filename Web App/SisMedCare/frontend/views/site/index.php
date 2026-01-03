@@ -121,7 +121,7 @@ $roleNames = array_keys($userRoles);
                     <span>Histórico clínico</span>
                 </a>
 
-                <a href="<?= \yii\helpers\Url::to(['prescricao/view']) ?>" class="servico-medico text-center">
+                <a href="<?= \yii\helpers\Url::to(['prescricao/index']) ?>" class="servico-medico text-center">
                     <div class="servico-icon">
                         <i class="bi bi-file-earmark-medical"></i>
                     </div>

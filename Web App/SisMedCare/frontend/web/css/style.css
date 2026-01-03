@@ -902,13 +902,6 @@ nav.navbar-smc {
     resize: none;
 }
 
-/* BOTÃO CENTRAL */
-.btn-primary {
-    background-color: var(--secundaria-smc);
-    border-color: var(--secundaria-smc);
-    color: #fff;
-}
-
 /* ============================= */
 /* Vista da Consulta             */
 /* ============================= */
@@ -951,15 +944,8 @@ nav.navbar-smc {
     resize: none;
 }
 
-/* BOTÃO CENTRAL */
-.btn-primary {
-    background-color: var(--secundaria-smc);
-    border-color: var(--secundaria-smc);
-    color: #fff;
-}
-
 /* ============================= */
-/* FORMULÁRIO DE PRESCRIÇÃO */
+/* FORMULÁRIO DE PRESCRIÇÃO      */
 /* ============================= */
 
 /* CARD CENTRAL */
@@ -1033,3 +1019,92 @@ nav.navbar-smc {
     flex-wrap: wrap;
 }
 
+/* ============================= */
+/* Prescrições - Index */
+/* ============================= */
+
+.prescricao-grid-container {
+    background-color: #0a936d; /* verde */
+    padding: 30px;
+    border-radius: 12px;
+}
+
+.prescricao-grid-title {
+    color: #fff;
+}
+
+.prescricao-grid-wrapper {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 15px;
+    overflow-x: auto;
+}
+
+/* Tabela moderna */
+.table-hover {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Linhas alternadas e hover */
+.table-hover tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #e9f5ec;
+}
+
+.table-hover td {
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.85rem;
+    padding: 0.35em 0.65em;
+    border-radius: 0.35rem;
+}
+
+/* Botões de ação */
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 0.35rem;
+}
+
+.btn-outline-secondary {
+    color: #198754;
+    border-color: #198754;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #198754;
+    color: #fff;
+}
+
+.btn-outline-success {
+    color: #198754;
+    border-color: #198754;
+}
+
+.btn-outline-success:hover {
+    background-color: #198754;
+    color: #fff;
+}
+
+/* Pager bootstrap */
+.pagination-smc .page-link {
+    border-radius: 0.35rem;
+    padding: 0.3rem 0.6rem;
+    margin: 0 2px;
+}
+
+.pagination-smc .page-item.active .page-link {
+    background-color: #198754;
+    border-color: #198754;
+    color: #fff;
+}
