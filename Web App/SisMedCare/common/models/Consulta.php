@@ -23,6 +23,10 @@ use Yii;
 class Consulta extends \yii\db\ActiveRecord
 {
 
+    const ESTADO_PENDENTE  = 'pendente';
+    const ESTADO_AGENDADA  = 'agendada';
+    const ESTADO_CONCLUIDA = 'concluida';
+    const ESTADO_CANCELADA = 'cancelada';
 
     /**
      * {@inheritdoc}
@@ -41,8 +45,14 @@ class Consulta extends \yii\db\ActiveRecord
             [['paciente_id', 'medico_id', 'observacoes'], 'default', 'value' => null],
             [['data_consulta', 'estado'], 'required'],
             [['paciente_id', 'medico_id'], 'integer'],
-            [['data_consulta', 'criado_em'], 'safe'],
-            [['estado'], 'string', 'max' => 20],
+            [['criado_em'], 'safe'],
+            ['estado', 'in', 'range' => [
+                self::ESTADO_PENDENTE,
+                self::ESTADO_AGENDADA,
+                self::ESTADO_CONCLUIDA,
+                self::ESTADO_CANCELADA,
+            ]],
+            ['data_consulta', 'validateDataConsulta'],
             [['observacoes'], 'string', 'max' => 255],
             [['medico_id'], 'exist', 'skipOnError' => true, 'targetClass' => Medico::class, 'targetAttribute' => ['medico_id' => 'id']],
             [['paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::class, 'targetAttribute' => ['paciente_id' => 'id']],
@@ -63,6 +73,14 @@ class Consulta extends \yii\db\ActiveRecord
             'observacoes' => 'Observações',
             'criado_em' => 'Criado Em',
         ];
+    }
+
+    public function beforeValidate()
+    {
+        if ($this->isNewRecord && empty($this->estado)) {
+            $this->estado = self::ESTADO_PENDENTE;
+        }
+        return parent::beforeValidate();
     }
 
     /**
@@ -167,5 +185,60 @@ class Consulta extends \yii\db\ActiveRecord
         };
 
         return $fields;
+    }
+
+    public function validateDataConsulta($attribute)
+    {
+        if (empty($this->$attribute) || empty($this->medico_id)) {
+            return;
+        }
+
+        $timestamp = strtotime($this->$attribute);
+
+        // Impossibilitar marcação de consultas ao domingo
+        if (date('w', $timestamp) == 0) {
+            $this->addError($attribute, 'Não é possível marcar consultas ao domingo.');
+            return;
+        }
+
+        // Impossibilitar marcação de consultas fora do horário de trabalho do médico
+        $medico = $this->medico;
+
+        if (!$medico || empty($medico->horario_trabalho)) {
+            $this->addError($attribute, 'Horário do médico não definido.');
+            return;
+        }
+
+        // Ex: "9:00 - 19:00"
+        [$inicio, $fim] = array_map('trim', explode('-', $medico->horario_trabalho));
+
+        $data = date('Y-m-d', $timestamp);
+
+        $inicioHorarioMedico = strtotime("$data $inicio");
+        $fimHorarioMedico    = strtotime("$data $fim");
+
+        if ($timestamp < $inicioHorarioMedico || $timestamp > $fimHorarioMedico) {
+            $this->addError(
+                $attribute,
+                "Consulta fora do horário do médico ({$medico->horario_trabalho})."
+            );
+            return;
+        }
+
+        // Impossibilitar marcação de consultas duplicadas (mesmo médico, data e hora)
+        $existe = self::find()
+            ->andWhere([
+                'medico_id' => $this->medico_id,
+                'data_consulta' => $this->$attribute,
+            ])
+            ->andWhere(['<>', 'id', $this->id])
+            ->exists();
+
+        if ($existe) {
+            $this->addError(
+                $attribute,
+                'Já existe uma consulta marcada para este médico nesta data e hora.'
+            );
+        }
     }
 }
