@@ -8,22 +8,37 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="prescricao-form">
+<div class="prescricao-form py-5">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <!-- CARD CENTRAL -->
+    <div class="form-card card shadow-sm mx-auto p-4">
 
-    <?= $form->field($model, 'data_prescricao')->textInput() ?>
+        <?php $form = ActiveForm::begin(); ?>
 
-    <br>
+        <!-- Data da Prescrição -->
+        <div class="linha mb-3">
+            <div>
+                <?= $form->field($model, 'data_prescricao')->textInput(['type' => 'date']) ?>
+            </div>
+        </div>
 
-    <?= $form->field($model, 'observacoes')->textInput(['maxlength' => true]) ?>
+        <!-- Observações (campo maior) -->
+        <div class="linha mb-3">
+            <div>
+                <?= $form->field($model, 'observacoes')->textarea([
+                    'rows' => 6,
+                    'placeholder' => 'Digite aqui as observações...',
+                ]) ?>
+            </div>
+        </div>
 
-    <br>
+        <?php ActiveForm::end(); ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <!-- BOTÃO CENTRALIZADO FORA DO CARD -->
+    <div class="text-center mt-4">
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success btn-lg', 'form' => $form->id]) ?>
+    </div>
 
 </div>

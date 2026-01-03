@@ -7,6 +7,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * PacienteController implements the CRUD actions for Paciente model.
@@ -40,16 +41,6 @@ class PacienteController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Paciente::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
         ]);
 
         return $this->render('index', [
@@ -63,10 +54,20 @@ class PacienteController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView()
     {
+        $numero_Utente = Yii::$app->request->get('numero_utente');
+        $model = null;
+
+        if ($numero_Utente) {
+            $model = Paciente::find()
+                ->where(['numero_utente' => $numero_Utente])
+                ->one();
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'numeroUtente' => $numero_Utente,
         ]);
     }
 
@@ -81,8 +82,9 @@ class PacienteController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Paciente atualizado com sucesso!');
+            return $this->refresh(); // mantém na mesma página
         }
 
         return $this->render('update', [

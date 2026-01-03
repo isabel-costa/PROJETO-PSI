@@ -9,7 +9,7 @@ $this->registerCssFile('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15
 $this->registerJsFile('https://code.jquery.com/jquery-3.6.0.min.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile('https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js', ['position' => \yii\web\View::POS_END]);
 // Per-page CSS
-$this->registerCssFile('@web/css/site-index.css');
+$this->registerCssFile('@web/css/site.css');
 // Main template stylesheet (registered instead of static link)
 $this->registerCssFile('@web/css/style.css');
 
@@ -56,7 +56,7 @@ $roleNames = array_keys($userRoles);
                 <div class="row mt-4">
 
                     <div class="col-md-3 col-sm-6">
-                        <div class="card text-center shadow-sm">
+                        <div class="card text-center shadow-sm card-dashboard">
                             <div class="card-body">
                                 <i class="fas fa-calendar-day fa-2x mb-2"></i>
                                 <h6>Consultas hoje</h6>
@@ -66,7 +66,7 @@ $roleNames = array_keys($userRoles);
                     </div>
 
                     <div class="col-md-3 col-sm-6">
-                        <div class="card text-center shadow-sm">
+                        <div class="card text-center shadow-sm card-dashboard">
                             <div class="card-body">
                                 <i class="fas fa-clock fa-2x mb-2"></i>
                                 <h6>Agendadas</h6>
@@ -76,7 +76,7 @@ $roleNames = array_keys($userRoles);
                     </div>
 
                     <div class="col-md-3 col-sm-6">
-                        <div class="card text-center shadow-sm">
+                        <div class="card text-center shadow-sm card-dashboard">
                             <div class="card-body">
                                 <i class="fas fa-check fa-2x mb-2"></i>
                                 <h6>Concluídas</h6>
@@ -86,7 +86,7 @@ $roleNames = array_keys($userRoles);
                     </div>
 
                     <div class="col-md-3 col-sm-6">
-                        <div class="card text-center shadow-sm">
+                        <div class="card text-center shadow-sm card-dashboard">
                             <div class="card-body">
                                 <i class="fas fa-clipboard-list fa-2x mb-2"></i>
                                 <h6>Prescrições</h6>
@@ -97,25 +97,56 @@ $roleNames = array_keys($userRoles);
 
                 </div>
 
+
                 <br>
-                <div class="card mt-5">
+                <hr class="mt-5">
+
+        <!-- SERVIÇOS DO MÉDICO -->
+        <div class="container my-5">
+            <h2 class="text-center mb-5">Serviços</h2>
+
+            <div class="d-flex justify-content-center gap-5 flex-wrap servicos-medico">
+
+                <a href="<?= \yii\helpers\Url::to(['consulta/index']) ?>" class="servico-medico text-center">
+                    <div class="servico-icon">
+                        <i class="bi bi-calendar-event"></i>
+                    </div>
+                    <span>Agenda</span>
+                </a>
+
+                <a href="<?= \yii\helpers\Url::to(['paciente/view']) ?>" class="servico-medico text-center">
+                    <div class="servico-icon">
+                        <i class="bi bi-journal-medical"></i>
+                    </div>
+                    <span>Histórico clínico</span>
+                </a>
+
+                <a href="<?= \yii\helpers\Url::to(['prescricao/view']) ?>" class="servico-medico text-center">
+                    <div class="servico-icon">
+                        <i class="bi bi-file-earmark-medical"></i>
+                    </div>
+                    <span>Prescrições</span>
+                </a>
+
+                <a href="<?= \yii\helpers\Url::to(['paciente/index']) ?>" class="servico-medico text-center">
+                    <div class="servico-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <span>Lista Pacientes</span>
+                </a>
+
+            </div>
+
+            <hr class="mt-5">
+        </div>
+
+            <div class="card mt-5">
                 <div class="card-header">
                     <h5>Consultas por mês</h5>
                 </div>
                 <div class="card-body">
                     <canvas id="graficoConsultasMedico"></canvas>
                 </div>
-            </div>
-
-            <hr class="my-5">
-
-            <div class="d-flex gap-3">
-                <a href="<?= \yii\helpers\Url::to(['consulta/index']) ?>" class="btn btn-primary">
-                    Todas as Consultas
-                </a>
-                <a href="<?= \yii\helpers\Url::to(['paciente/index']) ?>" class="btn btn-outline-primary">
-                    Pacientes
-                </a>
             </div>
         </div>
 
