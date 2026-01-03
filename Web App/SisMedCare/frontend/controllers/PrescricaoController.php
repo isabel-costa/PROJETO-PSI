@@ -38,9 +38,11 @@ class PrescricaoController extends Controller
      *
      * @return string
      */
-    public function actionIndex($consulta_id)
+    public function actionIndex($paciente_id)
     {
-        $query = Prescricao::find()->where(['consulta_id' => $consulta_id]);
+        $query = Prescricao::find()
+            ->where(['paciente_id' => $paciente_id])
+            ->with(['consulta', 'medico']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -48,17 +50,15 @@ class PrescricaoController extends Controller
                 'pageSize' => 20,
             ],
             'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ],
+                'defaultOrder' => ['id' => SORT_DESC],
             ],
         ]);
 
-        $consulta = \common\models\Consulta::findOne($consulta_id);
+        $paciente = \common\models\Paciente::findOne($paciente_id);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'consulta' => $consulta,
+            'paciente' => $paciente,
         ]);
     }
 
@@ -68,10 +68,23 @@ class PrescricaoController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView()
     {
+        $query = Prescricao::find()
+            ->select([
+                'paciente_id',
+                'COUNT(*) AS total'
+            ])
+            ->groupBy('paciente_id')
+            ->with('paciente');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => false,
+        ]);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'dataProvider' => $dataProvider,
         ]);
     }
 

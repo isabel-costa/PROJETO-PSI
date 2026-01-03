@@ -6,38 +6,53 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var common\models\PrescricaoMedicamento $model */
 /** @var yii\widgets\ActiveForm $form */
+/** @var array $medicamentos */
 ?>
 
-<div class="prescricao-medicamento-form">
+<div class="prescricao-medicamento-form py-5">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <!-- CARD CENTRAL -->
+    <div class="form-card card shadow-sm mx-auto p-4">
 
-    <br>
+        <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'medicamento_id')->dropDownList($medicamentos, ['prompt' => 'Selecione um medicamento']) ?>
+        <!-- Medicamento -->
+        <div class="linha mb-3">
+            <div>
+                <?= $form->field($model, 'medicamento_id')->dropDownList($medicamentos, ['prompt' => 'Selecione um medicamento']) ?>
+            </div>
+        </div>
 
-    <br>
+        <!-- Posologia (campo grande) -->
+        <div class="linha mb-3">
+            <div>
+                <?= $form->field($model, 'posologia')->textarea([
+                    'rows' => 6,
+                    'placeholder' => 'Digite a posologia do medicamento...',
+                ]) ?>
+            </div>
+        </div>
 
-    <?= $form->field($model, 'posologia')->textarea(['rows' => 6]) ?>
+        <!-- Frequência, Duração, Instruções em uma linha -->
+        <div class="linha mb-3">
+            <div>
+                <?= $form->field($model, 'frequencia')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div>
+                <?= $form->field($model, 'duracao_dias')->textInput() ?>
+            </div>
+            <div>
+                <?= $form->field($model, 'instrucoes')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>
 
-    <br>
+        <?php ActiveForm::end(); ?>
 
-    <?= $form->field($model, 'frequencia')->textInput(['maxlength' => true]) ?>
-
-    <br>
-
-    <?= $form->field($model, 'duracao_dias')->textInput() ?>
-
-    <br>
-
-    <?= $form->field($model, 'instrucoes')->textInput(['maxlength' => true]) ?>
-
-    <br>
-
-    <div class="form-group">
-        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <!-- BOTÃO CENTRALIZADO FORA DO CARD -->
+    <div class="text-center mt-4">
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success btn-lg', 'form' => $form->id]) ?>
+    </div>
 
 </div>

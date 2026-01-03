@@ -1,25 +1,50 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var common\models\Consulta $model */
-
-$this->title = 'Editar Consulta: ' . $model->data_consulta;
-$this->params['breadcrumbs'][] = ['label' => 'Consultas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Editar';
+/** @var yii\widgets\ActiveForm $form */
 ?>
-<div class="consulta-update">
 
-    <br>
+<div class="consulta-form py-5">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h2 class="text-center mb-4">Editar Consulta</h2>
 
-    <br>
+    <!-- CARD CENTRAL -->
+    <div class="form-card card shadow-sm mx-auto p-4">
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+        <?php $form = ActiveForm::begin(['id' => 'consulta-form']); ?>
+
+        <!-- Estado (radio buttons) -->
+        <div class="linha mb-3">
+            <?= $form->field($model, 'estado')->radioList([
+                'concluida' => 'Concluída',
+                'cancelada' => 'Cancelada',
+            ], [
+                'itemOptions' => ['class' => 'form-check-input'],
+            ]) ?>
+        </div>
+
+        <!-- Observações -->
+        <div class="linha mb-3">
+            <?= $form->field($model, 'observacoes')->textarea([
+                'rows' => 4,
+                'placeholder' => 'Digite observações adicionais...',
+            ]) ?>
+        </div>
+
+        <?php ActiveForm::end(); ?>
+
+    </div>
+
+    <!-- BOTÃO CENTRALIZADO FORA DO CARD -->
+    <div class="text-center mt-4">
+        <?= Html::submitButton('Guardar', [
+            'class' => 'btn btn-success btn-lg',
+            'form' => 'consulta-form', // liga o botão ao ActiveForm
+        ]) ?>
+    </div>
 
 </div>

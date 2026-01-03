@@ -1,50 +1,135 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\Paciente $model */
+/** @var common\models\Paciente|null $model */
+/** @var string|null $numeroUtente */
 
-$this->title = $model->nome_completo . ' - ' . $model->numero_utente;
+$this->title = 'Histórico clínico';
 $this->params['breadcrumbs'][] = ['label' => 'Pacientes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 \yii\web\YiiAsset::register($this);
 ?>
+
 <div class="paciente-view">
 
-    <br>
+    <!-- TOPO: TÍTULO + PESQUISA -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <h2><?= Html::encode($this->title) ?></h2>
 
-    <br>
+        <?php $form = ActiveForm::begin([
+            'method' => 'get',
+            'action' => ['view'],
+        ]); ?>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            //'id',
-            //'user_id',
-            'nome_completo',
-            [
-                'label' => 'Data de Nascimento',
-                'value' => Yii::$app->formatter->asDatetime($model->data_nascimento),
-            ],
-            'sexo',
+        <?= Html::input(
+            'text',
             'numero_utente',
-            'email:email',
-            'telemovel',
-            'morada',
-            'altura',
-            'peso',
-            'alergias',
-            'doencas_cronicas',
-            //'data_registo',
-        ],
-    ]) ?>
+            $numeroUtente,
+            [
+                'class' => 'form-control',
+                'placeholder' => 'Nº de utente',
+                'style' => 'width: 220px; display: inline-block;'
+            ]
+        ) ?>
 
-    <br>
+        <?= Html::submitButton('Pesquisar', ['class' => 'btn btn-secondary']) ?>
 
-    <p>
-        <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-    </p>
+        <?php ActiveForm::end(); ?>
+    </div>
+
+    <?php if (!$model): ?>
+        <div style="text-align: center; font-style: italic; margin-bottom: 15px;">
+            Pesquise um paciente pelo número de utente.
+        </div>
+    <?php endif; ?>
+
+    <!-- RETÂNGULO DOS DADOS -->
+    <div class="paciente-dados">
+
+    <?php if ($model): ?>
+        <div class="paciente-header">
+            <h3><?= Html::encode($model->nome_completo) ?></h3>
+            <p><strong>Nº de utente:</strong> <?= Html::encode($model->numero_utente) ?></p>
+        </div>
+    <?php endif; ?>
+
+        <?php
+        function valor($model, $campo) 
+        {
+            return $model ? Html::encode($model->$campo ?? '') : '';
+        }
+        ?>
+
+        <div class="linha">
+            <div>
+                <label>Nome completo</label>
+                <input type="text" value="<?= valor($model, 'nome_completo') ?>" disabled>
+            </div>
+
+            <div>
+                <label>Altura</label>
+                <input type="text" value="<?= valor($model, 'altura') ?>" disabled>
+            </div>
+        </div>
+
+        <div class="linha">
+            <div>
+                <label>Data de nascimento</label>
+                <input type="text"
+                       value="<?= $model && $model->data_nascimento
+                           ? Yii::$app->formatter->asDate($model->data_nascimento)
+                           : '' ?>"
+                       disabled>
+            </div>
+
+            <div>
+                <label>Peso</label>
+                <input type="text" value="<?= valor($model, 'peso') ?>" disabled>
+            </div>
+        </div>
+
+        <div class="linha">
+            <div>
+                <label>Sexo</label>
+                <input type="text" value="<?= valor($model, 'sexo') ?>" disabled>
+            </div>
+
+            <div>
+                <label>Doenças crónicas</label>
+                <input type="text" value="<?= valor($model, 'doencas_cronicas') ?>" disabled>
+            </div>
+        </div>
+
+        <div class="linha">
+            <div>
+                <label>Alergias</label>
+                <input type="text" value="<?= valor($model, 'alergias') ?>" disabled>
+            </div>
+
+            <div>
+                <label>Telemóvel</label>
+                <input type="text" value="<?= valor($model, 'telemovel') ?>" disabled>
+            </div>
+        </div>
+
+        <div class="linha">
+            <div>
+                <label>Email</label>
+                <input type="text" value="<?= valor($model, 'email') ?>" disabled>
+            </div>
+        </div>
+
+    </div>
+
+    <?php if ($model): ?>
+        <div style="text-align: center; margin-top: 20px;">
+            <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        </div>
+    <?php endif; ?>
+
 </div>

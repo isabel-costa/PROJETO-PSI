@@ -14,6 +14,11 @@
     transition: .5s;
 }
 
+.a {
+    color: var(--bs-link-color);
+    text-decoration: underline;
+}
+
 .btn:hover {
     -webkit-box-shadow: 0 8px 6px -6px #555555;
     -moz-box-shadow: 0 8px 6px -6px #555555;
@@ -22,6 +27,24 @@
 
 .btn-primary {
     color: #FFFFFF;
+    background-color: #1b7f5c;
+    border-color: #1b7f5c;
+}
+
+.btn-primary:hover {
+    background-color: #1b7f5c;
+    border-color: #1b7f5c;
+}
+
+.btn-secondary {
+    color: #FFFFFF;
+    background-color: #1b7f5c;
+    border-color: #1b7f5c;
+}
+
+.btn-secondary:hover {
+    background-color: #1b7f5c;
+    border-color: #1b7f5c;
 }
 
 .btn-square {
@@ -340,3 +363,673 @@ nav.navbar-smc {
     padding-left: 40px;
     margin-left: calc(100% / 4);
 }
+
+/* ============================= */
+/* Estatisticas */
+/* ============================= */
+
+/* Todos os cards do dashboard médico com ícones e títulos verdes */
+.card-dashboard i,
+.card-dashboard h6 {
+    color: #0a936d;
+}
+
+/* Mantém o fundo branco e sombra */
+.card-dashboard {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 15px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* ============================= */
+/* SERVIÇOS - DASHBOARD MÉDICO   */
+/* ============================= */
+
+.servicos-medico {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.servico-medico {
+    text-decoration: none;
+    color: #000;
+    text-align: center;
+    width: 150px;
+}
+
+.servico-medico span {
+    display: block;
+    margin-top: 12px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* CÍRCULO */
+.servico-medico .servico-icon {
+    width: 120px;
+    height: 120px;
+    background-color: #aef0c4;
+    border-radius: 50% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+/* ÍCONE */
+.servico-medico .servico-icon i {
+    font-size: 40px;
+    color: #1b7f5c;
+}
+
+/* HOVER */
+.servico-medico:hover .servico-icon {
+    background-color: #97e6b5;
+    transition: 0.3s ease;
+}
+
+/* ============================= */
+/* Agenda - Consultas Index */
+/* ============================= */
+
+/* CONTAINER COM FUNDO VERDE */
+.consulta-grid-container {
+    background-color: #0a936d;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+/* TÍTULO EM BRANCO */
+.consulta-grid-title {
+    color: #fff;
+}
+
+/* WRAPPER DA TABELA COM FUNDO BRANCO */
+.consulta-grid-wrapper {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 15px;
+    overflow-x: auto;
+}
+
+/* TABELA MODERNA */
+.table-hover {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Linhas alternadas e hover */
+.table-hover tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #e9f5ec;
+}
+
+.table-hover td {
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.85rem;
+    padding: 0.35em 0.65em;
+    border-radius: 0.35rem;
+}
+
+/* Botões de ação */
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 0.35rem;
+}
+
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-outline-primary {
+    color: var(--secundaria-smc);
+    border-color: var(--secundaria-smc);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--secundaria-smc);
+    color: #fff;
+}
+
+/* Pager bootstrap */
+.pagination-smc .page-link {
+    border-radius: 0.35rem;
+    padding: 0.3rem 0.6rem;
+    margin: 0 2px;
+}
+
+.pagination-smc .page-item.active .page-link {
+    background-color: var(--secundaria-smc);
+    border-color: var(--secundaria-smc);
+    color: #fff;
+}
+
+/* ============================= */
+/* PAGINAÇÃO MODERNA COMPACTA    */
+/* ============================= */
+.pagination-smc {
+    display: flex;
+    justify-content: center; 
+    gap: 0.25rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    list-style: none;
+    padding-left: 0;
+}
+
+.pagination-smc .page-item {
+    border-radius: 0.35rem;
+    overflow: hidden;
+}
+
+.pagination-smc .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;    
+    padding: 0 0.5rem;
+    border: 1px solid #1b7f5c;
+    color: #1b7f5c;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    border-radius: 0.35rem;
+}
+
+.pagination-smc .page-link:hover {
+    background-color: var(--secundaria-smc);
+    color: #fff;
+    border-color: var(--secundaria-smc);
+}
+
+.pagination-smc .page-item.active .page-link {
+    background-color: #1b7f5c;
+    color: #fff;
+    border-color: #1b7f5c;
+}
+
+.pagination-smc .page-item.disabled .page-link {
+    color: #aaa;
+    border-color: #ccc;
+    background-color: #f5f5f5;
+}
+
+/* ============================= */
+/* HISTORICO CLINICO Vista*/
+/* ============================= */
+
+/* RETÂNGULO */
+.paciente-dados {
+    background: var(--secundaria-smc);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* HEADER DENTRO DO RETÂNGULO */
+.paciente-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+}
+
+/* LINHAS */
+.paciente-dados .linha {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 15px;
+}
+
+.paciente-dados .linha > div {
+    flex: 1;
+}
+
+.paciente-dados label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.paciente-dados input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #999;
+    background: #fff;
+}
+
+.btn btn-primary {
+    background-color: var(--secundaria-smc);
+    border-color: var(--secundaria-smc);
+    color: #fff;
+}
+
+/* ============================= */
+/* HISTORICO CLINICO Update*/
+/* ============================= */
+
+/* RETÂNGULO */
+.paciente-dados {
+    background: var(--secundaria-smc);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* HEADER DENTRO DO RETÂNGULO */
+.paciente-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+}
+
+/* LINHAS */
+.paciente-dados .linha {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 15px;
+}
+
+.paciente-dados .linha > div {
+    flex: 1;
+}
+
+.paciente-dados label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.paciente-dados input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #999;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+/* ============================= */
+/* Pacientes Index*/
+/* ============================= */
+
+/* CONTAINER COM FUNDO VERDE */
+.paciente-grid-container {
+    background-color: #0a936d;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+/* TÍTULO EM BRANCO */
+.paciente-grid-title {
+    color: #fff;
+}
+
+/* WRAPPER DA TABELA COM FUNDO BRANCO */
+.paciente-grid-wrapper {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 15px;
+    overflow-x: auto;
+}
+
+/* TABELA MODERNA */
+.paciente-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Linhas alternadas e hover */
+.paciente-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.paciente-table tbody tr:hover {
+    background-color: #e9f5ec;
+}
+
+.paciente-table td {
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.85rem;
+    padding: 0.35em 0.65em;
+    border-radius: 0.35rem;
+}
+
+/* Botões de ação */
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 0.35rem;
+}
+
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-outline-primary {
+    color: var(--secundaria-smc);
+    border-color: var(--secundaria-smc);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--secundaria-smc);
+    color: #fff;
+}
+
+/* Pager bootstrap */
+.pagination-smc .page-link {
+    border-radius: 0.35rem;
+    padding: 0.3rem 0.6rem;
+    margin: 0 2px;
+}
+
+.pagination-smc .page-item.active .page-link {
+    background-color: var(--secundaria-smc);
+    border-color: var(--secundaria-smc);
+    color: #fff;
+}
+
+/* ============================= */
+/* Prescrição de Medicamentos */
+/* ============================= */
+
+/* CONTAINER COM FUNDO VERDE */
+.prescricao-medicamento-container {
+    background-color: #0a936d;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+/* TÍTULO EM BRANCO */
+.prescricao-medicamento-title {
+    color: #fff;
+}
+
+/* WRAPPER DA TABELA COM FUNDO BRANCO */
+.prescricao-medicamento-wrapper {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 15px;
+    overflow-x: auto;
+}
+
+/* TABELA MODERNA */
+.table-hover {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Linhas alternadas e hover */
+.table-hover tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #e9f5ec;
+}
+
+.table-hover td {
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.85rem;
+    padding: 0.35em 0.65em;
+    border-radius: 0.35rem;
+}
+
+/* Botões de ação */
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 0.35rem;
+}
+
+.btn-outline-primary {
+    color: var(--secundaria-smc);
+    border-color: var(--secundaria-smc);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--secundaria-smc);
+    color: #fff;
+}
+
+/* Pager bootstrap */
+.pagination-smc .page-link {
+    border-radius: 0.35rem;
+    padding: 0.3rem 0.6rem;
+    margin: 0 2px;
+}
+
+.pagination-smc .page-item.active .page-link {
+    background-color: var(--secundaria-smc);
+    border-color: var(--secundaria-smc);
+    color: #fff;
+}
+
+/* Botão "Criar" grande centralizado */
+.btn-lg {
+    font-size: 1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.35rem;
+}
+
+/* ================================= */
+/* Detalhes do Medicamento Prescrito */
+/* ================================= */
+
+/* RETÂNGULO CENTRAL COM FUNDO VERDE */
+.prescricao-dados {
+    background: var(--secundaria-smc);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* LINHAS FLEXÍVEIS */
+.prescricao-dados .linha {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 15px;
+}
+
+.prescricao-dados .linha > div {
+    flex: 1;
+}
+
+/* LABELS */
+.prescricao-dados label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* INPUTS E TEXTAREAS */
+.prescricao-dados input,
+.prescricao-dados textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #999;
+    background: #fff;
+    resize: none;
+}
+
+/* BOTÃO CENTRAL */
+.btn-primary {
+    background-color: var(--secundaria-smc);
+    border-color: var(--secundaria-smc);
+    color: #fff;
+}
+
+/* ============================= */
+/* Vista da Consulta             */
+/* ============================= */
+
+/* RETÂNGULO CENTRAL COM FUNDO VERDE */
+.consulta-dados {
+    background: var(--secundaria-smc);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* LINHAS FLEXÍVEIS */
+.consulta-dados .linha {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 15px;
+}
+
+.consulta-dados .linha > div {
+    flex: 1;
+}
+
+/* LABELS */
+.consulta-dados label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* INPUTS E TEXTAREAS */
+.consulta-dados input,
+.consulta-dados textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #999;
+    background: #fff;
+    resize: none;
+}
+
+/* BOTÃO CENTRAL */
+.btn-primary {
+    background-color: var(--secundaria-smc);
+    border-color: var(--secundaria-smc);
+    color: #fff;
+}
+
+/* ============================= */
+/* FORMULÁRIO DE PRESCRIÇÃO */
+/* ============================= */
+
+/* CARD CENTRAL */
+.form-card {
+    background: var(--secundaria-smc); /* fundo verde */
+    max-width: 600px;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+/* INPUTS E TEXTAREA */
+.form-card .form-control {
+    border-radius: 6px;
+    background-color: #fff;
+    border: 1px solid #999;
+    padding: 8px;
+}
+
+/* LABELS */
+.form-card label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* LINHAS FLEXÍVEIS */
+.form-card .linha {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+/* BOTÃO CENTRAL FORA DO CARD */
+.btn-success {
+    color: #fff;
+    font-size: 1.05rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+/* ==================================== */
+/* FORMULÁRIO DE PRESCRIÇÃO MEDICAMENTO */
+/* ==================================== */
+
+/* CARD CENTRAL */
+.form-card {
+    background: var(--secundaria-smc);
+    max-width: 700px;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+/* INPUTS, TEXTAREAS E SELECTS */
+.form-card .form-control {
+    border-radius: 6px;
+    background-color: #fff;
+    border: 1px solid #999;
+    padding: 8px;
+}
+
+/* LABELS */
+.form-card label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* LINHAS FLEXÍVEIS */
+.form-card .linha {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+

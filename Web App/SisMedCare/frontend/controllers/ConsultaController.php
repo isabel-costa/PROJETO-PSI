@@ -52,6 +52,24 @@ class ConsultaController extends Controller
             throw new NotFoundHttpException('Médico não encontrado para este utilizador.');
         }
 
+        // =============================
+        // Atualiza consultas agendadas automaticamente após 3h
+        // =============================
+        $consultasAgendadas = Consulta::find()
+            ->where(['estado' => 'agendada', 'medico_id' => $medico->id])
+            ->all();
+
+        foreach ($consultasAgendadas as $consulta) {
+            $horarioConsulta = strtotime($consulta->data_consulta); 
+            if (time() > $horarioConsulta + 3 * 3600) { 
+                $consulta->estado = 'concluida';
+                $consulta->save(false);
+            }
+        }
+
+        // =============================
+        // DataProvider para mostrar as consultas
+        // =============================
         $dataProvider = new ActiveDataProvider([
             'query' => Consulta::find()->where(['medico_id' => $medico->id]),
         ]);

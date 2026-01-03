@@ -21,7 +21,7 @@ use Yii;
  */
 class Prescricao extends \yii\db\ActiveRecord
 {
-
+    public $total;
 
     /**
      * {@inheritdoc}
