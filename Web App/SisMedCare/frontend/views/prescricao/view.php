@@ -1,65 +1,62 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
 
-/** @var yii\web\View $this */
-/** @var yii\data\ActiveDataProvider $dataProvider */
+/* @var $this yii\web\View */
+/* @var $model common\models\Prescricao */
 
-$this->title = 'Prescrições';
+$this->title = 'Prescrição ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Prescrições', 'url' => ['index', 'paciente_id' => $model->paciente_id]];
 $this->params['breadcrumbs'][] = $this->title;
 
-/* Bootstrap Icons */
 $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css');
 ?>
 
-<div class="prescricao-view container consulta-grid-container">
+<div class="prescricao-view py-5">
 
-    <h1 class="mb-4 consulta-grid-title"><?= Html::encode($this->title) ?></h1>
+    <h2 class="text-center mb-4"><?= Html::encode($this->title) ?></h2>
 
-    <div class="consulta-grid-wrapper">
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'tableOptions' => ['class' => 'table table-hover align-middle mb-0'],
-            'layout' => "{items}\n{pager}",
-            'pager' => [
-                'class' => \yii\bootstrap5\LinkPager::class,
-                'options' => ['class' => 'pagination pagination-smc justify-content-center mt-3'],
-                'linkContainerOptions' => ['class' => 'page-item'],
-                'linkOptions' => ['class' => 'page-link'],
-                'disabledListItemSubTagOptions' => ['class' => 'page-link'],
-                'prevPageLabel' => '<i class="bi bi-chevron-left"></i>',
-                'nextPageLabel' => '<i class="bi bi-chevron-right"></i>',
-                'firstPageLabel' => '<i class="bi bi-skip-start"></i>',
-                'lastPageLabel' => '<i class="bi bi-skip-end"></i>',
-            ],
-            'columns' => [
-                [
-                    'label' => 'Paciente',
-                    'value' => fn($model) => $model->paciente->nome_completo,
-                    'contentOptions' => ['class' => 'fw-semibold'],
-                ],
-                [
-                    'label' => 'Quantidade de Prescrições',
-                    'value' => 'total',
-                ],
-                [
-                    'label' => 'Ações',
-                    'format' => 'raw',
-                    'contentOptions' => ['class' => 'text-center'],
-                    'headerOptions' => ['class' => 'text-center'],
-                    'value' => fn($model) => Html::tag(
-                        'div',
-                        Html::a(
-                            '<i class="bi bi-eye"></i> Ver',
-                            ['prescricao/index', 'paciente_id' => $model->paciente_id],
-                            ['class' => 'btn btn-sm btn-outline-primary']
-                        ),
-                        ['class' => 'd-flex justify-content-center align-items-center h-100']
-                    ),
-                ],
-            ],
-        ]) ?>
+    <div class="prescricao-dados">
+
+        <div class="linha">
+            <div>
+                <label>Paciente</label>
+                <input type="text" value="<?= Html::encode($model->paciente->nome_completo) ?>" disabled>
+            </div>
+            <div>
+                <label>Nº de Utente</label>
+                <input type="text" value="<?= Html::encode($model->paciente->numero_utente) ?>" disabled>
+            </div>
+        </div>
+
+        <div class="linha">
+            <div>
+                <label>Médico</label>
+                <input type="text" value="<?= Html::encode($model->medico->nome_completo) ?>" disabled>
+            </div>
+        </div>
+        <div class="linha">
+            <div>
+                <label>Data da Prescrição</label>
+                <input type="text" value="<?= Yii::$app->formatter->asDatetime($model->data_prescricao) ?>" disabled>
+            </div>
+            <div>
+                <label>Data da Consulta</label>
+                <input type="text" value="<?= Yii::$app->formatter->asDatetime($model->consulta->data_consulta) ?>" disabled>
+            </div>
+        </div>
+
+        <div class="linha">
+            <div style="flex: 1;">
+                <label>Observações</label>
+                <textarea rows="3" disabled><?= Html::encode($model->observacoes ?: '—') ?></textarea>
+            </div>
+        </div>
+
     </div>
+
+    <div class="text-center mt-3">
+            <?= Html::a('<i class="bi bi-arrow-left"></i> Voltar', ['index', 'paciente_id' => $model->paciente_id], ['class' => 'btn btn-success']) ?>
+        </div>
 
 </div>

@@ -16,7 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="paciente-view">
 
-    <!-- TOPO: TÍTULO + PESQUISA -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
 
         <h2><?= Html::encode($this->title) ?></h2>
@@ -48,7 +47,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     <?php endif; ?>
 
-    <!-- RETÂNGULO DOS DADOS -->
     <div class="paciente-dados">
 
     <?php if ($model): ?>

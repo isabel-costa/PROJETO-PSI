@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\Paciente;
 
 /**
  * PrescricaoController implements the CRUD actions for Prescricao model.
@@ -38,27 +39,36 @@ class PrescricaoController extends Controller
      *
      * @return string
      */
-    public function actionIndex($paciente_id)
+    public function actionIndex($paciente_id = null)
     {
-        $query = Prescricao::find()
-            ->where(['paciente_id' => $paciente_id])
-            ->with(['consulta', 'medico']);
+        if ($paciente_id !== null) {
+            $paciente = Paciente::findOne($paciente_id);
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-            'sort' => [
-                'defaultOrder' => ['id' => SORT_DESC],
-            ],
+            $dataProvider = new ActiveDataProvider([
+                'query' => Prescricao::find()
+                    ->where(['paciente_id' => $paciente_id])
+                    ->with(['consulta', 'medico']),
+                'pagination' => ['pageSize' => 20],
+                'sort' => ['defaultOrder' => ['id' => SORT_DESC]],
+            ]);
+
+            return $this->render('index', [
+                'paciente' => $paciente,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+
+        // Lista de pacientes com pelo menos uma prescrição
+        $listaPacientes = new ActiveDataProvider([
+            'query' => Prescricao::find()
+                ->joinWith('paciente')
+                ->groupBy('paciente_id')
+                ->select(['prescricoes.*', 'COUNT(prescricoes.id) AS total']),
+            'pagination' => false,
         ]);
 
-        $paciente = \common\models\Paciente::findOne($paciente_id);
-
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'paciente' => $paciente,
+            'listaPacientes' => $listaPacientes,
         ]);
     }
 
@@ -68,23 +78,10 @@ class PrescricaoController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView()
+    public function actionView($id)
     {
-        $query = Prescricao::find()
-            ->select([
-                'paciente_id',
-                'COUNT(*) AS total'
-            ])
-            ->groupBy('paciente_id')
-            ->with('paciente');
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => false,
-        ]);
-
         return $this->render('view', [
-            'dataProvider' => $dataProvider,
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -135,6 +132,6 @@ class PrescricaoController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('A Prescrição solicitada não existe.');
     }
 }
