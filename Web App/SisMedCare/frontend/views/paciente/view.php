@@ -8,11 +8,14 @@ use yii\widgets\ActiveForm;
 /** @var string|null $numeroUtente */
 
 $this->title = 'Histórico clínico';
-$this->params['breadcrumbs'][] = ['label' => 'Pacientes', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$previousUrl = Yii::$app->request->referrer ?: ['/site/index'];
 
 \yii\web\YiiAsset::register($this);
 ?>
+
+<p>
+    <?= Html::a('<span style="display:inline-block; transform: rotate(180deg); margin-right: 6px;">⤷</span> Voltar',$previousUrl,['class' => 'btn-voltar-smc']) ?>
+</p>
 
 <div class="paciente-view">
 

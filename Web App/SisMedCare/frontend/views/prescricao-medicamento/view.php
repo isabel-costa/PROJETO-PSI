@@ -6,12 +6,14 @@ use yii\helpers\Html;
 /** @var common\models\PrescricaoMedicamento $model */
 
 $this->title = 'Detalhes do Medicamento Prescrito';
-$this->params['breadcrumbs'][] = ['label' => 'Prescrição de Medicamentos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$previousUrl = Yii::$app->request->referrer ?: ['/site/index'];
 
 \yii\web\YiiAsset::register($this);
 ?>
 
+<p>
+    <?= Html::a('<span style="display:inline-block; transform: rotate(180deg); margin-right: 6px;">⤷</span> Voltar',$previousUrl,['class' => 'btn-voltar-smc']) ?>
+</p>
 <div class="prescricao-medicamento-view py-5">
 
     <h2 class="text-center mb-4"><?= Html::encode($this->title) ?></h2>

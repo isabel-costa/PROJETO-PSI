@@ -9,14 +9,19 @@ use yii\grid\GridView;
 /* @var $listaPacientes yii\data\ActiveDataProvider|null */
 
 $this->title = 'Prescrições';
-$this->params['breadcrumbs'][] = $this->title;
 
 /* Bootstrap Icons */
 $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css');
+
+$previousUrl = Yii::$app->request->referrer ?: ['/site/index'];
 ?>
 
-<?php if (isset($paciente)): ?>
+<p>
+    <?= Html::a('<span style="display:inline-block; transform: rotate(180deg); margin-right: 6px;">⤷</span> Voltar',$previousUrl,['class' => 'btn-voltar-smc']) ?>
+</p>
 
+<?php if (isset($paciente)): ?>
+<div class="container-smc">
     <div class="prescricao-grid-container container">
 
         <h1 class="mb-4 prescricao-grid-title">Prescrições – <?= Html::encode($paciente->nome_completo) ?></h1>
@@ -62,16 +67,11 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootst
                 ],
             ]) ?>
         </div>
-
     </div>
-
-    <!-- Botão fora do fundo verde -->
-    <div class="container text-center mt-3">
-        <?= Html::a('← Voltar à lista de pacientes', ['index'], ['class' => 'btn btn-success']) ?>
-    </div>
+</div>
 
 <?php else: ?>
-
+<div class="container-smc">
     <div class="prescricao-grid-container container">
 
         <h1 class="mb-4 prescricao-grid-title">Pacientes com Prescrições</h1>
@@ -109,7 +109,6 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootst
                 ],
             ]) ?>
         </div>
-
     </div>
-
+</div>
 <?php endif; ?>

@@ -9,12 +9,15 @@ use yii\grid\GridView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Agenda de Consultas';
-$this->params['breadcrumbs'][] = $this->title;
+$previousUrl = Yii::$app->request->referrer ?: ['/site/index'];
 
 /* Bootstrap Icons (caso não estejam no layout) */
 $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css');
 ?>
 
+<p>
+    <?= Html::a('<span style="display:inline-block; transform: rotate(180deg); margin-right: 6px;">⤷</span> Voltar',$previousUrl,['class' => 'btn-voltar-smc']) ?>
+</p>
 <div class="consulta-index container consulta-grid-container">
 
     <h1 class="mb-4 consulta-grid-title"><?= Html::encode($this->title) ?></h1>
