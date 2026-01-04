@@ -8,6 +8,7 @@ return [
     'components' => [
         'cache' => [
             'class' => \yii\caching\FileCache::class,
+            'cachePath' => dirname(__DIR__) . '/runtime/cache',
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
