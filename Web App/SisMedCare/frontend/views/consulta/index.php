@@ -8,20 +8,18 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-<<<<<<< Updated upstream
 $this->title = 'Agenda de Consultas';
-=======
-$this->title = 'Agenda';
->>>>>>> Stashed changes
-$this->params['breadcrumbs'][] = $this->title;
+$previousUrl = Yii::$app->request->referrer ?: ['/site/index'];
 
 /* Bootstrap Icons (caso não estejam no layout) */
 $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css');
 ?>
 
+<p>
+    <?= Html::a('<span style="display:inline-block; transform: rotate(180deg); margin-right: 6px;">⤷</span> Voltar',$previousUrl,['class' => 'btn-voltar-smc']) ?>
+</p>
 <div class="consulta-index container consulta-grid-container">
 
-<<<<<<< Updated upstream
     <h1 class="mb-4 consulta-grid-title"><?= Html::encode($this->title) ?></h1>
 
     <div class="consulta-grid-wrapper">
@@ -41,47 +39,6 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootst
                 'lastPageLabel' => '<i class="bi bi-skip-end"></i>',
             ],
             'columns' => [
-=======
-    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
-
-    <br>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-
-            //'medico_id',
-            [
-                'attribute' => 'data_consulta',
-                'value' => 'data_consulta',
-                'format' => 'datetime',
-            ],
-            //'id',
-            [
-                'label' => 'Nome do Paciente',
-                'value' => 'paciente.nome_completo',
-            ],
-            'estado',
-            'observacoes',
-            //'criado_em',
-            [
-                'class' => ActionColumn::class,
-                'template' => '{view} {update}',
-            ],
-            [
-                'label' => 'Prescrições',
-                'format' => 'raw',
-                'value' => function (Consulta $model) {
-                    return Html::a(
-                        'Ver prescrições',
-                        ['prescricao/index', 'consulta_id' => $model->id],
-                        ['class' => 'btn btn-sm btn-primary']
-                    );
-                },
-            ],
-        ],
-    ]); ?>
->>>>>>> Stashed changes
 
                 [
                     'attribute' => 'data_consulta',
