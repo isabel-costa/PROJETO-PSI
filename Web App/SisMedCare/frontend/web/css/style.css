@@ -80,6 +80,11 @@
 }
 
 /* smc = sismedcare */
+.container-smc {
+    height: 50vh;
+    align-content: center;
+}
+
 .cor-nav-e-footer-smc {
     color: var(--nav-fotter-smc);
 }
@@ -116,7 +121,7 @@ nav.navbar-smc {
 }
 
 /* Botão de login da navbar normal sem nenhuma ação */
-.button-login {
+.btn-link.login {
     background-color: var(--secundaria-smc);
     color: #fff;
     border: none;
@@ -124,15 +129,75 @@ nav.navbar-smc {
 }
 
 /* Botão de login da navbar com hover / rato pressionado */
-.button-login:hover,
-.navbar-smc .btn.button-login:hover,
-.navbar-smc .btn.button-login:active {
+.btn-link.login:hover,
+.navbar-smc .btn.btn-link.login:hover,
+.navbar-smc .btn.btn-link.login:active {
     background-color: #3da78f;
     color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Botão de logout da navbar */
+.btn-link.logout{
+    background-color: var(--secundaria-smc);
+    color: #fff !important;
+    border: none;
+    transition: all 0.3s ease;
+}
 
+/* Hover / active do botão logout */
+.btn-link.logout:hover,
+.navbar-smc .btn.btn-link.logout:hover,
+.navbar-smc .btn.btn-link.logout:active {
+    background-color: #3da78f;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* página login */
+
+.site-login-wrapper {
+    height: 60vh;
+    align-content: center;
+}
+
+.btn-login-smc {
+    background-color: var(--secundaria-smc);
+    color: #fff;
+    border: none;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+}
+
+.btn-login-smc:hover {
+    background-color: #0ba076;
+    color: #fff;
+}
+
+/* Botão voltar */
+.btn-voltar-smc {
+    background-color: var(--secundaria-smc);
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    padding: 0.4rem 1rem;
+    border-radius: 0.3rem;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 2rem;
+    
+}
+
+.btn-voltar-smc:hover,
+.btn-voltar-smc:focus {
+    background-color: #0ba076;
+    color: #fff;
+    text-decoration: none;
+    outline: none;
+}
+
+/* Navbar */
 .navbar-light .navbar-nav .nav-link {
     font-family: 'Jost', sans-serif;
     position: relative;
@@ -364,6 +429,7 @@ nav.navbar-smc {
     margin-left: calc(100% / 4);
 }
 
+<<<<<<< Updated upstream
 /* ============================= */
 /* Estatisticas */
 /* ============================= */
@@ -1108,3 +1174,42 @@ nav.navbar-smc {
     border-color: #198754;
     color: #fff;
 }
+=======
+.social-icon {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #1D2A4D;
+    color: #fff;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    color: #fff;
+}
+
+.social-icon.twitter:hover {
+    background-color: #1DA1F2;
+}
+
+.social-icon.facebook:hover {
+    background-color: #1877F2;
+}
+
+.social-icon.linkedin:hover {
+    background-color: #0A66C2;
+}
+
+.social-icon.instagram:hover {
+    background: radial-gradient(circle at 30% 107%,
+        #fdf497 0%, #fdf497 5%, #fd5949 45%,
+        #d6249f 60%, #285AEB 90%);
+}
+>>>>>>> Stashed changes

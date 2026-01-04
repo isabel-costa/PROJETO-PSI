@@ -6,11 +6,14 @@ use yii\helpers\Html;
 /* @var $model common\models\Prescricao */
 
 $this->title = 'Prescrição ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Prescrições', 'url' => ['index', 'paciente_id' => $model->paciente_id]];
-$this->params['breadcrumbs'][] = $this->title;
+$previousUrl = Yii::$app->request->referrer ?: ['/site/index'];
 
 $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css');
 ?>
+
+<p>
+    <?= Html::a('<span style="display:inline-block; transform: rotate(180deg); margin-right: 6px;">⤷</span> Voltar',$previousUrl,['class' => 'btn-voltar-smc']) ?>
+</p>
 
 <div class="prescricao-view py-5">
 
@@ -52,11 +55,5 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootst
                 <textarea rows="3" disabled><?= Html::encode($model->observacoes ?: '—') ?></textarea>
             </div>
         </div>
-
     </div>
-
-    <div class="text-center mt-3">
-            <?= Html::a('<i class="bi bi-arrow-left"></i> Voltar', ['index', 'paciente_id' => $model->paciente_id], ['class' => 'btn btn-success']) ?>
-        </div>
-
 </div>

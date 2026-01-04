@@ -7,35 +7,46 @@
 use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
 
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Iniciar Sessão';
+$previousUrl = Yii::$app->request->referrer ?: ['/site/index'];
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+<p>
+    <?= Html::a('← Voltar', $previousUrl, ['class' => 'btn-voltar-smc']) ?>
+</p>
+<div class="site-login-wrapper">
+    <div class="site-login" style="max-width: 400px; margin: 0 auto; padding: 20px;">
+        <h2 class="text-center mb-4" style="font-weight: 700;"><?= Html::encode($this->title) ?></h2>
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+        <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'username', [
+                'inputOptions' => [
+                    'class' => 'form-control rounded-pill px-4',
+                    'autofocus' => true
+                ],
+                'template' => "{label}\n{input}\n{error}"
+            ]) ?>
 
-                <?= $form->field($model, 'password')->passwordInput() ?>
+            <?= $form->field($model, 'password', [
+                'inputOptions' => [
+                    'class' => 'form-control rounded-pill px-4'
+                ],
+                'template' => "{label}\n{input}\n{error}"
+            ])->passwordInput() ?>
 
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
+            <div class="form-check mb-3">
+                <?= $form->field($model, 'rememberMe')->checkbox([
+                    'template' => "{input} {label}\n{error}",
+                    'labelOptions' => ['class' => 'form-check-label'],
+                    'inputOptions' => ['class' => 'form-check-input']
+                ]) ?>
+            </div>
 
-                <div class="my-1 mx-0" style="color:#999;">
-                    If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                    <br>
-                    Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
-                </div>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-
-            <?php ActiveForm::end(); ?>
-        </div>
+            <div class="d-grid">
+                <?= Html::submitButton('Iniciar Sessão', ['class' => 'btn-login-smc rounded-pill py-2', 'name' => 'login-button'
+    ]) ?>
+</div>
+        <?php ActiveForm::end(); ?>
     </div>
 </div>

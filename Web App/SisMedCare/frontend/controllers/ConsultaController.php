@@ -74,8 +74,11 @@ class ConsultaController extends Controller
             'query' => Consulta::find()->where(['medico_id' => $medico->id]),
         ]);
 
+        $user = Yii::$app->user->identity;
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'user' => $user,
         ]);
     }
 

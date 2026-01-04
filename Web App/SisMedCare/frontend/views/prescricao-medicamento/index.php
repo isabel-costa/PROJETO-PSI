@@ -9,11 +9,17 @@ use yii\grid\ActionColumn;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Prescrição de Medicamentos';
-$this->params['breadcrumbs'][] = $this->title;
 
 $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css');
+
+$previousUrl = Yii::$app->request->referrer ?: ['/site/index'];
 ?>
 
+<p>
+    <?= Html::a('<span style="display:inline-block; transform: rotate(180deg); margin-right: 6px;">⤷</span> Voltar',$previousUrl,['class' => 'btn-voltar-smc']) ?>
+</p>
+
+<div class="container-smc">
 <div class="prescricao-medicamento-container container">
 
     <h1 class="prescricao-medicamento-title mb-4 text-center"><?= Html::encode($this->title) ?></h1>
@@ -70,4 +76,5 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootst
 
 <div class="container text-center mt-4">
     <?= Html::a('Criar Prescrição de Medicamentos', ['create'], ['class' => 'btn btn-success btn-lg']) ?>
+</div>
 </div>

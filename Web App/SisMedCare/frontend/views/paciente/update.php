@@ -7,13 +7,15 @@ use yii\widgets\ActiveForm;
 /** @var common\models\Paciente $model */
 
 $this->title = 'Editar paciente: ';
-$this->params['breadcrumbs'][] = ['label' => 'Pacientes', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->nome_completo, 'url' => ['view', 'nome_completo' => $model->nome_completo]];
-$this->params['breadcrumbs'][] = 'Editar';
+$previousUrl = Yii::$app->request->referrer ?: ['/site/index'];
 
 \yii\web\YiiAsset::register($this);
 ?>
 
+<p>
+    <?= Html::a('<span style="display:inline-block; transform: rotate(180deg); margin-right: 6px;">⤷</span> Voltar',$previousUrl,['class' => 'btn-voltar-smc']) ?>
+</p>
+<div class="container-smc">
 <div class="paciente-update">
 
     <!-- TÍTULO -->
@@ -62,4 +64,5 @@ $this->params['breadcrumbs'][] = 'Editar';
         <?php ActiveForm::end(); ?>
 
 
+    </div>
 </div>
