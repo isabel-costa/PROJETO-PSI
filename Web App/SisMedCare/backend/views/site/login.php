@@ -1,45 +1,39 @@
 <?php
 use yii\helpers\Html;
 ?>
-<div class="card">
-    <div class="card-body login-card-body">
-        <p class="login-box-msg">Login Backend</p>
 
-        <?php $form = \yii\bootstrap4\ActiveForm::begin(['id' => 'login-form']) ?>
+<div class="login-wrapper">
+    <div class="card login-card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg login-title">Iniciar Sessão</p>
 
-        <?= $form->field($model,'username', [
-            'options' => ['class' => 'form-group has-feedback'],
-            'inputTemplate' => '{input}<div class="input-group-append"><div class="input-group-text"><span class="fas fa-envelope"></span></div></div>',
-            'template' => '{beginWrapper}{input}{error}{endWrapper}',
-            'wrapperOptions' => ['class' => 'input-group mb-3']
-        ])
-            ->label(false)
-            ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
+            <?php $form = \yii\bootstrap4\ActiveForm::begin(['id' => 'login-form']) ?>
 
-        <?= $form->field($model, 'password', [
-            'options' => ['class' => 'form-group has-feedback'],
-            'inputTemplate' => '{input}<div class="input-group-append"><div class="input-group-text"><span class="fas fa-lock"></span></div></div>',
-            'template' => '{beginWrapper}{input}{error}{endWrapper}',
-            'wrapperOptions' => ['class' => 'input-group mb-3']
-        ])
-            ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
+            <?= $form->field($model,'username', [
+                'options' => ['class' => 'form-group has-feedback'],
+                'template' => '{beginWrapper}{input}{error}{endWrapper}',
+                'wrapperOptions' => ['class' => 'input-group mb-3']
+            ])
+                ->label(false)
+                ->textInput(['placeholder' => $model->getAttributeLabel('username'), 'class' => 'form-control rounded-input']) ?>
 
-        <div class="row">
-            <div class="col-8">
-                <?= $form->field($model, 'rememberMe')->checkbox([
-                    'template' => '<div class="icheck-primary">{input}{label}</div>',
-                    'labelOptions' => [
-                        'class' => ''
-                    ],
-                    'uncheck' => null
-                ]) ?>
-            </div>
-            <div class="col-4">
-                <?= Html::submitButton('Sign In', ['class' => 'btn btn-primary btn-block']) ?>
-            </div>
+            <?= $form->field($model, 'password', [
+                'options' => ['class' => 'form-group has-feedback'],
+                'template' => '{beginWrapper}{input}{error}{endWrapper}',
+                'wrapperOptions' => ['class' => 'input-group mb-3']
+            ])
+                ->label(false)
+                ->passwordInput(['placeholder' => $model->getAttributeLabel('password'), 'class' => 'form-control rounded-input']) ?>
+
+            <?= $form->field($model, 'rememberMe')->checkbox([
+                'template' => '<div class="icheck-primary remember-container">{input}{label}</div>',
+                'labelOptions' => ['class' => 'remember-label'],
+                'uncheck' => null
+            ]) ?>
+
+            <?= Html::submitButton('Iniciar Sessão', ['class' => 'btn btn-primary btn-block rounded-btn mt-3']) ?>
+
+            <?php \yii\bootstrap4\ActiveForm::end(); ?>
         </div>
-
-        <?php \yii\bootstrap4\ActiveForm::end(); ?>
-    <!-- /.login-card-body -->
+    </div>
 </div>

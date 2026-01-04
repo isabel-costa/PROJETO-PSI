@@ -1,9 +1,12 @@
 <?php
 
 use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\grid\ActionColumn;
+use yii\helpers\Url;
+use common\models\Consulta;
 
 $this->title = 'Painel de Administração';
-$this->params['breadcrumbs'] = [['label' => $this->title]];
 
 $user = Yii::$app->user->identity;
 $auth = Yii::$app->authManager;
@@ -11,7 +14,7 @@ $userRoles = $user ? $auth->getRolesByUser($user->id) : [];
 $roleNames = array_keys($userRoles);
 
 ?>
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: -100px;">
 
     <h5 class="mb-4">Bem-vindo(a), <?= Html::encode($user->username) ?> 👋</h5>
 
@@ -49,7 +52,71 @@ $roleNames = array_keys($userRoles);
 
     <?php elseif (in_array('secretary', $roleNames)): ?>
 
-        <!-- INFOBOXES SECRETARIA -->
+    <!-- INFOBOXES SECRETARIA -->
+        <div class="consulta-grid-wrapper" style="max-height:800px; overflow-y:auto;">
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'tableOptions' => ['class' => 'table table-hover align-middle mb-0'],
+        'layout' => "{items}\n{pager}",
+        'pager' => [
+            'class' => \yii\bootstrap5\LinkPager::class,
+            'options' => ['class' => 'pagination pagination-smc justify-content-center mt-3'],
+            'linkContainerOptions' => ['class' => 'page-item'],
+            'linkOptions' => ['class' => 'page-link'],
+            'disabledListItemSubTagOptions' => ['class' => 'page-link'],
+            'prevPageLabel' => '<i class="bi bi-chevron-left"></i>',
+            'nextPageLabel' => '<i class="bi bi-chevron-right"></i>',
+            'firstPageLabel' => '<i class="bi bi-skip-start"></i>',
+            'lastPageLabel' => '<i class="bi bi-skip-end"></i>',
+        ],
+        'columns' => [
+
+            [
+                'attribute' => 'data_consulta',
+                'label' => 'Data / Hora',
+                'format' => ['datetime'],
+                'contentOptions' => ['class' => 'fw-semibold'],
+            ],
+
+            [
+                'label' => 'Paciente',
+                'value' => 'paciente.nome_completo',
+            ],
+
+            [
+            'label' => 'Médico',
+            'value' => 'medico.nome_completo',
+            ],
+
+            [
+                'attribute' => 'estado',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $estado = strtolower(trim($model->estado));
+                    switch ($estado) {
+                        case 'agendada':
+                            return '<span class="badge bg-success">Agendada</span>';
+                        case 'pendente':
+                            return '<span class="badge bg-warning text-dark">Pendente</span>';
+                        case 'realizada':
+                            return '<span class="badge bg-success">Realizada</span>';
+                        case 'cancelada':
+                            return '<span class="badge bg-danger">Cancelada</span>';
+                        default:
+                            return '<span class="badge bg-secondary">' . ($model->estado ?: '—') . '</span>';
+                    }
+                },
+            ],
+
+            [
+                'attribute' => 'observacoes',
+                'value' => fn($model) => $model->observacoes ?: '—',
+                'contentOptions' => ['class' => 'text-muted'],
+            ],
+        ],
+    ]); ?>
+    </div>
+</div>
         <div class="row mt-4">
             <div class="col-md-4 col-sm-6 col-12">
                 <?= \hail812\adminlte\widgets\InfoBox::widget([
