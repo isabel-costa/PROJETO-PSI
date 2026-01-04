@@ -66,6 +66,17 @@ $roleNames = array_keys($userRoles);
                             'icon'  => 'calendar-check',
                             'url'   => ['consulta/index'],
                         ],
+                        [
+                            'label' => 'Infos. do Paciente',
+                            'icon' => 'user-injured',
+                            'url' => ['infos-paciente/index'],
+                        ],
+
+                        [
+                            'label' => 'Hórario de Médicos',
+                            'icon' => 'user-md',
+                            'url' => ['medico/horarios'],
+                        ],
                     ],
                 ]);
             } else {

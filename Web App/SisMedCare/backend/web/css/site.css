@@ -486,3 +486,87 @@ body {
         font-size: 1.1rem !important;
     }
 }
+
+/* ===== Login ===== */
+.login-wrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    width: 400px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    padding: 32px 32px 40px;
+    margin: 0 auto;
+}
+
+.login-card-body {
+    padding: 0;
+}
+
+.login-title {
+    font-weight: 700;
+    font-size: 26px;
+    margin-bottom: 24px;
+    text-align: center;
+    color: #111;
+}
+
+.form-control.rounded-input {
+    border-radius: 20px !important;
+    height: 44px !important;
+    font-size: 16px !important;
+    padding-left: 16px !important;
+    border: 1.5px solid #ccc !important;
+    transition: border-color 0.3s ease;
+}
+
+.form-control.rounded-input:focus {
+    border-color: #667eea !important;
+    box-shadow: none !important;
+}
+
+.input-group-text {
+    border-radius: 0 20px 20px 0 !important;
+    background-color: #f0f0f0 !important;
+    border: 1.5px solid #ccc !important;
+    border-left: none !important;
+    color: #888 !important;
+    padding: 0 12px !important;
+    font-size: 16px !important;
+}
+
+.btn-primary.btn-block.rounded-btn {
+    width: 100%;
+    border-radius: 22px;
+    font-size: 16px;
+    padding: 10px 0;
+    background-color: #667eea;
+    border-color: #667eea;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary.btn-block.rounded-btn:hover {
+    background-color: #4f6beb;
+    border-color: #4f6beb;
+}
+
+.remember-container {
+    display: flex;
+    align-items: center;
+}
+
+.remember-label {
+    font-weight: 500;
+    margin-left: 8px;
+    user-select: none;
+}
+
+.mt-3 {
+    margin-top: 1rem !important;
+}

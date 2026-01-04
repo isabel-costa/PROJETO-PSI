@@ -28,6 +28,7 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     <link rel="icon" type="image/x--icon" href="<?= Yii::$app->request->baseUrl ?>/img/SisMedCare_Logo">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <?php $this->beginBody() ?>

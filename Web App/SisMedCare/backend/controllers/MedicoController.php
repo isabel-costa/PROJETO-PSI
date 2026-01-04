@@ -211,4 +211,21 @@ class MedicoController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionHorarios()
+    {
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => \common\models\Medico::find(),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+            'sort' => [
+                'defaultOrder' => ['nome_completo' => SORT_ASC],
+            ],
+        ]);
+
+        return $this->render('horarios', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 }

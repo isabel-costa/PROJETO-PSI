@@ -10,6 +10,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
+use yii\data\ActiveDataProvider;
 
 /**
  * Site controller
@@ -97,8 +98,15 @@ class SiteController extends Controller
             $consultasPorMes = Consulta::consultasPorMes();
             $labels = array_column($consultasPorMes, 'mes');
             $values = array_column($consultasPorMes, 'count');
+            $dataProvider = new ActiveDataProvider([
+                'query' => Consulta::find()->orderBy(['data_consulta' => SORT_DESC]),
+                'pagination' => [
+                    'pageSize' => 20,
+                ],
+            ]);
         } else {
             $labels = $values = [];
+            $dataProvider = null;
         }
 
         return $this->render('index', compact(
@@ -109,7 +117,8 @@ class SiteController extends Controller
             'pedidosRejeitados',
             'pedidosPendentes',
             'labels',
-            'values'
+            'values',
+            'dataProvider'
         ));
     }
 
