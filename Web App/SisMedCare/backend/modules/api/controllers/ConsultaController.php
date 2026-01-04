@@ -7,6 +7,7 @@ use yii\filters\auth\HttpHeaderAuth;
 use yii\rest\ActiveController;
 use Yii;
 use common\models\Consulta;
+use common\components\MqttService;
 
 class ConsultaController extends ActiveController
 {
@@ -96,6 +97,18 @@ class ConsultaController extends ActiveController
         if (!$consulta->save()) {
             return ['error' => $consulta->getErrors()];
         }
+
+        if (!$consulta->save()) {
+        return ['error' => $consulta->getErrors()];
+        }
+
+         // Publish de mensagem no tópico pedidos-de-consulta
+        $mqtt = new MqttService();
+        $formatted = "\ntópico: pedidos-de-consulta\n\n" .
+            "consulta_id: {$consulta->id}\n" .
+            "paciente_id: {$consulta->paciente_id}\n" .
+            "data_consulta: {$consulta->data_consulta}\n\n";
+        $mqtt->publish('pedidos-de-consulta', $formatted);
 
         return [
             'success' => true,
