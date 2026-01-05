@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Pacientes';
+$this->title = 'Infos. do Pacientes';
 
 ?>
 <div class="container-fluid" style="margin-top: -100px;">

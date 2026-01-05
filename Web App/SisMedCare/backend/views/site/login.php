@@ -8,10 +8,10 @@ use yii\bootstrap4\Alert;
         <div class="card-body login-card-body">
             <p class="login-box-msg login-title">Iniciar Sessão</p>
 
-            <?php if (Yii::$app->session->hasFlash('error')): ?>
+            <?php if (Yii::$app->session->hasFlash('error-login')): ?>
                 <?= Alert::widget([
                     'options' => ['class' => 'alert-danger'],
-                    'body' => Yii::$app->session->getFlash('error'),
+                    'body' => Yii::$app->session->getFlash('error-login'),
                     'closeButton' => ['label' => '&times;'],
                 ]) ?>
             <?php endif; ?>
@@ -34,10 +34,13 @@ use yii\bootstrap4\Alert;
                 ->label(false)
                 ->passwordInput(['placeholder' => $model->getAttributeLabel('password'), 'class' => 'form-control rounded-input']) ?>
 
-            <?= $form->field($model, 'rememberMe')->checkbox([
-                'template' => '<div class="icheck-primary remember-container">{input}{label}</div>',
-                'labelOptions' => ['class' => 'remember-label'],
-                'uncheck' => null
+            <?= $form->field($model, 'rememberMe', [
+                'template' => '<div class="form-check remember-container">{input}{label}</div>',
+            ])->checkbox([
+                'label' => 'Remember me',
+                'labelOptions' => ['class' => 'form-check-label ms-2'],
+                'class' => 'form-check-input',
+                'uncheck' => null,
             ]) ?>
 
             <?= Html::submitButton('Iniciar Sessão', ['class' => 'btn btn-primary btn-block rounded-btn mt-3']) ?>

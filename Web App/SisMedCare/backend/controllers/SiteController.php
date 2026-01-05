@@ -144,10 +144,10 @@ class SiteController extends Controller
             if (!isset($roles['admin']) && !isset($roles['secretary'])) {
                 Yii::$app->user->logout();
                 Yii::$app->session->setFlash(
-                    'error',
+                    'error-login',
                     'Apenas administradores e secretárias podem aceder ao Backend.'
                 );
-                return $this->refresh();
+                return $this->redirect(['login']);
             }
             return $this->goBack();
         }
