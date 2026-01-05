@@ -10,19 +10,6 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
-/* Register external CSS/JS via Yii view methods */
-$this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css');
-$this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css');
-$this->registerCssFile('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css');
-$this->registerJsFile('https://code.jquery.com/jquery-3.6.0.min.js', ['position' => \yii\web\View::POS_END]);
-$this->registerJsFile('https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js', ['position' => \yii\web\View::POS_END]);
-// Per-page CSS
-$this->registerCssFile('@web/css/site.css');
-// Main template stylesheet (registered instead of static link)
-$this->registerCssFile('@web/css/style.css');
-
-
-
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -32,7 +19,19 @@ AppAsset::register($this);
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <?php $this->registerCsrfMetaTags() ?>
-        <title><?= Html::encode($this->title) ?></title>
+        <link rel="icon" href="<?= Yii::getAlias('@web') ?>/img/SisMedCare_Logo.png" type="image/png" />
+        <title>
+        <?php 
+            // Se tiver na homepage mete este titulo
+            if (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index') {
+                echo 'SisMedCare';
+            } else {
+                // Caso contrário, deixa o título dinâmico normal
+                echo Html::encode($this->title);
+            }
+        ?>
+</title>
+
         <?php $this->head() ?>
     </head>
     <body class="d-flex flex-column h-100">
@@ -52,7 +51,7 @@ AppAsset::register($this);
         /* Botões de navegação */
         $menuItems = [
                 ['label' => 'Home', 'url' => ['/site/index']],
-                ['label' => 'Contact', 'url' => ['/site/contact'], 'linkOptions' => ['class' => 'nav-link me-5']],
+                ['label' => 'Perfil', 'url' => ['/medico/perfil'], 'linkOptions' => ['class' => 'nav-link me-5']],
         ];
 
         echo Nav::widget([
@@ -94,7 +93,7 @@ AppAsset::register($this);
                             <?= Html::img('@web/img/SisMedCare_Logo.png', ['class' => 'img-fluid footer-img', 'alt' => 'Logo SisMedCare']) ?>
                         </div>
                         <br>
-                        <p class="mb-4">No dolore ipsum accusam no lorem. Invidunt sed clita kasd clita et et dolor sed dolor</p>
+                        <p class="mb-4">SisMedCare é uma plataforma dedicada a conectar profissionais de saúde com pacientes, oferecendo uma gestão eficiente de consultas, medicações e prescrições de medicamentos.</p>
                         <h6 class="cor-secundaria-smc text-uppercase mt-4 mb-3">Redes Sociais</h6>
                         <div class="d-flex gap-2">
                         <a class="social-icon twitter" href="#"><i class="fab fa-twitter"></i></a>
@@ -102,13 +101,11 @@ AppAsset::register($this);
                         <a class="social-icon linkedin" href="#"><i class="fab fa-linkedin-in"></i></a>
                         <a class="social-icon instagram" href="#"><i class="fab fa-instagram"></i></a>
                     </div>
-
                     </div>
                     <div class="col-lg-3 col-md-6 separador-centrar-footer">
                         <h4 class="d-inline-block cor-secundaria-smc text-uppercase mb-4">SisMedCare</h4>
                         <div class="d-flex flex-column justify-content-start">
                             <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Home</a>
-                            <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Contacte-nos</a>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
@@ -128,7 +125,7 @@ AppAsset::register($this);
                 </div>
             </div>
         </div>
-        </Footer>
+    </footer>
 
     <?php $this->endBody() ?>
     </body>
