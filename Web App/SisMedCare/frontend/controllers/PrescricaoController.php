@@ -99,6 +99,10 @@ class PrescricaoController extends Controller
             throw new \yii\web\NotFoundHttpException('Consulta não encontrada.');
         }
 
+        if ($consulta->estado !== \common\models\Consulta::ESTADO_AGENDADA) {
+            throw new \yii\web\ForbiddenHttpException('Não é possível criar uma prescrição para uma consulta que não está agendada.');
+        }
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->medico_id = $consulta->medico_id;

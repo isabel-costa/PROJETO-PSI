@@ -106,6 +106,10 @@ class ConsultaController extends Controller
     {
         $model = $this->findModel($id);
 
+        if ($model->estado !== Consulta::ESTADO_AGENDADA) {
+            throw new \yii\web\ForbiddenHttpException('Não é possível editar consultas que não estão agendadas.');
+        }
+
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }

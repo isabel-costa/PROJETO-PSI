@@ -1,11 +1,20 @@
 <?php
 use yii\helpers\Html;
+use yii\bootstrap4\Alert;
 ?>
 
 <div class="login-wrapper">
     <div class="card login-card">
         <div class="card-body login-card-body">
             <p class="login-box-msg login-title">Iniciar Sessão</p>
+
+            <?php if (Yii::$app->session->hasFlash('error')): ?>
+                <?= Alert::widget([
+                    'options' => ['class' => 'alert-danger'],
+                    'body' => Yii::$app->session->getFlash('error'),
+                    'closeButton' => ['label' => '&times;'],
+                ]) ?>
+            <?php endif; ?>
 
             <?php $form = \yii\bootstrap4\ActiveForm::begin(['id' => 'login-form']) ?>
 
