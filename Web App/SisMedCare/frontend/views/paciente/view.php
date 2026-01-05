@@ -121,7 +121,8 @@ $previousUrl = Yii::$app->request->referrer ?: ['/site/index'];
         <div class="linha">
             <div>
                 <label>Email</label>
-                <input type="text" value="<?= valor($model, 'email') ?>" disabled>
+                <input type="text"
+                    value="<?= $model && $model->user ? Html::encode($model->user->email) : '—' ?>" disabled>
             </div>
         </div>
 
