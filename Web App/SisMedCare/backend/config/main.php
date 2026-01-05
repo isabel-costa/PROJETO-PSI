@@ -80,6 +80,7 @@ return [
                         'GET futuras' => 'futuras',
                         'GET passadas' => 'passadas',
                         'POST solicitar' => 'solicitar',
+                        'PUT {id}' => 'update',
                         'DELETE {id}' => 'delete'
                     ],
                 ],
@@ -91,7 +92,13 @@ return [
                         'GET' => 'view',
                         'PUT' => 'update',
                         'GET alergias' => 'alergias',
-                        'GET doencas' => 'doencas'
+                        'POST alergias' => 'create-alergias',
+                        'PUT alergias' => 'update-alergias',
+                        'DELETE alergias' => 'delete-alergias',
+                        'GET doencas' => 'doencas',
+                        'POST doencas' => 'create-doencas',
+                        'PUT doencas' => 'update-doencas',
+                        'DELETE doencas' => 'delete-doencas'
                     ],
                 ],
                 [

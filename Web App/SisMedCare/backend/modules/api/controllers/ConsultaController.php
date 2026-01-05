@@ -19,7 +19,7 @@ class ConsultaController extends ActiveController
 
         $behaviors['authenticator'] = [
             'class' => \yii\filters\auth\HttpBasicAuth::class,
-            'only' => ['view', 'futuras', 'passadas', 'solicitar', 'delete'],
+            'only' => ['view', 'futuras', 'passadas', 'solicitar', 'delete', 'update'],
             'auth' => function ($username, $password) {
                 $user = \common\models\User::findByUsername($username);
                 if ($user && $user->validatePassword($password)) {
@@ -30,6 +30,15 @@ class ConsultaController extends ActiveController
         ];
 
         return $behaviors;
+    }
+        
+    public function actions()
+    {
+        $actions = parent::actions();
+
+            unset($actions['update']);
+
+        return $actions;
     }
 
     public function actionView($id)
@@ -93,6 +102,7 @@ class ConsultaController extends ActiveController
         $consulta->paciente_id = Yii::$app->user->identity->paciente->id;
         $consulta->medico_id = $medico->id;
         $consulta->data_consulta = $request['data_consulta'];
+        $consulta->estado = 'pendente';
 
         if (!$consulta->save()) {
             return ['error' => $consulta->getErrors()];
@@ -122,6 +132,39 @@ class ConsultaController extends ActiveController
             ],
             'data_consulta' => $consulta->data_consulta
         ];
+    }
+
+    /** Atualizar uma consulta
+     * PUT /consulta/{id}
+     */
+    public function actionUpdate($id)
+    {
+        $consulta = Consulta::findOne($id);
+
+        if (!$consulta) {
+            Yii::$app->response->statusCode = 404;
+            return ['error' => 'Consulta não encontrada'];
+        }
+
+        $request = Yii::$app->request->bodyParams;
+        $fields = ['data_consulta', 'estado', 'observacoes'];
+
+        // Só atualiza os campos permitidos
+        foreach ($fields as $field) {
+            if (isset($request[$field])) {
+                $consulta->$field = $request[$field];
+            }
+        }
+
+        if (!$consulta->save()) {
+            Yii::$app->response->statusCode = 400;
+            return [
+                'error' => 'Erro ao atualizar consulta',
+                'details' => $consulta->getErrors()
+            ];
+        }
+
+        return ['success' => true, 'message' => 'Consulta atualizada com sucesso'];
     }
 
     /**
