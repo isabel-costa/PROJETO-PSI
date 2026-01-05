@@ -6,8 +6,12 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var common\models\Consulta $model */
 /** @var yii\widgets\ActiveForm $form */
+$previousUrl = Yii::$app->request->referrer ?: ['/site/index'];
 ?>
 
+<p>
+    <?= Html::a('<span style="display:inline-block; transform: rotate(180deg); margin-right: 6px;">⤷</span> Voltar',$previousUrl,['class' => 'btn-voltar-smc']) ?>
+</p>
 <div class="consulta-form py-5">
 
     <h2 class="text-center mb-4">Editar Consulta</h2>
