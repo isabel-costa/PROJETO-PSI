@@ -16,7 +16,10 @@ $this->registerCssFile('@web/css/site.css', ['depends' => [\yii\web\YiiAsset::cl
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <link rel="icon" href="<?= Yii::getAlias('@web') ?>/img/SisMedCare_Logo.png" type="image/png" />
+    <title>
+        <?= Html::encode($this->title ?: 'SisMedCare') ?>
+    </title>
     <?php $this->head() ?>
 </head>
 <body class="d-flex flex-column h-100">

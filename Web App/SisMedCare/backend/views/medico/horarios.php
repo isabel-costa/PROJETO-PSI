@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Horários de Médicos';
+$this->title = 'Horário de Médicos';
 ?>
 <div class="container-fluid" style="margin-top: -100px;">
 

@@ -126,6 +126,7 @@ nav.navbar-smc {
     color: #fff;
     border: none;
     transition: all 0.3s ease;
+    margin-left: 2rem;
 }
 
 /* Botão de login da navbar com hover / rato pressionado */

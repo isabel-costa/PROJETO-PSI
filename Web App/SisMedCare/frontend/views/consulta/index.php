@@ -82,7 +82,7 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootst
                     'class' => ActionColumn::class,
                     'header' => 'Ações',
                     'template' => '{view} {update}',
-                    'contentOptions' => ['class' => 'text-center'],
+                    'contentOptions' => ['class' => 'text-left'],
                     'buttons' => [
                         'view' => fn($url, $model) => Html::a(
                             '<i class="bi bi-eye"></i>',

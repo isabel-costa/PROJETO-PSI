@@ -559,14 +559,19 @@ body {
 .remember-container {
     display: flex;
     align-items: center;
+    margin-top: 10px;
 }
 
-.remember-label {
+.remember-container .form-check-input {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+}
+
+.remember-container .form-check-label {
     font-weight: 500;
-    margin-left: 8px;
-    user-select: none;
 }
 
 .mt-3 {
-    margin-top: 1rem !important;
+    margin-top: 1rem;
 }

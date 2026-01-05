@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Pedidos de Marcação';
+$this->title = 'Pedidos de Consulta';
 ?>
 <div id="mqtt-modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:2000;">
     <div id="mqtt-modal" style="max-width:520px; margin:80px auto; background:#fff; border-radius:8px; box-shadow:0 10px 30px rgba(0,0,0,0.2); padding:18px; font-family:inherit;">
