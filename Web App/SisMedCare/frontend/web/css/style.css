@@ -1211,3 +1211,101 @@ nav.navbar-smc {
     border-color: #198754;
     color: #fff;
 }
+
+/* ============================= */
+/* Medico - view */
+/* ============================= */
+
+.medico-view {
+    background: var(--secundaria-smc);
+    max-width: 900px;
+    border-radius: 20px;
+    padding: 30px;
+    margin: 40px auto;
+    color: #000;
+}
+
+.medico-dados {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Linha 1: Nome Completo */
+.linha1 {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nome-medico {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.nome-medico label {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 6px;
+}
+
+/* Linha 2: Especialidade + Cédula + Horário */
+.linha2 {
+    display: flex;
+    gap: 20px;
+}
+
+.especialidade-medico,
+.cedula-medico {
+    flex: 1 1 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.especialidade-medico label,
+.cedula-medico label {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.horario-medico {
+    flex: 2 1 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.horario-medico label {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+/* Linha 3: Telemóvel + NIF */
+.linha3 {
+    display: flex;
+    gap: 20px;
+}
+
+.telemovel-medico,
+.nif-medico {
+    flex: 1 1 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.telemovel-medico label,
+.nif-medico label {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.medico-dados input[disabled] {
+    border-radius: 6px;
+    background-color: #fff;
+    border: 1px solid #999;
+    padding: 8px 12px;
+    font-size: 1rem;
+}

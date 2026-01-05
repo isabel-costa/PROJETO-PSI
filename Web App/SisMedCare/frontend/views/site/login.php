@@ -12,7 +12,7 @@ $previousUrl = Yii::$app->request->referrer ?: ['/site/index'];
 ?>
 
 <p>
-    <?= Html::a('← Voltar', $previousUrl, ['class' => 'btn-voltar-smc']) ?>
+    <?= Html::a('<span style="display:inline-block; transform: rotate(180deg); margin-right: 6px;">⤷</span> Voltar',$previousUrl,['class' => 'btn-voltar-smc']) ?>
 </p>
 <div class="site-login-wrapper">
     <div class="site-login" style="max-width: 400px; margin: 0 auto; padding: 20px;">
