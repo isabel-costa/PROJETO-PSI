@@ -26,7 +26,7 @@ class LoginCest
 
     public function _before(FunctionalTester $I)
     {
-        $I->amOnRoute('site/login');
+        $I->amOnPage('site/login');
     }
 
     protected function formParams($login, $password)
@@ -46,7 +46,7 @@ class LoginCest
 
     public function checkWrongPassword(FunctionalTester $I)
     {
-        $I->submitForm('#login-form', $this->formParams('admin', 'wrong'));
+        $I->submitForm('#login-form', $this->formParams('medico1', 'wrong'));
         $I->seeValidationError('Incorrect username or password.');
     }
 
@@ -58,9 +58,8 @@ class LoginCest
 
     public function checkValidLogin(FunctionalTester $I)
     {
-        $I->submitForm('#login-form', $this->formParams('erau', 'password_0'));
-        $I->see('Logout (erau)', 'form button[type=submit]');
-        $I->dontSeeLink('Login');
-        $I->dontSeeLink('Signup');
+        $I->submitForm('#login-form', $this->formParams('medico1', 'password123'));
+        $I->see('Logout (medico1)', 'form button[type=submit]');
+        $I->dontSeeLink('Iniciar Sessão');
     }
 }

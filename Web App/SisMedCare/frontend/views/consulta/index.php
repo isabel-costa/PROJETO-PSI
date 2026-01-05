@@ -84,16 +84,22 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootst
                     'template' => '{view} {update}',
                     'contentOptions' => ['class' => 'text-center'],
                     'buttons' => [
-                        'view' => fn($url) => Html::a(
+                        'view' => fn($url, $model) => Html::a(
                             '<i class="bi bi-eye"></i>',
                             $url,
                             ['class' => 'btn btn-sm btn-outline-secondary me-1', 'title' => 'Ver']
                         ),
-                        'update' => fn($url) => Html::a(
-                            '<i class="bi bi-pencil"></i>',
-                            $url,
-                            ['class' => 'btn btn-sm btn-outline-primary', 'title' => 'Editar']
-                        ),
+                        'update' => function($url, $model) {
+
+                            if (strtolower($model->estado) === 'agendada') {
+                                return Html::a(
+                                    '<i class="bi bi-pencil"></i>',
+                                    $url,
+                                    ['class' => 'btn btn-sm btn-outline-primary', 'title' => 'Editar']
+                                );
+                            }
+                            return null;
+                        },
                     ],
                 ],
 
@@ -102,11 +108,14 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootst
                     'format' => 'raw',
                     'contentOptions' => ['style' => 'width: 170px'],
                     'value' => function ($model) {
-                        return Html::a(
-                            '<i class="bi bi-journal-medical"></i> Criar',
-                            ['prescricao/create', 'consulta_id' => $model->id],
-                            ['class' => 'btn btn-sm btn-outline-success']
-                        );
+                        if ($model->estado === \common\models\Consulta::ESTADO_AGENDADA) {
+                            return Html::a(
+                                '<i class="bi bi-journal-medical"></i> Criar',
+                                ['prescricao/create', 'consulta_id' => $model->id],
+                                ['class' => 'btn btn-sm btn-outline-success']
+                            );
+                        }
+                        return '<span class="text-muted">Não disponível</span>';
                     },
                 ],
             ],

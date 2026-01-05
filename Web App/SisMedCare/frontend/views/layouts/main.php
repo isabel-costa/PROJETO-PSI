@@ -51,8 +51,13 @@ AppAsset::register($this);
         /* Botões de navegação */
         $menuItems = [
                 ['label' => 'Home', 'url' => ['/site/index']],
-                ['label' => 'Perfil', 'url' => ['/medico/perfil'], 'linkOptions' => ['class' => 'nav-link me-5']],
         ];
+        if (!Yii::$app->user->isGuest) {
+            $roles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+            if (isset($roles['doctor'])) {
+                $menuItems[] = ['label' => 'Perfil', 'url' => ['/medico/perfil'], 'linkOptions' => ['class' => 'nav-link me-5']];
+            }
+        }
 
         echo Nav::widget([
                 'options' => ['class' => 'navbar-nav ms-auto mb-2 mb-md-0'],

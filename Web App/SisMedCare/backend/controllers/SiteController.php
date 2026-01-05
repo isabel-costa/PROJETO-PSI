@@ -136,7 +136,19 @@ class SiteController extends Controller
         $this->layout = 'blank';
 
         $model = new LoginForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+            $roles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+
+            if (!isset($roles['admin']) && !isset($roles['secretary'])) {
+                Yii::$app->user->logout();
+                Yii::$app->session->setFlash(
+                    'error',
+                    'Apenas administradores e secretárias podem aceder ao Backend.'
+                );
+                return $this->refresh();
+            }
             return $this->goBack();
         }
 
