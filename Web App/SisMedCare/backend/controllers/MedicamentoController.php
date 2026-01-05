@@ -105,9 +105,10 @@ class MedicamentoController extends Controller
                 if ($model->save()) {
                     Yii::$app->session->setFlash('success', 'Medicamento criado com sucesso.');
                     return $this->redirect(['view', 'id' => $model->id]);
-                } else {
-                    Yii::$app->session->setFlash('error', 'Erro ao criar medicamento.');
                 }
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
 
             } else {
                 Yii::$app->session->setFlash('error', 'Erro ao carregar os dados do formulário.');
@@ -139,9 +140,10 @@ class MedicamentoController extends Controller
                 if ($model->save()) {
                     Yii::$app->session->setFlash('success', 'Medicamento atualizado com sucesso.');
                     return $this->redirect(['view', 'id' => $model->id]);
-                } else {
-                    Yii::$app->session->setFlash('error', 'Erro ao atualizar medicamento.');
                 }
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
 
             } else {
                 Yii::$app->session->setFlash('error', 'Erro ao carregar os dados do formulário.');

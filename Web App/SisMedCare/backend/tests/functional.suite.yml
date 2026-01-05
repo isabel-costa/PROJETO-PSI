@@ -2,4 +2,10 @@ suite_namespace: backend\tests\functional
 actor: FunctionalTester
 modules:
     enabled:
-        - Yii2
+        - Yii2:
+            part: [fixtures, orm, functional]
+            configFile: 'config/test.php'
+        - Asserts
+        - PhpBrowser:
+            url: http://localhost/PROJETO-PSI/Web%20App/SisMedCare/backend/web
+        

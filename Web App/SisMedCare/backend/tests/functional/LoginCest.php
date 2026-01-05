@@ -22,23 +22,34 @@ class LoginCest
         return [
             'user' => [
                 'class' => UserFixture::class,
-                'dataFile' => codecept_data_dir() . 'login_data.php'
-            ]
+                'dataFile' => codecept_data_dir() . 'login_data.php',
+            ],
         ];
     }
-    
-    /**
-     * @param FunctionalTester $I
-     */
-    public function loginUser(FunctionalTester $I)
-    {
-        $I->amOnRoute('/site/login');
-        $I->fillField('Username', 'erau');
-        $I->fillField('Password', 'password_0');
-        $I->click('login-button');
 
-        $I->see('Logout (erau)', 'form button[type=submit]');
-        $I->dontSeeLink('Login');
+    public function loginAdmin(FunctionalTester $I)
+    {
+        $I->amOnPage('/site/login');
+
+        $I->fillField('input[name="LoginForm[username]"]', 'admin');
+        $I->fillField('input[name="LoginForm[password]"]', 'password123');
+
+        $I->click('button[type=submit]');
+
+        $I->see('Sair');
+        $I->dontSeeLink('Signup');
+    }
+
+    public function loginSecretaria(FunctionalTester $I)
+    {
+        $I->amOnPage('/site/login');
+
+        $I->fillField('input[name="LoginForm[username]"]', 'secretaria1');
+        $I->fillField('input[name="LoginForm[password]"]', 'password123');
+
+        $I->click('button[type=submit]');
+
+        $I->see('Sair');
         $I->dontSeeLink('Signup');
     }
 }

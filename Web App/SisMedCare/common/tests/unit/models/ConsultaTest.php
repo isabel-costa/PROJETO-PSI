@@ -8,8 +8,7 @@ use Codeception\Test\Unit;
 
 class ConsultaTest extends Unit
 {
-    // Cria um médico fake em memória
-    private function criarMedicoFake($horario = '9:00 - 19:00')
+    protected function criarMedicoFake($horario = '9:00 - 19:00')
     {
         $medico = new Medico();
         $medico->id = 1;
@@ -17,20 +16,11 @@ class ConsultaTest extends Unit
         return $medico;
     }
 
-    // Cria uma consulta base válida
-    private function criarConsultaBase()
+    public function testEstadoInvalido()
     {
         $consulta = new Consulta();
         $consulta->medico_id = 1;
         $consulta->data_consulta = '2026-01-05 10:00:00';
-        return $consulta;
-    }
-
-    // Testar os estados
-
-    public function testEstadoInvalido()
-    {
-        $consulta = $this->criarConsultaBase();
         $consulta->estado = 'Inventado';
 
         $this->assertFalse($consulta->validate(['estado']));
@@ -38,7 +28,9 @@ class ConsultaTest extends Unit
 
     public function testEstadoValido()
     {
-        $consulta = $this->criarConsultaBase();
+        $consulta = new Consulta();
+        $consulta->medico_id = 1;
+        $consulta->data_consulta = '2026-01-05 10:00:00';
         $consulta->estado = Consulta::ESTADO_AGENDADA;
 
         $this->assertTrue($consulta->validate(['estado']));
@@ -46,25 +38,21 @@ class ConsultaTest extends Unit
 
     public function testEstadoInicial()
     {
-        $consulta = $this->criarConsultaBase();
+        $consulta = new Consulta();
+        $consulta->medico_id = 1;
+        $consulta->data_consulta = '2026-01-05 10:00:00';
 
         $consulta->validate();
 
-        $this->assertEquals(
-            Consulta::ESTADO_PENDENTE,
-            $consulta->estado
-        );
+        $this->assertEquals(Consulta::ESTADO_PENDENTE, $consulta->estado);
     }
-
-    // Testar as datas
 
     public function testNaoPermiteConsultaAoDomingo()
     {
         $consulta = new Consulta();
         $consulta->medico_id = 1;
-        $consulta->data_consulta = '2026-01-04 10:00:00'; // Domingo
+        $consulta->data_consulta = '2026-01-04 10:00:00';
 
-        // Simular a relação com a tabela médico
         $consulta->populateRelation('medico', $this->criarMedicoFake());
 
         $this->assertFalse($consulta->validate(['data_consulta']));
@@ -74,7 +62,7 @@ class ConsultaTest extends Unit
     {
         $consulta = new Consulta();
         $consulta->medico_id = 1;
-        $consulta->data_consulta = '2026-01-05 20:00:00'; // Fora do horário
+        $consulta->data_consulta = '2026-01-05 20:00:00';
 
         $consulta->populateRelation('medico', $this->criarMedicoFake('9:00 - 19:00'));
 

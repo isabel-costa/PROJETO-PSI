@@ -119,9 +119,11 @@ class MedicoController extends Controller
             $model->user_id = $user->id;
 
             if (!$model->save()) {
-                Yii::$app->session->setFlash('error', 'Erro ao guardar dados do médico.');
-                $user->delete(); // Para não deixar nenhum user órfão
-                return $this->redirect(['index']);
+                // se falhar, remove o user criado para não deixar órfão
+                $user->delete();
+                // exibe os erros do modelo
+                Yii::$app->session->setFlash('error', implode("<br>", $model->getFirstErrors()));
+                return $this->render('create', ['model' => $model]);
             }
 
             return $this->redirect(['view', 'id' => $model->id]);

@@ -44,6 +44,8 @@ class Prescricao extends \yii\db\ActiveRecord
             [['consulta_id'], 'exist', 'skipOnError' => true, 'targetClass' => Consulta::class, 'targetAttribute' => ['consulta_id' => 'id']],
             [['medico_id'], 'exist', 'skipOnError' => true, 'targetClass' => Medico::class, 'targetAttribute' => ['medico_id' => 'id']],
             [['paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::class, 'targetAttribute' => ['paciente_id' => 'id']],
+            [['data_prescricao'], 'validateDataPrescricao'],
+            [['consulta_id'], 'validateConsultaAgendada'],
         ];
     }
 
@@ -137,22 +139,34 @@ class Prescricao extends \yii\db\ActiveRecord
         return $fields;
     }
 
-    /*public function beforeSave($insert)
+    public function validateDataPrescricao($attribute)
     {
-        if (parent::beforeSave($insert)) {
-            if ($insert) {
-                $this->medico_id = Yii::$app->user->identity->medico->id;
-
-                if (!$this->paciente_id && Yii::$app->request->post('paciente_id')) {
-                    $this->paciente_id = Yii::$app->request->post('paciente_id');
-                }
-
-                if (!$this->consulta_id && Yii::$app->request->post('consulta_id')) {
-                    $this->consulta_id = Yii::$app->request->post('consulta_id');
-                }
-            }
-            return true;
+        if (!$this->consulta) {
+            return;
         }
-        return false;
-    }*/
+
+        $dataConsulta = strtotime($this->consulta->data_consulta);
+        $dataPrescricao = strtotime($this->$attribute);
+
+        if ($dataPrescricao < $dataConsulta) {
+            $this->addError(
+                $attribute,
+                'A prescrição não pode ser criada antes da data e hora da consulta.'
+            );
+        }
+    }
+
+    public function validateConsultaAgendada($attribute)
+    {
+        if (!$this->consulta) {
+            return;
+        }
+
+        if ($this->consulta->estado !== Consulta::ESTADO_AGENDADA) {
+            $this->addError(
+                $attribute,
+                'Só é possível criar prescrições para consultas com estado "agendada".'
+            );
+        }
+    }
 }

@@ -35,6 +35,7 @@ class Medicamento extends \yii\db\ActiveRecord
         return [
             [['nome', 'descricao', 'dosagem', 'fabricante'], 'required'],
             [['nome'], 'string', 'max' => 150],
+            [['nome'], 'unique', 'message' => 'Já existe um medicamento com este nome.'],
             [['descricao'], 'string', 'max' => 255],
             [['dosagem'], 'string', 'max' => 50],
             [['fabricante'], 'string', 'max' => 100],
