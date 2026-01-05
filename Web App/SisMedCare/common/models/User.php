@@ -54,12 +54,26 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'email'], 'required'],
+            [['username','password', 'email'], 'required'],
             [['username', 'email'], 'string', 'max' => 255],
             ['email', 'email'],
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if ($insert && !empty($this->password)) {
+            $this->setPassword($this->password);
+            $this->generateAuthKey();
+        }
+
+        return true;
     }
 
     public function attributeLabels()
