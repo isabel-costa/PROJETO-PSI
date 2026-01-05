@@ -4,10 +4,9 @@ bootstrap: false
 modules:
     enabled:
         - Yii2:
-            part: fixtures
+            part: [fixtures, orm, unit]
         - Asserts
         - Db:
             dsn: 'mysql:host=localhost;dbname=sismedcare_test'
             user: 'root'
             password: ''
-            cleanup: true

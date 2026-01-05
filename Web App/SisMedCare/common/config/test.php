@@ -6,6 +6,8 @@ return [
         'user' => [
             'class' => \yii\web\User::class,
             'identityClass' => 'common\models\User',
+            'enableSession' => false,
+            'loginUrl' => null,
         ],
     ],
 ];

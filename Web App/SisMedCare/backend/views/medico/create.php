@@ -5,13 +5,11 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\Medico $model */
 
-$this->title = 'Create Medico';
-$this->params['breadcrumbs'][] = ['label' => 'Medicos', 'url' => ['index']];
+$this->title = 'Criar Médico';
+$this->params['breadcrumbs'][] = ['label' => 'Médicos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="medico-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

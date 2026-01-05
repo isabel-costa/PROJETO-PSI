@@ -53,6 +53,13 @@ class Paciente extends \yii\db\ActiveRecord
             [['sexo'], 'string', 'max' => 1],
             [['telemovel'], 'string', 'max' => 20],
             [['alergias', 'doencas_cronicas'], 'string', 'max' => 255],
+
+            [['numero_utente'], 'unique', 'message' => 'Este número de utente já está registado.'],
+            [['telemovel'], 'unique', 'message' => 'Este número de telemóvel já está registado.'],
+
+            ['email', 'validateEmailUnique'],
+            ['username', 'validateUsernameUnique'],
+
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -117,6 +124,20 @@ class Paciente extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function validateEmailUnique($attribute, $params)
+    {
+        if ($this->email && User::find()->where(['email' => $this->email])->andWhere(['!=', 'id', $this->user_id])->exists()) {
+            $this->addError($attribute, 'Já existe um utilizador com este email.');
+        }
+    }
+
+    public function validateUsernameUnique($attribute, $params)
+    {
+        if ($this->username && User::find()->where(['username' => $this->username])->andWhere(['!=', 'id', $this->user_id])->exists()) {
+            $this->addError($attribute, 'Já existe um utilizador com este username.');
+        }
     }
 
 }
