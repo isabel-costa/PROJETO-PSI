@@ -6,12 +6,14 @@ use yii\helpers\Html;
 /** @var common\models\Consulta $model */
 
 $this->title = 'Detalhes da Consulta';
-$this->params['breadcrumbs'][] = ['label' => 'Consultas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$previousUrl = Yii::$app->request->referrer ?: ['/site/index'];
 
 \yii\web\YiiAsset::register($this);
 ?>
 
+<p>
+    <?= Html::a('<span style="display:inline-block; transform: rotate(180deg); margin-right: 6px;">⤷</span> Voltar',$previousUrl,['class' => 'btn-voltar-smc']) ?>
+</p>
 <div class="consulta-view py-5">
 
     <h2 class="text-center mb-4"><?= Html::encode($this->title) ?></h2>
