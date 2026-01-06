@@ -114,7 +114,7 @@ class ConsultaController extends ActiveController
 
          // Publish de mensagem no tópico pedidos-de-consulta
         $mqtt = new MqttService();
-        $formatted = "\ntópico: pedidos-de-consulta\n\n" .
+        $formatted = "\ntopico: pedidos-de-consulta\n\n" .
             "consulta_id: {$consulta->id}\n" .
             "paciente_id: {$consulta->paciente_id}\n" .
             "data_consulta: {$consulta->data_consulta}\n\n";

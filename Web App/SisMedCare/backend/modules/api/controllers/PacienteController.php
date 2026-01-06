@@ -53,8 +53,6 @@ class PacienteController extends Controller
             'morada' => $paciente->morada,
             'altura' => $paciente->altura,
             'peso' => $paciente->peso,
-            'alergias' => $paciente->alergias,
-            'doencas_cronicas' => $paciente->doencas_cronicas,
         ];
     }
 

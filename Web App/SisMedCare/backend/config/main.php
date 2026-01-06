@@ -1,14 +1,14 @@
 <?php
 $params = array_merge(
-    require __DIR__ . '/../../common/config/params.php',
-    require __DIR__ . '/../../common/config/params-local.php',
-    require __DIR__ . '/params.php',
-    require __DIR__ . '/params-local.php'
+    require _DIR_ . '/../../common/config/params.php',
+    require _DIR_ . '/../../common/config/params-local.php',
+    require _DIR_ . '/params.php',
+    require _DIR_ . '/params-local.php'
 );
 
 return [
     'id' => 'app-backend',
-    'basePath' => dirname(__DIR__),
+    'basePath' => dirname(_DIR_),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [
@@ -36,7 +36,6 @@ return [
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
         'session' => [
-            // this is the name of the session cookie used for login on the backend
             'name' => 'advanced-backend',
         ],
         'log' => [
@@ -76,12 +75,9 @@ return [
                     'controller' => ['api/consulta'],
                     'pluralize' => true,
                     'extraPatterns' => [
-                        'GET {id}' => 'view',
                         'GET futuras' => 'futuras',
                         'GET passadas' => 'passadas',
                         'POST solicitar' => 'solicitar',
-                        'PUT {id}' => 'update',
-                        'DELETE {id}' => 'delete'
                     ],
                 ],
                 [
@@ -120,8 +116,6 @@ return [
                     'controller' => ['api/prescricao-medicamento'],
                     'pluralize' => false,
                     'extraPatterns' => [
-                        'GET' => 'index',
-                        'GET {id}' => 'view',
                         'GET prescricao/<prescricao_id>' => 'prescricao'
                     ],
                 ],
@@ -130,8 +124,8 @@ return [
                     'controller' => ['api/registo-toma'],
                     'pluralize' => false,
                     'extraPatterns' => [
-                        'GET pendentes/{id}' => 'pendentes',
-                        'GET tomadas/{id}' => 'tomadas',
+                        'GET pendentes' => 'pendentes',
+                        'GET tomadas' => 'tomadas',
                         'POST marcar/{id}' => 'marcar'
                     ],
                 ],
