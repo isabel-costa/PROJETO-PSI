@@ -5,5 +5,4 @@ modules:
         - Filesystem
         - Yii2
         - Asserts
-        - PhpBrowser:
-            url: http://localhost/PROJETO-PSI/Web%20App/SisMedCare/frontend/web
+        

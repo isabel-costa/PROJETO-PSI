@@ -2,24 +2,13 @@
 
 return [
     [
-        'username' => 'erau',
-        'auth_key' => 'tUu1qHcde0diwUol3xeI-18MuHkkprQI',
-        // password_0
-        'password_hash' => '$2y$13$nJ1WDlBaGcbCdbNC5.5l4.sgy.OMEKCqtDQOdQ2OWpgiKRWYyzzne',
-        'password_reset_token' => 'RkD_Jw0_8HEedzLk7MM-ZKEFfYR7VbMr_1392559490',
-        'created_at' => '1392559490',
-        'updated_at' => '1392559490',
-        'email' => 'sfriesen@jenkins.info',
-    ],
-    [
-        'username' => 'test.test',
-        'auth_key' => 'O87GkY3_UfmMHYkyezZ7QLfmkKNsllzT',
-        // Test1234
-        'password_hash' => 'O87GkY3_UfmMHYkyezZ7QLfmkKNsllzT',
-        'email' => 'test@mail.com',
-        'status' => '9',
-        'created_at' => '1548675330',
-        'updated_at' => '1548675330',
-        'verification_token' => '4ch0qbfhvWwkcuWqjN8SWRq72SOw1KYT_1548675330',
+        'id' => 1,
+        'username' => 'medico1',
+        'email' => 'medico1@example.com',
+        'auth_key' => 'n-OOLtSj-6pBqUxcQ9uzv7nM1Nw-sqBX',
+        'password_hash' => Yii::$app->security->generatePasswordHash('password123'),
+        'status' => 10,
+        'created_at' => time(),
+        'updated_at' => time(),
     ],
 ];

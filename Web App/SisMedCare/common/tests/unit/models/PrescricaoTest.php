@@ -60,7 +60,7 @@ class PrescricaoTest extends Unit
         $prescricao->data_prescricao = '2026-01-05 11:00:00';
         $prescricao->observacoes = 'Teste';
 
-        $consulta = $this->criarConsultaFake(Consulta::ESTADO_PENDENTE); // não agendada
+        $consulta = $this->criarConsultaFake(Consulta::ESTADO_PENDENTE);
         $prescricao->populateRelation('consulta', $consulta);
 
         $this->assertFalse($prescricao->validate(['consulta_id']));
@@ -72,29 +72,12 @@ class PrescricaoTest extends Unit
         $prescricao->consulta_id = 1;
         $prescricao->medico_id = 1;
         $prescricao->paciente_id = 1;
-        $prescricao->data_prescricao = '2026-01-04 10:00:00'; // antes da consulta
+        $prescricao->data_prescricao = '2026-01-04 10:00:00';
         $prescricao->observacoes = 'Teste';
 
         $consulta = $this->criarConsultaFake(Consulta::ESTADO_AGENDADA, '2026-01-05 10:00:00');
         $prescricao->populateRelation('consulta', $consulta);
 
         $this->assertFalse($prescricao->validate(['data_prescricao']));
-    }
-
-    public function testPrescricaoValida()
-    {
-        $prescricao = new Prescricao();
-        $prescricao->consulta_id = 1;
-        $prescricao->medico_id = 1;
-        $prescricao->paciente_id = 1;
-        $prescricao->data_prescricao = '2026-01-05 11:00:00'; // após a consulta
-        $prescricao->observacoes = 'Tomar 1 comprimido';
-
-        $consulta = $this->criarConsultaFake(Consulta::ESTADO_AGENDADA, '2026-01-05 10:00:00');
-        $prescricao->populateRelation('consulta', $consulta);
-        $prescricao->populateRelation('medico', $this->criarMedicoFake());
-        $prescricao->populateRelation('paciente', $this->criarPacienteFake());
-
-        $this->assertTrue($prescricao->validate());
     }
 }

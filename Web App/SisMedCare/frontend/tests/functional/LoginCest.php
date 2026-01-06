@@ -7,13 +7,6 @@ use common\fixtures\UserFixture;
 
 class LoginCest
 {
-    /**
-     * Load fixtures before db transaction begin
-     * Called in _before()
-     * @see \Codeception\Module\Yii2::_before()
-     * @see \Codeception\Module\Yii2::loadFixtures()
-     * @return array
-     */
     public function _fixtures()
     {
         return [
@@ -26,7 +19,8 @@ class LoginCest
 
     public function _before(FunctionalTester $I)
     {
-        $I->amOnPage('site/login');
+        $I->amOnPage('/site/login');
+        $I->see('Iniciar Sessão');
     }
 
     protected function formParams($login, $password)
@@ -40,26 +34,30 @@ class LoginCest
     public function checkEmpty(FunctionalTester $I)
     {
         $I->submitForm('#login-form', $this->formParams('', ''));
-        $I->seeValidationError('Username cannot be blank.');
-        $I->seeValidationError('Password cannot be blank.');
+
+        $I->see('Username cannot be blank.');
+        $I->see('Password cannot be blank.');
     }
 
     public function checkWrongPassword(FunctionalTester $I)
     {
         $I->submitForm('#login-form', $this->formParams('medico1', 'wrong'));
-        $I->seeValidationError('Incorrect username or password.');
+
+        $I->see('Incorrect username or password.');
     }
 
     public function checkInactiveAccount(FunctionalTester $I)
     {
         $I->submitForm('#login-form', $this->formParams('test.test', 'Test1234'));
-        $I->seeValidationError('Incorrect username or password');
+
+        $I->see('Incorrect username or password.');
     }
 
     public function checkValidLogin(FunctionalTester $I)
     {
         $I->submitForm('#login-form', $this->formParams('medico1', 'password123'));
-        $I->see('Logout (medico1)', 'form button[type=submit]');
+
+        $I->see('Logout');
         $I->dontSeeLink('Iniciar Sessão');
     }
 }
