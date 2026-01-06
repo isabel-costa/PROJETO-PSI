@@ -116,18 +116,17 @@ $this->title = 'Pedidos de Consulta';
     </div>
 </div>
 
-    <?php if (Yii::$app->session->hasFlash('success')): ?>
+    <?php if (Yii::$app->session->hasFlash('consulta-success')): ?>
         <div class="alert alert-success">
-            <?= Yii::$app->session->getFlash('success') ?>
+            <?= Yii::$app->session->getFlash('consulta-success') ?>
         </div>
     <?php endif; ?>
 
-    <?php if (Yii::$app->session->hasFlash('error')): ?>
+    <?php if (Yii::$app->session->hasFlash('consulta-error')): ?>
         <div class="alert alert-danger">
-            <?= Yii::$app->session->getFlash('error') ?>
+            <?= Yii::$app->session->getFlash('consulta-error') ?>
         </div>
     <?php endif; ?>
-
 
 <?php
 $checkUrl = Url::to(['consulta/check-novos-pedidos']);

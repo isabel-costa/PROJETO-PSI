@@ -159,10 +159,17 @@ class ConsultaController extends Controller
         }
 
         $model->estado = 'agendada';
+
         if ($model->save(false, ['estado'])) {
-            Yii::$app->session->setFlash('success', 'Consulta aprovada com sucesso.');
+            Yii::$app->session->setFlash(
+                'consulta-success',
+                'Consulta aprovada com sucesso.'
+            );
         } else {
-            Yii::$app->session->setFlash('error', 'Erro ao aprovar a consulta.');
+            Yii::$app->session->setFlash(
+                'consulta-error',
+                'Erro ao aprovar a consulta.'
+            );
         }
         return $this->redirect(['index']);
     }
