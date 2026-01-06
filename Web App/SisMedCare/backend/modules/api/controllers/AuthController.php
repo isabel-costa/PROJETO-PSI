@@ -17,13 +17,6 @@ class AuthController extends Controller
         $behaviors['authenticator'] = [
             'class' => \yii\filters\auth\HttpBasicAuth::class,
             'except' => ['login', 'registar'],
-            'auth' => function ($username, $password) {
-                $user = \common\models\User::findByUsername($username);
-                if ($user && $user->validatePassword($password)) {
-                    return $user;
-                }
-                return null;
-            },
         ];
 
         return $behaviors;
