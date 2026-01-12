@@ -16,10 +16,12 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.menu_navegacao_fragments);
 
-        // Fragment inicial
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new HomepageFragment())
-                .commit();
+        // Fragment inicial -> HOMEPAGE
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new HomepageFragment())
+                    .commit();
+        }
 
         bottomNav.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
@@ -38,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, selectedFragment)
                         .commit();
+                return true;
             }
 
-            return true;
+            return false;
         });
-
     }
 }

@@ -42,22 +42,21 @@
 
         <!-- LABEL EMAIL -->
         <TextView
-            android:id="@+id/lb_Email"
+            android:id="@+id/lb_Username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="E-mail"
+            android:text="Username"
             android:textSize="14sp" />
 
         <!-- INPUT EMAIL -->
         <EditText
-            android:id="@+id/txt_Email"
+            android:id="@+id/txt_Username"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_txt_redondo"
-            android:hint="nome@exemplo.com"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:padding="10dp" />
 
         <!-- LABEL PASSWORD -->
@@ -92,7 +91,8 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/Cor_Padrao"
             android:text="Iniciar Sessão"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:onClick="onClickLogin" />
 
         <!-- TEXTO EM LINHA -->
         <LinearLayout

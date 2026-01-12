@@ -42,7 +42,6 @@ class PacienteController extends Controller
         }
 
         return [
-            'user_id' => $user->id,
             'username' => $user->username,
             'email' => $user->email,
             'nome_completo' => $paciente->nome_completo,

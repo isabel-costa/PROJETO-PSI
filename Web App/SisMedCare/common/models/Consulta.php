@@ -165,28 +165,6 @@ class Consulta extends \yii\db\ActiveRecord
             ->all();
     }
 
-    public function fields()
-    {
-        $fields = parent::fields();
-        unset($fields['medico_id'], $fields['paciente_id']);
-
-        $fields['medico'] = function ($model) {
-            return $model->medico ? [
-                'nome' => $model->medico->nome_completo,
-                'cedula_numero' => $model->medico->cedula_numero,
-            ] : null;
-        };
-
-        $fields['paciente'] = function ($model) {
-            return $model->paciente ? [
-                'nome' => $model->paciente->nome_completo,
-                'numero_utente' => $model->paciente->numero_utente,
-            ] : null;
-        };
-
-        return $fields;
-    }
-
     public function validateDataConsulta($attribute)
     {
         if (empty($this->$attribute) || empty($this->medico_id)) {

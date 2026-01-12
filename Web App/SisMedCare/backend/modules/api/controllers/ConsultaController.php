@@ -53,12 +53,6 @@ class ConsultaController extends ActiveController
 
         return [
             'id' => $consulta->id,
-            'paciente_id' => $consulta->paciente_id,
-            'medico' => [
-                'id' => $consulta->medico->id,
-                'nome_completo' => $consulta->medico->nome_completo,
-                'especialidade' => $consulta->medico->especialidade,
-            ],
             'data_consulta' => $consulta->data_consulta,
             'estado' => $consulta->estado,
             'observacoes' => $consulta->observacoes,
