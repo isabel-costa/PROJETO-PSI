@@ -130,12 +130,25 @@ class AuthController extends Controller
         }
 
         return [
-            'success' => true,
-            'message' => 'Login efetuado com sucesso',
-            'user_id' => $user->id,
+        'success' => true,
+        'message' => 'Login efetuado com sucesso',
+        'user' => [
+            'username' => $user->username,
+            'email' => $user->email,
             'auth_key' => $user->auth_key,
-            'paciente_id' => $paciente->id,
-            'nome_completo' => $paciente->nome_completo,
-        ];
+            'paciente' => [
+                'nome_completo' => $paciente->nome_completo,
+                'sexo' => $paciente->sexo,
+                'numero_utente' => $paciente->numero_utente,
+                'telemovel' => $paciente->telemovel,
+                'morada' => $paciente->morada,
+                'altura' => $paciente->altura,
+                'peso' => $paciente->peso,
+                'alergias' => $paciente->alergias,
+                'doencas_cronicas' => $paciente->doencas_cronicas,
+                'data_registo' => $paciente->data_registo,
+            ]
+        ]
+    ];
     }
 }

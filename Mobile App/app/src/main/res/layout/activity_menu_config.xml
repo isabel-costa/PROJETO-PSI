@@ -90,7 +90,8 @@
             android:layout_marginTop="35dp"
             android:backgroundTint="@color/Cor_Padrao"
             android:text="Guardar Configuração"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:onClick="onClickGuardarConfiguracao" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

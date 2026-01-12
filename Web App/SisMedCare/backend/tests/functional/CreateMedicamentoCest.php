@@ -42,7 +42,7 @@ final class CreateMedicamentoCest
 
         $I->amOnPage('/medicamento/create');
 
-        $I->fillField('input[name="Medicamento[nome]"]', 'Ibuprofeno');
+        $I->fillField('input[name="Medicamento[nome]"]', 'Clavamox');
         $I->fillField('input[name="Medicamento[descricao]"]', 'Anti-inflamatório');
         $I->fillField('input[name="Medicamento[dosagem]"]', '400mg');
         $I->fillField('input[name="Medicamento[fabricante]"]', 'Farmácia Teste');

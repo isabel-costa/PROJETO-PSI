@@ -153,24 +153,36 @@ class ConsultaController extends Controller
 
     public function actionAprovarConsulta($id)
     {
-        $model = Consulta::findOne($id);
-        if (!$model) {
-            throw new NotFoundHttpException("Consulta não encontrada.");
+        $consulta = Consulta::findOne($id);
+
+        if (!$consulta) {
+            Yii::$app->session->setFlash('consulta-error', 'Consulta não encontrada.');
+            return $this->redirect(['index']);
         }
 
-        $model->estado = 'agendada';
+        $consulta->estado = Consulta::ESTADO_AGENDADA;
 
-        if ($model->save(false, ['estado'])) {
-            Yii::$app->session->setFlash(
-                'consulta-success',
-                'Consulta aprovada com sucesso.'
-            );
-        } else {
+        if (!$consulta->save()) {
+            $erros = [];
+            foreach ($consulta->getErrors() as $campo => $mensagens) {
+                foreach ($mensagens as $msg) {
+                    $erros[] = $msg;
+                }
+            }
+
             Yii::$app->session->setFlash(
                 'consulta-error',
-                'Erro ao aprovar a consulta.'
+                implode('<br>', $erros)
             );
+
+            return $this->redirect(['index']);
         }
+
+        Yii::$app->session->setFlash(
+            'consulta-success',
+            'Consulta aprovada com sucesso.'
+        );
+
         return $this->redirect(['index']);
     }
 

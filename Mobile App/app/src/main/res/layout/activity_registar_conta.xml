@@ -36,17 +36,18 @@
             android:layout_marginTop="12dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/campoNomeCompleto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputNomeCompleto"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:paddingVertical="4dp" />
+                android:paddingVertical="4dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Data de nascimento -->
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,13 +84,26 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- Masculino/Feminino/Outros -->
-            <RadioButton android:text="@string/rb_genero_masculino" android:layout_height="wrap_content" android:layout_width="wrap_content"/>
-            <RadioButton android:text="@string/rb_genero_feminino" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <RadioButton android:text="@string/rb_genero_outros" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <RadioButton
+                android:id="@+id/rbMasculino"
+                android:text="@string/rb_genero_masculino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioButton
+                android:id="@+id/rbFeminino"
+                android:text="@string/rb_genero_feminino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioButton
+                android:id="@+id/rbOutros"
+                android:text="@string/rb_genero_outros"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </RadioGroup>
 
-        <!-- LinearLayout para ter Nº utente + Telemóvel lado a lado -->
+        <!-- Nº utente + Telemóvel lado a lado -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -111,10 +125,12 @@
                     android:textStyle="bold"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/campoNumeroUtente"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputNumeroUtente"
                         android:layout_width="match_parent"
                         android:layout_height="34dp"
                         android:paddingVertical="4dp"
@@ -137,17 +153,18 @@
                     android:textStyle="bold"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/campoTelemovel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputTelemovel"
                         android:layout_width="match_parent"
                         android:layout_height="34dp"
                         android:paddingVertical="4dp"
                         android:inputType="phone"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-
         </LinearLayout>
 
         <!-- Morada -->
@@ -164,9 +181,31 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputMorada"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:paddingVertical="4dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Username -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/campoUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputUsername"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:paddingVertical="4dp"
+                android:inputType="textPersonName"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Email -->
@@ -177,15 +216,14 @@
             android:textStyle="bold"
             android:layout_marginTop="12dp"/>
 
-        <!-- Hint no email -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/campoEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/tf_hint_email"
             android:layout_marginTop="1dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputEmail"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:paddingVertical="4dp"
@@ -201,10 +239,12 @@
             android:layout_marginTop="12dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/campoPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputPassword"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:paddingVertical="4dp"
@@ -233,7 +273,6 @@
             android:orientation="horizontal"
             android:layout_marginTop="16dp">
 
-            <!-- Texto "Já tem uma conta?" -->
             <TextView
                 android:id="@+id/txtJaTemConta"
                 android:layout_width="wrap_content"
