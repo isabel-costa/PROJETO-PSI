@@ -2,7 +2,6 @@ package pt.ipleiria.estg.dei.sismedcare.modelo;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Base64;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -113,7 +112,7 @@ public class SingletonGestorAPI {
     }
 
     public String getBaseApiUrl() {
-        return "http://172.22.21.219/SisMedCare/backend/web/api";
+        return "http://10.0.2.2/PROJETO-PSI/Web%20App/SisMedCare/backend/web/api";
     }
 
     public void login(String username, String password, Context context) {
