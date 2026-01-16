@@ -112,27 +112,11 @@ class Prescricao extends \yii\db\ActiveRecord
     public function fields()
     {
         $fields = parent::fields();
-        unset($fields['medico_id'], $fields['paciente_id'], $fields['consulta_id']);
-
-        $fields['consulta'] = function ($model) {
-            return $model->consulta ? [
-                'data_consulta' => $model->consulta->data_consulta,
-                'estado' => $model->consulta->estado,
-                'observacoes' => $model->consulta->observacoes,
-            ] : null;
-        };
+        unset($fields['medico_id']);
 
         $fields['medico'] = function ($model) {
             return $model->medico ? [
                 'nome' => $model->medico->nome_completo,
-                'cedula_numero' => $model->medico->cedula_numero,
-            ] : null;
-        };
-
-        $fields['paciente'] = function ($model) {
-            return $model->paciente ? [
-                'nome' => $model->paciente->nome_completo,
-                'numero_utente' => $model->paciente->numero_utente,
             ] : null;
         };
 

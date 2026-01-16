@@ -7,16 +7,25 @@ import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import pt.ipleiria.estg.dei.sismedcare.LoginActivity;
+import pt.ipleiria.estg.dei.sismedcare.PrescricoesActivity;
 import pt.ipleiria.estg.dei.sismedcare.RegistarContaActivity;
+
+import com.android.volley.toolbox.JsonArrayRequest;
+import org.json.JSONArray;
+import org.json.JSONException;
+
 
 public class SingletonGestorAPI {
 
@@ -52,10 +61,6 @@ public class SingletonGestorAPI {
         }
         return instance;
     }
-
-    /* =========================
-       SESSÃO / AUTH
-       ========================= */
 
     private void guardarSessao(Context context, Paciente paciente, String username, String password) {
 
@@ -112,10 +117,7 @@ public class SingletonGestorAPI {
         authPassword = null;
         pacienteAutenticado = null;
 
-        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-                .edit()
-                .clear()
-                .apply();
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit().clear().apply();
     }
 
     public String getAuthHeader() {
@@ -124,10 +126,6 @@ public class SingletonGestorAPI {
         return "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
     }
 
-    /* =========================
-       GETTERS
-       ========================= */
-
     public Paciente getPacienteAutenticado() {
         return pacienteAutenticado;
     }
@@ -135,10 +133,6 @@ public class SingletonGestorAPI {
     public String getBaseApiUrl() {
         return "http://172.22.21.219/SisMedCare/backend/web/api";
     }
-
-    /* =========================
-       LOGIN
-       ========================= */
 
     public void login(String username, String password, Context context) {
         String url = getBaseApiUrl() + "/auth/login";
@@ -154,7 +148,7 @@ public class SingletonGestorAPI {
 
                         if (!obj.optBoolean("success", false)) {
                             ((LoginActivity) context).onLoginErro(
-                                    obj.optString("message", "Erro de login")
+                                    obj.optString("message", "Erro no login")
                             );
                             return;
                         }
@@ -214,10 +208,6 @@ public class SingletonGestorAPI {
         volleyQueue.add(request);
     }
 
-    /* =========================
-       REGISTO
-       ========================= */
-
     public void registarPaciente(
             Context context,
             Map<String, String> dados,
@@ -256,10 +246,6 @@ public class SingletonGestorAPI {
         volleyQueue.add(request);
     }
 
-    /* =========================
-       URLS
-       ========================= */
-
     public String getConsultasFuturasUrl() {
         return getBaseApiUrl() + "/consultas/futuras";
     }
@@ -275,4 +261,241 @@ public class SingletonGestorAPI {
     public String getAuthPassword() {
         return authPassword;
     }
+
+    public interface ConsultasListener {
+        void onSuccess(List<Consulta> consultas);
+        void onError(String erro);
+    }
+
+    public void getConsultasFuturas(Context context, ConsultasListener listener) {
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET,
+                getConsultasFuturasUrl(),
+                null,
+                response -> listener.onSuccess(parseConsultas(response)),
+                error -> listener.onError("Erro ao carregar consultas futuras")
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", getAuthHeader());
+                return headers;
+            }
+        };
+
+        volleyQueue.add(request);
+    }
+
+    public void getConsultasPassadas(Context context, ConsultasListener listener) {
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET,
+                getConsultasPassadasUrl(),
+                null,
+                response -> listener.onSuccess(parseConsultas(response)),
+                error -> listener.onError("Erro ao carregar consultas passadas")
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", getAuthHeader());
+                return headers;
+            }
+        };
+
+        volleyQueue.add(request);
+    }
+
+    private List<Consulta> parseConsultas(JSONArray response) {
+        List<Consulta> lista = new ArrayList<>();
+
+        for (int i = 0; i < response.length(); i++) {
+            try {
+                JSONObject obj = response.getJSONObject(i);
+
+                Consulta c = new Consulta(
+                        obj.getInt("id"),
+                        obj.getString("data_consulta"),
+                        obj.getString("estado"),
+                        obj.optString("observacoes", "")
+                );
+
+                lista.add(c);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return lista;
+    }
+
+    public interface ConsultaDeleteListener {
+        void onSuccess();
+        void onError(String erro);
+    }
+
+    public void cancelarPedidoConsulta(int consultaId, ConsultaDeleteListener listener) {
+        String url = getBaseApiUrl() + "/consultas/" + consultaId;
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.DELETE,
+                url,
+                null,
+                response -> {
+                    if (listener != null) listener.onSuccess();
+                },
+                error -> {
+                    if (listener != null) listener.onError(error.toString());
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                String auth = getAuthHeader();
+                if (auth != null) {
+                    headers.put("Authorization", auth);
+                }
+                return headers;
+            }
+        };
+
+        volleyQueue.add(request);
+    }
+
+    public interface PrescricoesListener {
+        void onSuccess(List<Prescricao> prescricoes);
+        void onError(String erro);
+    }
+
+    public interface PrescricaoDetalhesListener {
+        void onSuccess(Prescricao prescricao);
+        void onError(String erro);
+    }
+
+    public void getPrescricoes(Context context, PrescricoesListener listener) {
+        String url = getBaseApiUrl() + "/prescricao";
+
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                response -> {
+                    List<Prescricao> lista = new ArrayList<>();
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject obj = response.getJSONObject(i);
+                            Prescricao p = new Prescricao(
+                                    obj.getInt("id"),
+                                    obj.getString("data_prescricao"),
+                                    obj.getJSONObject("medico").optString("nome", "Desconhecido"),
+                                    new ArrayList<>()
+                            );
+                            lista.add(p);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    listener.onSuccess(lista);
+                },
+                error -> listener.onError("Erro ao carregar prescrições")
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                String auth = getAuthHeader();
+                if (auth != null) {
+                    headers.put("Authorization", auth);
+                }
+                return headers;
+            }
+        };
+
+        volleyQueue.add(request);
+    }
+
+    public void getPrescricaoDetalhes(int prescricaoId, PrescricaoDetalhesListener listener) {
+        String urlPrescricao = getBaseApiUrl() + "/prescricao/" + prescricaoId;
+        String urlMedicamentos = getBaseApiUrl() + "/prescricao-medicamento/prescricao/" + prescricaoId;
+
+        // 1️⃣ Buscar a prescrição
+        JsonObjectRequest requestPrescricao = new JsonObjectRequest(
+                Request.Method.GET,
+                urlPrescricao,
+                null,
+                response -> {
+                    try {
+                        // Nome do médico e data da prescrição
+                        String data = response.getString("data_prescricao");
+                        JSONObject medicoObj = response.getJSONObject("medico");
+                        String nomeMedico = medicoObj.optString("nome", "Desconhecido");
+
+                        // 2️⃣ Buscar os medicamentos associados
+                        JsonArrayRequest requestMeds = new JsonArrayRequest(
+                                Request.Method.GET,
+                                urlMedicamentos,
+                                null,
+                                medsArray -> {
+                                    try {
+                                        List<PrescricaoMedicamento> listaMeds = new ArrayList<>();
+
+                                        for (int i = 0; i < medsArray.length(); i++) {
+                                            JSONObject m = medsArray.getJSONObject(i);
+                                            JSONObject med = m.getJSONObject("medicamento");
+
+                                            // Criar PrescricaoMedicamento
+                                            PrescricaoMedicamento pm = new PrescricaoMedicamento(
+                                                    med.getString("nome"),
+                                                    m.getString("posologia"),
+                                                    m.getString("frequencia"),
+                                                    m.getInt("duracao_dias"),
+                                                    m.getString("instrucoes")
+                                            );
+
+                                            listaMeds.add(pm);
+                                        }
+
+                                        // Criar objeto Prescricao final
+                                        Prescricao prescricao = new Prescricao(
+                                                response.getInt("id"),
+                                                data,
+                                                nomeMedico,
+                                                listaMeds
+                                        );
+
+                                        listener.onSuccess(prescricao);
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        listener.onError("Erro ao processar medicamentos");
+                                    }
+                                },
+                                error -> listener.onError("Erro ao carregar medicamentos")
+                        ) {
+                            @Override
+                            public Map<String, String> getHeaders() {
+                                Map<String, String> headers = new HashMap<>();
+                                headers.put("Authorization", getAuthHeader());
+                                return headers;
+                            }
+                        };
+
+                        volleyQueue.add(requestMeds);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        listener.onError("Erro ao processar prescrição");
+                    }
+                },
+                error -> listener.onError("Erro ao carregar prescrição")
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", getAuthHeader());
+                return headers;
+            }
+        };
+
+        volleyQueue.add(requestPrescricao);
+    }
+
 }

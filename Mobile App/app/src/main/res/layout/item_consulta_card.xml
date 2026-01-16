@@ -5,7 +5,8 @@
     android:orientation="horizontal"
     android:gravity="center_vertical"
     android:padding="12dp"
-    android:background="@drawable/bg_consultas_ver_consultas_fundo_cards">
+    android:background="@drawable/bg_consultas_ver_consultas_fundo_cards"
+    android:layout_marginBottom="25dp" >
 
     <!-- DATA -->
     <LinearLayout

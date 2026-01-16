@@ -3,60 +3,58 @@ package pt.ipleiria.estg.dei.sismedcare;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
+import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
+import pt.ipleiria.estg.dei.sismedcare.adaptadores.ConsultaAdapter;
+import pt.ipleiria.estg.dei.sismedcare.modelo.Consulta;
 import pt.ipleiria.estg.dei.sismedcare.modelo.Paciente;
 import pt.ipleiria.estg.dei.sismedcare.modelo.SingletonGestorAPI;
 
 public class HomepageFragment extends Fragment {
 
     private TextView tvNomeCompleto, tvNumUtente;
-    private LinearLayout llProximasConsultas; // container para os cards
+    private RecyclerView rvProximasConsultas;
 
     @Nullable
     @Override
     public View onCreateView(
-            @NonNull LayoutInflater inflater,
-            @Nullable ViewGroup container,
+            @NonNull android.view.LayoutInflater inflater,
+            @Nullable android.view.ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
-        // Inflar o fragment principal
         View view = inflater.inflate(R.layout.fragment_homepage, container, false);
 
-        // Inicializar Views
+        // Inicializar views
         tvNomeCompleto = view.findViewById(R.id.tv_nome_completo);
         tvNumUtente = view.findViewById(R.id.tv_num_utente);
-        llProximasConsultas = view.findViewById(R.id.ll_container_consultas);
+        rvProximasConsultas = view.findViewById(R.id.rvProximasConsultas);
+        rvProximasConsultas.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // Botão de perfil
         ImageView btnPerfil = view.findViewById(R.id.btn_consultas_Perfil);
-        btnPerfil.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), PerfilActivity.class);
-            startActivity(intent);
-        });
+        btnPerfil.setOnClickListener(v -> startActivity(new Intent(getContext(), PerfilActivity.class)));
+
+        // Outras navegações
+        view.findViewById(R.id.ll_doencas_cronicas).setOnClickListener(v -> startActivity(new Intent(getContext(), DoencasCronicasActivity.class)));
+
+        view.findViewById(R.id.ll_prescricao).setOnClickListener(v -> startActivity(new Intent(getContext(), PrescricoesActivity.class)));
+
+        view.findViewById(R.id.ll_alergias).setOnClickListener(v -> startActivity(new Intent(getContext(), AlergiasActivity.class)));
+
+        view.findViewById(R.id.ll_marcacao_consultas).setOnClickListener(v -> startActivity(new Intent(getContext(), MarcarConsultasActivity.class)));
+
+        view.findViewById(R.id.ll_ver_consultas).setOnClickListener(v -> startActivity(new Intent(getContext(), ConsultasVerConsultasActivity.class)));
 
         // Preencher dados do paciente
         Paciente paciente = SingletonGestorAPI.getInstance(requireContext()).getPacienteAutenticado();
@@ -65,7 +63,7 @@ public class HomepageFragment extends Fragment {
             tvNumUtente.setText("Nº de utente: " + paciente.getNumeroUtente());
         }
 
-        // Carregar consultas futuras
+        // Carregar consultas futuras via API
         carregarProximasConsultas();
 
         return view;
@@ -74,8 +72,7 @@ public class HomepageFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Carregar paciente autenticado do SharedPreferences se existir
+        // Garantir login do paciente
         SingletonGestorAPI api = SingletonGestorAPI.getInstance(requireContext());
         if (api.getPacienteAutenticado() == null) {
             String username = api.getAuthUsername();
@@ -87,83 +84,22 @@ public class HomepageFragment extends Fragment {
     }
 
     private void carregarProximasConsultas() {
+        SingletonGestorAPI api = SingletonGestorAPI.getInstance(requireContext());
 
-        String url = SingletonGestorAPI.getInstance(requireContext()).getBaseApiUrl() + "/consultas/futuras";
-
-        RequestQueue queue = Volley.newRequestQueue(requireContext());
-
-        JsonArrayRequest request = new JsonArrayRequest(
-                Request.Method.GET,
-                url,
-                null,
-                response -> {
-                    try {
-                        llProximasConsultas.removeAllViews();
-
-                        for (int i = 0; i < response.length(); i++) {
-                            JSONObject consulta = response.getJSONObject(i);
-
-                            String dataConsulta = consulta.getString("data_consulta");
-                            String estado = consulta.getString("estado");
-                            String tipo = consulta.getString("tipo");
-
-                            View card = LayoutInflater.from(getContext())
-                                    .inflate(R.layout.fragment_homepage, llProximasConsultas, false);
-
-                            LinearLayout infoLayout = (LinearLayout) ((LinearLayout) card).getChildAt(1);
-
-                            TextView txtTipo = (TextView) infoLayout.getChildAt(0);
-                            TextView txtEstado = (TextView) infoLayout.getChildAt(1);
-                            TextView txtHora = (TextView) infoLayout.getChildAt(2);
-
-                            txtTipo.setText(tipo);
-                            txtEstado.setText(estado);
-                            txtHora.setText("Data: " + dataConsulta);
-
-                            ImageView btnDelete = (ImageView) ((LinearLayout) card).getChildAt(2);
-
-                            if (estado.equalsIgnoreCase("pendente") && consultaFutura(dataConsulta)) {
-                                btnDelete.setVisibility(View.VISIBLE);
-                            } else {
-                                btnDelete.setVisibility(View.GONE);
-                            }
-
-                            llProximasConsultas.addView(card);
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Toast.makeText(getContext(), "Erro ao processar consultas", Toast.LENGTH_LONG).show();
-                    }
-                },
-                error -> {
-                    Toast.makeText(getContext(), "Erro ao carregar consultas", Toast.LENGTH_LONG).show();
-                    Log.e("CONSULTAS", "Erro: " + error);
-                }
-        ) {
+        api.getConsultasFuturas(getContext(), new SingletonGestorAPI.ConsultasListener() {
             @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-
-                String auth = SingletonGestorAPI.getInstance(requireContext()).getAuthHeader();
-
-                if (auth != null) {
-                    headers.put("Authorization", auth);
+            public void onSuccess(List<Consulta> consultas) {
+                if (consultas != null && !consultas.isEmpty()) {
+                    // Preencher RecyclerView
+                    rvProximasConsultas.setAdapter(new ConsultaAdapter(consultas));
                 }
-
-                return headers;
             }
-        };
-    }
 
-    // Verifica se a consulta é futura
-    private boolean consultaFutura(String dataConsulta) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-            Date data = sdf.parse(dataConsulta);
-            return data != null && data.after(new Date());
-        } catch (Exception e) {
-            return false;
-        }
+            @Override
+            public void onError(String erro) {
+                Toast.makeText(getContext(), "Erro ao carregar consultas: " + erro, Toast.LENGTH_LONG).show();
+                Log.e("CONSULTAS", "Erro ao carregar consultas: " + erro);
+            }
+        });
     }
 }

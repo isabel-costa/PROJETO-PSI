@@ -25,6 +25,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/ivVoltar"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="16dp"
@@ -55,114 +56,10 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <TextView
-                android:text="Nome do Medicamento:"
-                android:textSize="18sp"
-                android:textColor="#333333"
-                android:layout_marginBottom="10dp"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMedicamentos"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="15sp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:textColor="#666" />
-
-            <TextView
-                android:text="Data:"
-                android:textSize="18sp"
-                android:textColor="#333333"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="15sp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:textColor="#666" />
-
-            <TextView
-                android:text="Posologia:"
-                android:textSize="18sp"
-                android:textColor="#333333"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="15sp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:textColor="#666" />
-
-            <TextView
-                android:text="Frequência:"
-                android:textSize="18sp"
-                android:textColor="#333333"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="15sp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:textColor="#666" />
-
-            <TextView
-                android:text="Duração em dias:"
-                android:textSize="18sp"
-                android:textColor="#333333"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="15sp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:textColor="#666" />
-
-            <TextView
-                android:text="Instruções:"
-                android:textSize="18sp"
-                android:textColor="#333333"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="15sp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:textColor="#666" />
-
         </LinearLayout>
     </ScrollView>
-
 </RelativeLayout>
