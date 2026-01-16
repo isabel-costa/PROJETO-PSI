@@ -17,12 +17,14 @@
         android:id="@+id/topo_marcar_consultas_arredondado"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/bg_topoactivityarredondado"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="60dp"
+        android:background="@drawable/bg_topoactivityarredondado" />
 
+    <!-- Header -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
 
         <ImageView
             android:id="@+id/ivVoltar"
@@ -43,20 +45,25 @@
             android:paddingTop="16dp" />
     </RelativeLayout>
 
-    <!-- Scroll do conteúdo -->
-    <LinearLayout
+    <!-- CONTEÚDO COM SCROLL -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBar"
+        android:fillViewport="true">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPrescricoes"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="120dp"
-            android:padding="16dp" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPrescricoes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"/>
+        </LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>
