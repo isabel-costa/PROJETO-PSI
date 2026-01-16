@@ -498,4 +498,73 @@ public class SingletonGestorAPI {
         volleyQueue.add(requestPrescricao);
     }
 
+    public interface DoencasListener {
+        void onSuccess(String doencas);
+        void onError(String erro);
+    }
+
+    public void getDoencas(Context context, DoencasListener listener) {
+        String url = getBaseApiUrl() + "/paciente/doencas";
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                response -> {
+                    try {
+                        // A API retorna algo como {"doencas_cronicas": "Alzheimer, Diabetes, Hipertensão"}
+                        String doencas = response.optString("doencas_cronicas", "");
+                        listener.onSuccess(doencas);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        listener.onError("Erro ao processar resposta da API");
+                    }
+                },
+                error -> {
+                    error.printStackTrace();
+                    listener.onError("Erro ao carregar doenças crónicas");
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                String auth = getAuthHeader();
+                if (auth != null) {
+                    headers.put("Authorization", auth);
+                }
+                return headers;
+            }
+        };
+
+        volleyQueue.add(request);
+    }
+
+    public interface AlergiasListener {
+        void onSuccess(String alergias);
+        void onError(String erro);
+    }
+
+    public void getAlergias(Context context, AlergiasListener listener) {
+        String url = getBaseApiUrl() + "/paciente/alergias";
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                response -> {
+                    String alergiasStr = response.optString("alergias", "");
+                    listener.onSuccess(alergiasStr);
+                },
+                error -> listener.onError("Erro ao carregar alergias")
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", getAuthHeader());
+                return headers;
+            }
+        };
+
+        volleyQueue.add(request);
+    }
 }

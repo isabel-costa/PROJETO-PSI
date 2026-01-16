@@ -28,6 +28,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
+        android:id="@+id/btnVoltar"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:src="@drawable/ic_voltar"
@@ -53,18 +54,12 @@
     android:padding="15dp"
     android:layout_marginTop="70dp">
 
-    <EditText
-        android:id="@+id/bg_nome_da_doenca"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAlergias"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:text="Pólen (ex)"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:background="@drawable/bg_txt_redondo" />
+        android:layout_height="match_parent"
+        android:padding="24dp"
+        android:clipToPadding="false"/>
 </LinearLayout>
 
 </RelativeLayout>
