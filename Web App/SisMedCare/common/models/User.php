@@ -98,9 +98,9 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        return self::find()->where(['auth_key' => $token])->one();
     }
-
+    
     /**
      * Finds user by username
      *

@@ -5,25 +5,21 @@ import org.json.JSONObject;
 
 public class Medico {
     private String nome;
-    private String cedulaNumero;
+    private String especialidade;
 
-    public Medico(String nome, String cedulaNumero) {
+    public Medico(String nome, String especialidade) {
         this.nome = nome;
-        this.cedulaNumero = cedulaNumero;
+        this.especialidade = especialidade;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public String getCedulaNumero() {
-        return cedulaNumero;
-    }
-
     public static Medico fromJson(JSONObject obj) throws JSONException {
         return new Medico(
                 obj.getString("nome"),
-                obj.getString("cedula_numero")
+                obj.getString("especialidade")
         );
     }
 }

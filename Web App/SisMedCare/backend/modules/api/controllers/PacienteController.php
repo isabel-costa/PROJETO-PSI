@@ -14,15 +14,8 @@ class PacienteController extends Controller
         $behaviors = parent::behaviors();
 
         $behaviors['authenticator'] = [
-            'class' => \yii\filters\auth\HttpBasicAuth::class,
+            'class' => \yii\filters\auth\HttpBearerAuth::class,
             'only' => ['view', 'update', 'alergias', 'doencas', 'create-alergias', 'update-alergias','delete-alergias', 'create-doencas', 'update-doencas', 'delete-doencas'],
-            'auth' => function ($username, $password) {
-                $user = User::findOne(['username' => $username]);
-                if ($user && $user->validatePassword($password)) {
-                    return $user;
-                }
-                return null;
-            },
         ];
 
         return $behaviors;

@@ -13,15 +13,8 @@ class MedicoController extends Controller
         $behaviors = parent::behaviors();
 
         $behaviors['authenticator'] = [
-            'class' => \yii\filters\auth\HttpBasicAuth::class,
-            'only' => ['index'],
-            'auth' => function ($username, $password) {
-                $user = User::findOne(['username' => $username]);
-                if ($user && $user->validatePassword($password)) {
-                    return $user;
-                }
-                return null;
-            },
+            'class' => \yii\filters\auth\HttpBearerAuth::class,
+            'only' => ['index', 'medico'],
         ];
 
         return $behaviors;
@@ -51,5 +44,16 @@ class MedicoController extends Controller
         }
 
         return $result;
+    }
+
+    public function actionMedico()
+    {
+        $medicos = Medico::find()->all();
+
+        return array_map(fn($m) => [
+            'id' => $m->id,
+            'nome' => $m->nome_completo,
+            'especialidade' => $m->especialidade,
+        ], $medicos);
     }
 }

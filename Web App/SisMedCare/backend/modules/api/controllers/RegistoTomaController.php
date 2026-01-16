@@ -13,15 +13,8 @@ class RegistoTomaController extends Controller
         $behaviors = parent::behaviors();
 
         $behaviors['authenticator'] = [
-            'class' => \yii\filters\auth\HttpBasicAuth::class,
+            'class' => \yii\filters\auth\HttpBearerAuth::class,
             'only' => ['pendentes', 'tomadas', 'marcar'],
-            'auth' => function ($username, $password) {
-                $user = \common\models\User::findByUsername($username);
-                if ($user && $user->validatePassword($password)) {
-                    return $user;
-                }
-                return null;
-            },
         ];
 
         return $behaviors;

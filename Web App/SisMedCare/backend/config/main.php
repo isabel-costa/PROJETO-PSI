@@ -100,7 +100,10 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['api/medico'],
-                    'pluralize' => true
+                    'pluralize' => true,
+                    'extraPatterns' => [
+                        'GET medicos' => 'medicos'
+                    ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
