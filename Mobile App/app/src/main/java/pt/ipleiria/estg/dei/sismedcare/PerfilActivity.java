@@ -61,14 +61,17 @@ public class PerfilActivity extends AppCompatActivity {
         // Botão terminar sessão
         Button btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(v -> {
-            // Limpar paciente autenticado
+            // Limpa a sessão
             SingletonGestorAPI.getInstance(this).logout(this);
 
-            // Voltar para a activity de login
+            // Ir para LoginActivity e limpar todas as activities da pilha
             Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Limpa a pilha
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+
+            // Destroi a PerfilActivity
             finish();
         });
+
     }
 }

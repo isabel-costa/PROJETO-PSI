@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -7,8 +6,7 @@
     android:background="@color/white"
     tools:context=".ConsultasVerConsultasActivity">
 
-    <!-- TODO: posteriormente estes cards irão desaparecer -->
-
+    <!-- TOPO FIXO -->
     <View
         android:id="@+id/bg_consultas_topopagina"
         android:layout_width="match_parent"
@@ -16,7 +14,6 @@
         android:background="@drawable/bg_gradiente_topo_activity"
         android:layout_alignParentTop="true"/>
 
-    <!-- Puxa o drawable bg_consultas_topoarredondado -->
     <View
         android:id="@+id/consultas_topo"
         android:layout_width="match_parent"
@@ -29,6 +26,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/ic_voltar"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_voltar"
@@ -47,232 +45,59 @@
             android:paddingTop="16dp"/>
     </RelativeLayout>
 
-    <!-- PRÓXIMAS CONSULTAS -->
-    <LinearLayout
-        android:orientation="vertical"
+    <!-- Conteúdo com Scroll -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/consultas_topo"
         android:padding="15dp"
-        android:layout_marginTop="70dp">
+        android:clipToPadding="false">
 
-        <TextView
-            android:text="Próximas Consultas"
-            android:textStyle="bold"
-            android:textColor="#000"
-            android:textSize="18sp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <!-- CARD -->
-        <LinearLayout
-            android:orientation="horizontal"
-            android:padding="12dp"
-            android:gravity="center_vertical"
-            android:background="@drawable/bg_consultas_ver_consultas_fundo_cards"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp">
-
-            <!-- Data do card -->
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:text="Mai."
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:textSize="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:text="25"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:textSize="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:text="2026"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <!-- Informação do card -->
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:paddingLeft="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:text="Exame Laboratorial"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:textColor="#000"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_consultas_ver_consultas_fundo_status"
-                    android:text="Agendado"
-                    android:textColor="#EBEFF2"
-                    android:textStyle="bold"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:padding="8dp"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:text="Hora: 10:00h"
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <!-- Delete do card -->
-            <ImageView
-                android:src="@drawable/ic_consultas_verconsultas_delete"
-                android:layout_width="28dp"
-                android:layout_height="28dp" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
-        android:spacing="16dp">
-
-        <!-- LINHA SEPARADORA -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1.5dp"
-            android:background="#666666"
-            android:layout_marginTop="250dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp" />
-
-        <!-- HISTÓRICO -->
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="15dp">
+            android:layout_height="wrap_content">
 
+            <!-- Próximas Consultas -->
+            <TextView
+                android:text="Próximas Consultas"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:layout_marginBottom="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvConsultasFuturas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"/>
+
+            <!-- Separador -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:background="#666666"
+                android:layout_marginVertical="16dp"/>
+
+            <!-- Histórico -->
             <TextView
                 android:text="Histórico"
                 android:textStyle="bold"
                 android:textColor="#000"
                 android:textSize="18sp"
-                android:layout_marginStart="10dp"
                 android:layout_marginBottom="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <!-- CARD -->
-            <LinearLayout
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:gravity="center_vertical"
-                android:background="@drawable/bg_consultas_ver_consultas_fundo_cards"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvConsultasPassadas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp">
-
-                <!-- Data do card -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="Abr."
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:gravity="center"
-                        android:textSize="16dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:text="12"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:gravity="center"
-                        android:textSize="20dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:text="2025"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <!-- Informação do card -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:paddingLeft="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="Exame Laboratorial"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:textColor="#000"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_consultas_ver_consultas_fundo_status"
-                        android:text="Realizada"
-                        android:textColor="#EBEFF2"
-                        android:textStyle="bold"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:padding="8dp"
-                        android:gravity="center"/>
-
-                    <TextView
-                        android:text="Hora: 10:00h"
-                        android:textStyle="bold"
-                        android:textColor="#000"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <!-- Delete do card -->
-                <ImageView
-                    android:src="@drawable/ic_consultas_verconsultas_delete"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp" />
-
-            </LinearLayout>
+                android:nestedScrollingEnabled="false"/>
         </LinearLayout>
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 </RelativeLayout>
