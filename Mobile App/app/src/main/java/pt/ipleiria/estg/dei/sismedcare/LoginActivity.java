@@ -30,8 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
-        if (prefs.getBoolean(KEY_LOGGED, false)) {
+        // Se já houver token válido, ir direto para MainActivity
+        if (SingletonGestorAPI.getInstance(this).isLoggedIn()) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
             return;
@@ -44,8 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.txt_Password);
 
         findViewById(R.id.txt_Registar).setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, RegistarContaActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(LoginActivity.this, RegistarContaActivity.class));
         });
     }
 
@@ -68,9 +67,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginSucesso() {
-        SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
-        prefs.edit().putString(KEY_USERNAME, etUsername.getText().toString()).putBoolean(KEY_LOGGED, true).apply();
-
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }

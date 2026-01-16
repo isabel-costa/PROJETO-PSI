@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import pt.ipleiria.estg.dei.sismedcare.LoginActivity;
-import pt.ipleiria.estg.dei.sismedcare.PrescricoesActivity;
 import pt.ipleiria.estg.dei.sismedcare.RegistarContaActivity;
 
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -33,13 +32,9 @@ public class SingletonGestorAPI {
 
     // SharedPreferences
     private static final String PREFS_NAME = "sismedcare_prefs";
-    private static final String KEY_USERNAME = "auth_username";
-    private static final String KEY_PASSWORD = "auth_password";
-    private static final String KEY_NOME = "paciente_nome";
-    private static final String KEY_NUM_UTENTE = "paciente_num_utente";
-    private static final String KEY_EMAIL = "paciente_email";
-    private static final String KEY_TELEMOVEL = "paciente_telemovel";
-    private static final String KEY_MORADA = "paciente_morada";
+    private static final String KEY_TOKEN = "auth_token";
+    private static final String KEY_PACIENTE_NOME = "paciente_nome";
+    private static final String KEY_PACIENTE_NUM_UTENTE = "paciente_num_utente";
 
     private static SingletonGestorAPI instance = null;
     private static RequestQueue volleyQueue;
@@ -49,6 +44,7 @@ public class SingletonGestorAPI {
     // Credenciais BasicAuth
     private String authUsername;
     private String authPassword;
+    private  String authToken;
 
     private SingletonGestorAPI(Context context) {
         volleyQueue = Volley.newRequestQueue(context.getApplicationContext());
@@ -62,37 +58,21 @@ public class SingletonGestorAPI {
         return instance;
     }
 
-    private void guardarSessao(Context context, Paciente paciente, String username, String password) {
+    private void guardarSessao(Context context, Paciente paciente, String token) {
+        this.pacienteAutenticado = paciente;
+        this.authToken = token;
 
-        authUsername = username;
-        authPassword = password;
-        pacienteAutenticado = paciente;
-
-        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-                .edit()
-                .putString(KEY_USERNAME, username)
-                .putString(KEY_PASSWORD, password)
-                .putString(KEY_NOME, paciente.getNomeCompleto())
-                .putString(KEY_NUM_UTENTE, paciente.getNumeroUtente())
-                .putString(KEY_EMAIL, paciente.getUser() != null ? paciente.getUser().getEmail() : "")
-                .putString(KEY_TELEMOVEL, paciente.getTelemovel())
-                .putString(KEY_MORADA, paciente.getMorada())
-                .apply();
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit().putString(KEY_TOKEN, token).putString(KEY_PACIENTE_NOME, paciente.getNomeCompleto()).putString(KEY_PACIENTE_NUM_UTENTE, paciente.getNumeroUtente()).apply();
     }
 
     private void restaurarSessao(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        authToken = prefs.getString(KEY_TOKEN, null);
 
-        authUsername = prefs.getString(KEY_USERNAME, null);
-        authPassword = prefs.getString(KEY_PASSWORD, null);
+        if (authToken == null) return;
 
-        if (authUsername == null || authPassword == null) return;
-
-        String nome = prefs.getString(KEY_NOME, "");
-        String numUtente = prefs.getString(KEY_NUM_UTENTE, "");
-        String email = prefs.getString(KEY_EMAIL, "");
-        String telemovel = prefs.getString(KEY_TELEMOVEL, "");
-        String morada = prefs.getString(KEY_MORADA, "");
+        String nome = prefs.getString(KEY_PACIENTE_NOME, "");
+        String numUtente = prefs.getString(KEY_PACIENTE_NUM_UTENTE, "");
 
         pacienteAutenticado = new Paciente(
                 0,
@@ -101,29 +81,31 @@ public class SingletonGestorAPI {
                 "",
                 "",
                 numUtente,
-                telemovel,
-                morada,
+                "",
+                "",
                 0,
                 0,
                 "",
                 "",
                 "",
-                new User(0, authUsername, email, 0, 0, 0, "")
+                null
         );
     }
 
     public void logout(Context context) {
-        authUsername = null;
-        authPassword = null;
+        authToken = null;
         pacienteAutenticado = null;
 
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit().clear().apply();
     }
 
     public String getAuthHeader() {
-        if (authUsername == null || authPassword == null) return null;
-        String credentials = authUsername + ":" + authPassword;
-        return "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+        if (authToken == null) return null;
+        return "Bearer " + authToken;
+    }
+
+    public boolean isLoggedIn() {
+        return authToken != null && !authToken.isEmpty();
     }
 
     public Paciente getPacienteAutenticado() {
@@ -141,8 +123,6 @@ public class SingletonGestorAPI {
                 Request.Method.POST,
                 url,
                 response -> {
-                    Log.d(TAG, "Resposta da API: " + response);
-
                     try {
                         JSONObject obj = new JSONObject(response);
 
@@ -156,15 +136,7 @@ public class SingletonGestorAPI {
                         JSONObject jsonUser = obj.getJSONObject("user");
                         JSONObject jsonPaciente = jsonUser.getJSONObject("paciente");
 
-                        User user = new User(
-                                0,
-                                jsonUser.optString("username"),
-                                jsonUser.optString("email"),
-                                0,
-                                0,
-                                0,
-                                jsonUser.optString("auth_key")
-                        );
+                        String token = jsonUser.getString("auth_key");
 
                         Paciente paciente = new Paciente(
                                 0,
@@ -180,21 +152,17 @@ public class SingletonGestorAPI {
                                 jsonPaciente.optString("alergias", ""),
                                 jsonPaciente.optString("doencas_cronicas", ""),
                                 jsonPaciente.optString("data_registo", ""),
-                                user
+                                null
                         );
 
-                        guardarSessao(context, paciente, username, password);
+                        guardarSessao(context, paciente, token);
                         ((LoginActivity) context).onLoginSucesso();
 
                     } catch (Exception e) {
-                        Log.e(TAG, "Erro login", e);
                         ((LoginActivity) context).onLoginErro("Erro ao processar dados");
                     }
                 },
-                error -> {
-                    Log.e(TAG, "Erro de login", error);
-                    ((LoginActivity) context).onLoginErro("Erro de ligação ao servidor");
-                }
+                error -> ((LoginActivity) context).onLoginErro("Erro de ligação ao servidor")
         ) {
             @Override
             protected Map<String, String> getParams() {
@@ -556,6 +524,65 @@ public class SingletonGestorAPI {
                     listener.onSuccess(alergiasStr);
                 },
                 error -> listener.onError("Erro ao carregar alergias")
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", getAuthHeader());
+                return headers;
+            }
+        };
+
+        volleyQueue.add(request);
+    }
+
+    public interface RegistoTomaListener {
+        void onSuccess(List<RegistoToma> lista);
+        void onError(String erro);
+    }
+
+    public void getRegistoTomasPendentes(Context context,
+                                         RegistoTomaListener listener) {
+
+        String url = getBaseApiUrl() + "/registo-toma/pendentes";
+
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                response -> {
+                    try {
+                        List<RegistoToma> lista = new ArrayList<>();
+
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject obj = response.getJSONObject(i);
+
+                            String id = obj.getString("id");
+
+                            // ⚠️ por agora hardcoded (a seguir ligamos à prescrição)
+                            String nome = "Medicamento";
+                            String quantidade = "—";
+                            String hora = obj.getString("data_toma").substring(11, 16);
+
+                            boolean foiTomado = obj.getInt("foi_tomado") == 1;
+
+                            lista.add(new RegistoToma(
+                                    id,
+                                    nome,
+                                    quantidade,
+                                    hora,
+                                    foiTomado
+                            ));
+                        }
+
+                        listener.onSuccess(lista);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        listener.onError("Erro ao processar tomas");
+                    }
+                },
+                error -> listener.onError("Erro ao carregar tomas pendentes")
         ) {
             @Override
             public Map<String, String> getHeaders() {

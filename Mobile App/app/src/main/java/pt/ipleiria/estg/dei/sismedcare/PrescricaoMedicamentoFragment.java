@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.ipleiria.estg.dei.sismedcare.adaptadores.PrescricaoAdapter;
+import pt.ipleiria.estg.dei.sismedcare.adaptadores.RegistoTomaAdapter;
 import pt.ipleiria.estg.dei.sismedcare.modelo.Prescricao;
+import pt.ipleiria.estg.dei.sismedcare.modelo.RegistoToma;
 import pt.ipleiria.estg.dei.sismedcare.modelo.SingletonGestorAPI;
 
 import android.content.Intent;
@@ -28,6 +30,7 @@ public class PrescricaoMedicamentoFragment extends Fragment {
     private RecyclerView rvPrescricoes;
     private TextView tvVerTudo;
     private ImageView btnPerfil;
+    private RecyclerView rvMedicacaoPendente;
 
     public PrescricaoMedicamentoFragment() {
         // Construtor vazio obrigatório
@@ -44,6 +47,9 @@ public class PrescricaoMedicamentoFragment extends Fragment {
         rvPrescricoes = view.findViewById(R.id.rvPrescricoes);
         rvPrescricoes.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        rvMedicacaoPendente = view.findViewById(R.id.rvMedicacaoPendente);
+        rvMedicacaoPendente.setLayoutManager(new LinearLayoutManager(getContext()));
+
         // Perfil
         btnPerfil = view.findViewById(R.id.btn_prescricoes_Perfil);
         btnPerfil.setOnClickListener(v -> {
@@ -59,6 +65,7 @@ public class PrescricaoMedicamentoFragment extends Fragment {
         });
 
         carregarPrescricaoMaisRecente();
+        carregarMedicacaoPendente();
 
         return view;
     }
@@ -91,4 +98,34 @@ public class PrescricaoMedicamentoFragment extends Fragment {
                     }
                 });
     }
+
+    private void carregarMedicacaoPendente() {
+
+        SingletonGestorAPI.getInstance(getContext())
+                .getRegistoTomasPendentes(getContext(),
+                        new SingletonGestorAPI.RegistoTomaListener() {
+                            @Override
+                            public void onSuccess(List<RegistoToma> lista) {
+
+                                if (lista.isEmpty()) {
+                                    Toast.makeText(getContext(),
+                                            "Sem medicação pendente",
+                                            Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                RegistoTomaAdapter adapter =
+                                        new RegistoTomaAdapter(lista, null);
+
+                                rvMedicacaoPendente.setAdapter(adapter); // ✅ AQUI
+                            }
+
+                            @Override
+                            public void onError(String erro) {
+                                Toast.makeText(getContext(), erro, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+    }
+
+
 }

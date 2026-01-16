@@ -27,6 +27,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/btnVoltar"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="16dp"
@@ -67,21 +68,37 @@
             android:text="Vamos marcar a sua consulta"
             android:textSize="14sp" />
 
-        <Spinner
-            android:id="@+id/spinnerTipo"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="24dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:background="@drawable/bg_txt_redondo"
-            android:padding="12dp" />
+            android:padding="8dp"
+            android:layout_marginTop="24dp">
 
-        <Spinner
-            android:id="@+id/spinnerProf"
+            <Spinner
+                android:id="@+id/spinnerTipo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:background="@drawable/bg_txt_redondo"
-            android:padding="12dp" />
+            android:padding="8dp"
+            android:layout_marginTop="16dp">
+
+            <Spinner
+                android:id="@+id/spinnerProf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"

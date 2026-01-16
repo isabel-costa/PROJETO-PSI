@@ -15,7 +15,7 @@ class AuthController extends Controller
         $behaviors = parent::behaviors();
 
         $behaviors['authenticator'] = [
-            'class' => \yii\filters\auth\HttpBasicAuth::class,
+            'class' => \yii\filters\auth\HttpBearerAuth::class,
             'except' => ['login', 'registar'],
         ];
 
