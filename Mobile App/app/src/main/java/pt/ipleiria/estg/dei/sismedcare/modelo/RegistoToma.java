@@ -23,8 +23,4 @@ public class RegistoToma {
     public String getQuantidade() { return quantidade; }
     public String getHora() { return hora; }
     public boolean isFoiTomado() { return foiTomado; }
-
-    public void setFoiTomado(boolean foiTomado) {
-        this.foiTomado = foiTomado;
-    }
 }
