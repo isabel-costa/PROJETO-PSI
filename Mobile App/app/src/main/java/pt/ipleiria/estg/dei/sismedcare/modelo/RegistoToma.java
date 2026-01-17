@@ -27,4 +27,12 @@ public class RegistoToma {
     public void setFoiTomado(boolean foiTomado) {
         this.foiTomado = foiTomado;
     }
+
+    public void setNomeMedicamento(String nomeMedicamento) {
+        this.nomeMedicamento = nomeMedicamento;
+    }
+
+    public void setQuantidade(String quantidade) {
+        this.quantidade = quantidade;
+    }
 }

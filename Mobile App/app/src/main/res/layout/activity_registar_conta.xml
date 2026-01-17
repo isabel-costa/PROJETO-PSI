@@ -63,10 +63,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputData"
                 android:layout_width="match_parent"
-                android:layout_height="34dp"
-                android:drawableEnd="@drawable/ic_calendario"
-                android:focusable="true"
-                android:clickable="true"/>
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:focusable="false"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_calendario" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Sexo -->

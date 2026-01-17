@@ -43,6 +43,35 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.txt_Username);
         etPassword = findViewById(R.id.txt_Password);
 
+        etPassword.setOnTouchListener((v, event) -> {
+            if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
+
+                if (event.getRawX() >= (etPassword.getRight()
+                        - etPassword.getCompoundDrawables()[2].getBounds().width())) {
+
+                    if (etPassword.getTransformationMethod() instanceof
+                            android.text.method.PasswordTransformationMethod) {
+
+                        // mostrar
+                        etPassword.setTransformationMethod(null);
+                        etPassword.setCompoundDrawablesWithIntrinsicBounds(
+                                0, 0, R.drawable.ic_reverlarpass, 0);
+
+                    } else {
+
+                        // esconder
+                        etPassword.setTransformationMethod(
+                                android.text.method.PasswordTransformationMethod.getInstance());
+                        etPassword.setCompoundDrawablesWithIntrinsicBounds(
+                                0, 0, R.drawable.ic_reverlarpass, 0);
+                    }
+                    etPassword.setSelection(etPassword.getText().length());
+                    return true;
+                }
+            }
+            return false;
+        });
+
         findViewById(R.id.txt_Registar).setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, RegistarContaActivity.class));
         });

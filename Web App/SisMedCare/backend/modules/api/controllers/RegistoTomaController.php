@@ -23,7 +23,12 @@ class RegistoTomaController extends Controller
     public function actionPendentes()
     {
         $pacienteId = Yii::$app->user->identity->paciente->id;
-        $tomas = RegistoToma::find()->where(['paciente_id' => $pacienteId, 'foi_tomado' => 0])->orderBy(['data_toma' => SORT_DESC])->all();
+        $tomas = RegistoToma::find()->where(['paciente_id' => $pacienteId, 'foi_tomado' => 0])->andWhere([
+            'between',
+            'data_toma',
+            new \yii\db\Expression('DATE_SUB(NOW(), INTERVAL 1 HOUR)'),
+            new \yii\db\Expression('DATE_ADD(NOW(), INTERVAL 1 HOUR)')
+        ])->orderBy(['data_toma' => SORT_DESC])->all();
 
         return $tomas;
     }

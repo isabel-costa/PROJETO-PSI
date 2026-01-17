@@ -38,12 +38,14 @@ public class SingletonGestorAPI {
     private static SingletonGestorAPI instance = null;
     private static RequestQueue volleyQueue;
 
+    private List<RegistoToma> tomasTomadas = new ArrayList<>();
+
     private Paciente pacienteAutenticado;
 
     // Credenciais BasicAuth
     private String authUsername;
     private String authPassword;
-    private  String authToken;
+    private String authToken;
 
     private SingletonGestorAPI(Context context) {
         volleyQueue = Volley.newRequestQueue(context.getApplicationContext());
@@ -231,6 +233,7 @@ public class SingletonGestorAPI {
 
     public interface ConsultasListener {
         void onSuccess(List<Consulta> consultas);
+
         void onError(String erro);
     }
 
@@ -297,6 +300,7 @@ public class SingletonGestorAPI {
 
     public interface ConsultaDeleteListener {
         void onSuccess();
+
         void onError(String erro);
     }
 
@@ -328,13 +332,42 @@ public class SingletonGestorAPI {
         volleyQueue.add(request);
     }
 
+    public interface MedicoEspecialidadeListener {
+        void onSuccess(org.json.JSONArray response);
+        void onError(String erro);
+    }
+
+    public void getMedicoEspecialidade(String url, MedicoEspecialidadeListener listener) {
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                response -> listener.onSuccess(response),
+                error -> listener.onError("Erro ao carregar dados")
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                String auth = getAuthHeader();
+                if (auth != null) {
+                    headers.put("Authorization", auth);
+                }
+                return headers;
+            }
+        };
+
+        volleyQueue.add(request);
+    }
+
     public interface PrescricoesListener {
         void onSuccess(List<Prescricao> prescricoes);
+
         void onError(String erro);
     }
 
     public interface PrescricaoDetalhesListener {
         void onSuccess(Prescricao prescricao);
+
         void onError(String erro);
     }
 
@@ -383,19 +416,16 @@ public class SingletonGestorAPI {
         String urlPrescricao = getBaseApiUrl() + "/prescricao/" + prescricaoId;
         String urlMedicamentos = getBaseApiUrl() + "/prescricao-medicamento/prescricao/" + prescricaoId;
 
-        // 1️⃣ Buscar a prescrição
         JsonObjectRequest requestPrescricao = new JsonObjectRequest(
                 Request.Method.GET,
                 urlPrescricao,
                 null,
                 response -> {
                     try {
-                        // Nome do médico e data da prescrição
                         String data = response.getString("data_prescricao");
                         JSONObject medicoObj = response.getJSONObject("medico");
                         String nomeMedico = medicoObj.optString("nome", "Desconhecido");
 
-                        // 2️⃣ Buscar os medicamentos associados
                         JsonArrayRequest requestMeds = new JsonArrayRequest(
                                 Request.Method.GET,
                                 urlMedicamentos,
@@ -408,7 +438,6 @@ public class SingletonGestorAPI {
                                             JSONObject m = medsArray.getJSONObject(i);
                                             JSONObject med = m.getJSONObject("medicamento");
 
-                                            // Criar PrescricaoMedicamento
                                             PrescricaoMedicamento pm = new PrescricaoMedicamento(
                                                     med.getString("nome"),
                                                     m.getString("posologia"),
@@ -420,7 +449,6 @@ public class SingletonGestorAPI {
                                             listaMeds.add(pm);
                                         }
 
-                                        // Criar objeto Prescricao final
                                         Prescricao prescricao = new Prescricao(
                                                 response.getInt("id"),
                                                 data,
@@ -467,6 +495,7 @@ public class SingletonGestorAPI {
 
     public interface DoencasListener {
         void onSuccess(String doencas);
+
         void onError(String erro);
     }
 
@@ -479,7 +508,6 @@ public class SingletonGestorAPI {
                 null,
                 response -> {
                     try {
-                        // A API retorna algo como {"doencas_cronicas": "Alzheimer, Diabetes, Hipertensão"}
                         String doencas = response.optString("doencas_cronicas", "");
                         listener.onSuccess(doencas);
                     } catch (Exception e) {
@@ -508,6 +536,7 @@ public class SingletonGestorAPI {
 
     public interface AlergiasListener {
         void onSuccess(String alergias);
+
         void onError(String erro);
     }
 
@@ -537,6 +566,7 @@ public class SingletonGestorAPI {
 
     public interface RegistoTomaListener {
         void onSuccess(List<RegistoToma> lista);
+
         void onError(String erro);
     }
 
@@ -557,21 +587,67 @@ public class SingletonGestorAPI {
                             JSONObject obj = response.getJSONObject(i);
 
                             String id = obj.getString("id");
+                            int prescricaoMedicamentoId =
+                                    obj.getInt("prescricao_medicamento_id");
 
-                            // ⚠️ por agora hardcoded (a seguir ligamos à prescrição)
-                            String nome = "Medicamento";
-                            String quantidade = "—";
-                            String hora = obj.getString("data_toma").substring(11, 16);
+                            String hora =
+                                    obj.getString("data_toma").substring(11, 16);
 
-                            boolean foiTomado = obj.getInt("foi_tomado") == 1;
+                            boolean foiTomado =
+                                    obj.getInt("foi_tomado") == 1;
 
-                            lista.add(new RegistoToma(
+                            RegistoToma toma = new RegistoToma(
                                     id,
-                                    nome,
-                                    quantidade,
+                                    "",
+                                    "",
                                     hora,
                                     foiTomado
-                            ));
+                            );
+
+                            lista.add(toma);
+
+                            String urlPrescricao = getBaseApiUrl()
+                                    + "/prescricao-medicamento/"
+                                    + prescricaoMedicamentoId;
+
+                            JsonObjectRequest prescricaoRequest =
+                                    new JsonObjectRequest(
+                                            Request.Method.GET,
+                                            urlPrescricao,
+                                            null,
+                                            prescricaoResponse -> {
+                                                try {
+                                                    String nomeMedicamento =
+                                                            prescricaoResponse
+                                                                    .getJSONObject("medicamento")
+                                                                    .getString("nome");
+
+                                                    String frequencia =
+                                                            prescricaoResponse
+                                                                    .getString("frequencia");
+
+                                                    toma.setNomeMedicamento(nomeMedicamento);
+                                                    toma.setQuantidade(frequencia);
+
+                                                    // refresca a UI
+                                                    listener.onSuccess(lista);
+
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            },
+                                            error -> {
+                                            }
+                                    ) {
+                                        @Override
+                                        public Map<String, String> getHeaders() {
+                                            Map<String, String> headers = new HashMap<>();
+                                            headers.put("Authorization", getAuthHeader());
+                                            return headers;
+                                        }
+                                    };
+
+                            volleyQueue.add(prescricaoRequest);
                         }
 
                         listener.onSuccess(lista);
@@ -591,6 +667,146 @@ public class SingletonGestorAPI {
             }
         };
 
+        volleyQueue.add(request);
+    }
+
+    public void marcarTomaComoTomada(RegistoToma toma, TomaTomadaListener listener) {
+        String url = getBaseApiUrl() + "/registo-toma/marcar/" + toma.getId();
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("id", toma.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            listener.onError("Erro ao criar solicitação");
+            return;
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                body,
+                response -> listener.onSuccess(),
+                error -> listener.onError("Erro ao marcar medicação como tomada")
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", getAuthHeader());
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+
+        volleyQueue.add(request);
+    }
+
+    public interface TomaTomadaListener {
+        void onSuccess();
+
+        void onError(String erro);
+    }
+
+    public void adicionarToma(RegistoToma toma) {
+        if (toma != null && !tomasTomadas.contains(toma)) {
+            tomasTomadas.add(toma);
+        }
+    }
+
+    public List<RegistoToma> getTomasTomadas() {
+        return new ArrayList<>(tomasTomadas);
+    }
+
+    public void getRegistoTomasTomadas(Context context, RegistoTomaListener listener) {
+
+        String url = getBaseApiUrl() + "/registo-toma/tomadas";
+
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                response -> {
+                    try {
+                        List<RegistoToma> lista = new ArrayList<>();
+
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject obj = response.getJSONObject(i);
+
+                            String id = obj.getString("id");
+                            String hora = obj.getString("data_toma").substring(11, 16);
+                            boolean foiTomado = obj.getInt("foi_tomado") == 1;
+
+                            int prescricaoMedicamentoId =
+                                    obj.getInt("prescricao_medicamento_id");
+
+                            RegistoToma toma = new RegistoToma(
+                                    id,
+                                    "",
+                                    "",
+                                    hora,
+                                    foiTomado
+                            );
+
+                            lista.add(toma);
+
+                            String urlPrescricao = getBaseApiUrl()
+                                    + "/prescricao-medicamento/"
+                                    + prescricaoMedicamentoId;
+
+                            JsonObjectRequest prescricaoRequest =
+                                    new JsonObjectRequest(
+                                            Request.Method.GET,
+                                            urlPrescricao,
+                                            null,
+                                            prescricaoResponse -> {
+                                                try {
+                                                    String nomeMedicamento =
+                                                            prescricaoResponse
+                                                                    .getJSONObject("medicamento")
+                                                                    .getString("nome");
+
+                                                    String frequencia =
+                                                            prescricaoResponse.getString("frequencia");
+
+                                                    toma.setNomeMedicamento(nomeMedicamento);
+                                                    toma.setQuantidade(frequencia);
+
+                                                    listener.onSuccess(lista);
+
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            },
+                                            error -> Log.e(TAG,
+                                                    "Erro ao carregar prescrição", error)
+                                    ) {
+                                        @Override
+                                        public Map<String, String> getHeaders() {
+                                            Map<String, String> headers = new HashMap<>();
+                                            headers.put("Authorization", getAuthHeader());
+                                            return headers;
+                                        }
+                                    };
+
+                            volleyQueue.add(prescricaoRequest);
+                        }
+
+                        listener.onSuccess(lista);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        listener.onError("Erro ao processar tomas tomadas");
+                    }
+                },
+                error -> listener.onError("Erro ao carregar tomas tomadas")
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", getAuthHeader());
+                return headers;
+            }
+        };
         volleyQueue.add(request);
     }
 }

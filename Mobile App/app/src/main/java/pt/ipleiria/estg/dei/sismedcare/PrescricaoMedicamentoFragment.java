@@ -64,6 +64,12 @@ public class PrescricaoMedicamentoFragment extends Fragment {
             startActivity(intent);
         });
 
+        TextView tvVerMedicacaoTomada = view.findViewById(R.id.tvVerMedicacaoTomada);
+        tvVerMedicacaoTomada.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), MedicacaoTomadaActivity.class);
+            startActivity(intent);
+        });
+
         carregarPrescricaoMaisRecente();
         carregarMedicacaoPendente();
 
@@ -114,18 +120,39 @@ public class PrescricaoMedicamentoFragment extends Fragment {
                                     return;
                                 }
 
-                                RegistoTomaAdapter adapter =
-                                        new RegistoTomaAdapter(lista, null);
+                                List<RegistoToma> listaPendentes = lista;
 
-                                rvMedicacaoPendente.setAdapter(adapter); // ✅ AQUI
+                                final RegistoTomaAdapter[] adapterHolder = new RegistoTomaAdapter[1];
+
+                                adapterHolder[0] = new RegistoTomaAdapter(listaPendentes, toma -> {
+
+                                    SingletonGestorAPI.getInstance(getContext())
+                                            .marcarTomaComoTomada(toma, new SingletonGestorAPI.TomaTomadaListener() {
+                                                @Override
+                                                public void onSuccess() {
+                                                    int pos = listaPendentes.indexOf(toma);
+                                                    if (pos != -1) {
+                                                        listaPendentes.remove(pos);
+                                                        adapterHolder[0].notifyItemRemoved(pos);
+                                                    }
+                                                    SingletonGestorAPI.getInstance(getContext()).adicionarToma(toma);
+                                                }
+
+                                                @Override
+                                                public void onError(String erro) {
+                                                    Toast.makeText(getContext(), "Não foi possível marcar como tomada: " + erro, Toast.LENGTH_LONG).show();
+                                                }
+                                            });
+                                });
+
+                                rvMedicacaoPendente.setAdapter(adapterHolder[0]);
                             }
 
                             @Override
                             public void onError(String erro) {
                                 Toast.makeText(getContext(), erro, Toast.LENGTH_SHORT).show();
                             }
-                        });
+                        }
+                );
     }
-
-
 }

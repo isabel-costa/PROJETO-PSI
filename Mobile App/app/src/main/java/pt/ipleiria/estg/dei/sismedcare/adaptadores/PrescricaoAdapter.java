@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,11 +55,13 @@ public class PrescricaoAdapter extends RecyclerView.Adapter<PrescricaoAdapter.Pr
 
     static class PrescricaoViewHolder extends RecyclerView.ViewHolder {
         TextView tvData, tvMedico;
+        ImageView imgEstado;
 
         public PrescricaoViewHolder(@NonNull View itemView) {
             super(itemView);
             tvData = itemView.findViewById(R.id.tvData);
             tvMedico = itemView.findViewById(R.id.tvMedico);
+            imgEstado = itemView.findViewById(R.id.imgEstado);
         }
     }
 }
