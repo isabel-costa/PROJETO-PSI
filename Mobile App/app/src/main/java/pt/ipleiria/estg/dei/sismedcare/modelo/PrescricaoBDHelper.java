@@ -12,15 +12,15 @@ import java.util.List;
 public class PrescricaoBDHelper extends SQLiteOpenHelper {
 
     private static final String DB_NOME = "db_prescricoes";
-    private static final int DB_VERSION = 3; // 🔥 aumentar sempre que mudar esquema
+    private static final int DB_VERSION = 3;
 
-    // ---------------- PRESCRIÇÕES ----------------
+    // Prescrições
     private static final String TABELA_PRESCRICOES = "prescricoes";
     private static final String COL_ID = "id";
     private static final String COL_DATA = "data_prescricao";
     private static final String COL_MEDICO = "medico";
 
-    // ---------------- MEDICAMENTOS ----------------
+    // Medicamentos
     private static final String TABELA_MEDICAMENTOS = "prescricao_medicamentos";
     private static final String COL_PRESCRICAO_ID = "prescricao_id";
     private static final String COL_NOME = "nome";
@@ -38,7 +38,7 @@ public class PrescricaoBDHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // tabela prescricoes
+        // Tabela prescricoes
         db.execSQL(
                 "CREATE TABLE " + TABELA_PRESCRICOES + " (" +
                         COL_ID + " INTEGER PRIMARY KEY, " +
@@ -66,7 +66,7 @@ public class PrescricaoBDHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // -------------------- PRESCRIÇÕES --------------------
+    // Prescrições
 
     public void guardarPrescricao(Prescricao p) {
         ContentValues values = new ContentValues();
@@ -74,13 +74,13 @@ public class PrescricaoBDHelper extends SQLiteOpenHelper {
         values.put(COL_DATA, p.getDataPrescricao());
         values.put(COL_MEDICO, p.getNomeMedico());
 
-        // atualiza se existir, insere se não
+        // Atualiza se existir, insere se não
         int rows = db.update(TABELA_PRESCRICOES, values, COL_ID + "=?", new String[]{String.valueOf(p.getId())});
         if (rows == 0) {
             db.insert(TABELA_PRESCRICOES, null, values);
         }
 
-        // guarda medicamentos
+        // Guarda medicamentos
         guardarMedicamentos(p.getId(), p.getMedicamentos());
     }
 
@@ -126,12 +126,11 @@ public class PrescricaoBDHelper extends SQLiteOpenHelper {
         return lista;
     }
 
-    // -------------------- MEDICAMENTOS --------------------
-
+    // Medicamentos
     public void guardarMedicamentos(int prescricaoId, List<PrescricaoMedicamento> lista) {
         db.beginTransaction();
         try {
-            // remove antigos
+            // Remove antigos
             db.delete(TABELA_MEDICAMENTOS, COL_PRESCRICAO_ID + "=?", new String[]{String.valueOf(prescricaoId)});
 
             for (PrescricaoMedicamento m : lista) {
@@ -179,7 +178,7 @@ public class PrescricaoBDHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try {
             for (Prescricao p : lista) {
-                guardarPrescricao(p); // já guarda medicamentos também
+                guardarPrescricao(p); // Já guarda medicamentos também
             }
             db.setTransactionSuccessful();
         } finally {

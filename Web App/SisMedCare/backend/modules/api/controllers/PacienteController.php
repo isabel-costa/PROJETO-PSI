@@ -62,7 +62,7 @@ class PacienteController extends Controller
         }
 
         $request = Yii::$app->request->bodyParams;
-        $fields = ['nome_completo', 'data_nascimento', 'sexo', 'telemovel', 'morada'];
+        $fields = ['telemovel', 'morada'];
 
         foreach ($fields as $field) {
             if (isset($request[$field])) {

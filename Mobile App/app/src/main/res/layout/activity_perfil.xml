@@ -140,8 +140,8 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/tv_morada"
+                <EditText
+                    android:id="@+id/et_morada"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
@@ -180,13 +180,16 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/tv_telemovel"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/et_telemovel"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text=""
                     android:textSize="14sp"
-                    android:layout_marginStart="10dp" />
+                    android:layout_marginStart="10dp"
+                    android:background="@null"
+                    android:inputType="phone"/>
 
                 <ImageView
                     android:layout_width="18dp"
@@ -218,13 +221,16 @@
                     android:text=""
                     android:textSize="14sp"
                     android:layout_marginStart="10dp" />
-
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/ic_editar" />
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/Cor_Padrao"
+                android:text="Guardar alterações" />
 
         </LinearLayout>
 
