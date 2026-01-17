@@ -8,58 +8,62 @@
     android:background="@color/white"
     tools:context=".AlergiasActivity">
 
-<View
-    android:id="@+id/bg_consultas_topopagina"
-    android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:background="@drawable/bg_gradiente_topo_activity"
-    android:layout_alignParentTop="true"/>
-
-<!-- Puxa o drawable bg_consultas_topoarredondado -->
-<View
-    android:id="@+id/consultas_topo"
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:background="@drawable/bg_topoactivityarredondado"
-    android:layout_marginTop="60dp"/>
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/btnVoltar"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:src="@drawable/ic_voltar"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_titulo_atividade_alergias"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:paddingTop="16dp"/>
-</RelativeLayout>
-
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="15dp"
-    android:layout_marginTop="70dp">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAlergias"
+    <View
+        android:id="@+id/bg_consultas_topopagina"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="24dp"
-        android:clipToPadding="false"/>
-</LinearLayout>
+        android:layout_height="160dp"
+        android:background="@drawable/bg_gradiente_topo_activity"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:id="@+id/containerPadding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <View
+            android:id="@+id/consultas_topo"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_topoactivityarredondado"
+            android:layout_marginTop="50dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/btnVoltar"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_voltar"
+                android:layout_marginStart="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_titulo_atividade_alergias"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_marginTop="90dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAlergias"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp"
+            android:clipToPadding="false" />
+    </LinearLayout>
 
 </RelativeLayout>

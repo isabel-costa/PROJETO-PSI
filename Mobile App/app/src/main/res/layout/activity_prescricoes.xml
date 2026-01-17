@@ -1,55 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <!-- Top Bar -->
     <View
         android:id="@+id/topBar"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@color/Cor_Padrao"
-        android:layout_alignParentTop="true" />
+        android:layout_height="150dp"
+        android:background="@drawable/bg_gradiente_topo_activity" />
 
-    <View
-        android:id="@+id/topo_marcar_consultas_arredondado"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/bg_topoactivityarredondado" />
-
-    <!-- Header -->
     <RelativeLayout
+        android:id="@+id/containerPadding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
 
-        <ImageView
-            android:id="@+id/ivVoltar"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_voltar" />
+        <View
+            android:id="@+id/topo_marcar_consultas_arredondado"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/bg_topoactivityarredondado" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Prescrições"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/Cor_Textos"
-            android:layout_centerInParent="true"
-            android:paddingTop="16dp" />
+        <RelativeLayout
+            android:id="@+id/containerHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivVoltar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/ic_voltar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prescrições"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/Cor_Textos"
+                android:layout_centerInParent="true"
+                android:paddingTop="0dp" />
+        </RelativeLayout>
+
     </RelativeLayout>
 
-    <!-- CONTEÚDO COM SCROLL -->
+    <!-- ScrollView fora do containerPadding -->
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/topBar"
+        android:layout_marginTop="120dp"
         android:fillViewport="true">
 
         <LinearLayout

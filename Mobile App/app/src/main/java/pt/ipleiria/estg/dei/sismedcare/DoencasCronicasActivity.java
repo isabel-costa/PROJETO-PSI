@@ -3,10 +3,14 @@ package pt.ipleiria.estg.dei.sismedcare;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +29,18 @@ public class DoencasCronicasActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doencas_cronicas);
+
+        RelativeLayout containerPadding = findViewById(R.id.containerPadding);
+        ViewCompat.setOnApplyWindowInsetsListener(containerPadding, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(
+                    v.getPaddingLeft(),
+                    systemBars.top,
+                    v.getPaddingRight(),
+                    v.getPaddingBottom()
+            );
+            return insets;
+        });
 
         rvDoencas = findViewById(R.id.rvDoencas);
         rvDoencas.setLayoutManager(new LinearLayoutManager(this));

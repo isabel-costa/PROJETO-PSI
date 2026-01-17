@@ -5,49 +5,52 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <!-- Top Bar -->
     <View
         android:id="@+id/topBar"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@color/Cor_Padrao"
+        android:layout_height="160dp"
+        android:background="@drawable/bg_gradiente_topo_activity"
         android:layout_alignParentTop="true" />
 
-    <View
-        android:id="@+id/topo_marcar_consultas_arredondado"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/bg_topoactivityarredondado"
-        android:layout_marginTop="60dp" />
-
     <RelativeLayout
+        android:id="@+id/containerPadding"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
 
-        <ImageView
-            android:id="@+id/ivVoltar"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_voltar" />
+        <View
+            android:id="@+id/topo_marcar_consultas_arredondado"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_topoactivityarredondado"
+            android:layout_marginTop="50dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Detalhes da Prescrição"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/Cor_Textos"
-            android:layout_centerInParent="true"
-            android:paddingTop="16dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivVoltar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_voltar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Detalhes da Prescrição"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/Cor_Textos"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
     </RelativeLayout>
 
-    <!-- Card de conteúdo -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/topBar"
+        android:layout_marginTop="90dp"
         android:padding="20dp">
 
         <LinearLayout
@@ -59,7 +62,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMedicamentos"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
+
 </RelativeLayout>
