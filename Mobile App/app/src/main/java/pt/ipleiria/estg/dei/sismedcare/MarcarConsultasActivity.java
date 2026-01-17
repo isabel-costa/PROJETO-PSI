@@ -91,7 +91,7 @@ public class MarcarConsultasActivity extends AppCompatActivity {
     }
 
     private void carregarEspecialidades() {
-        String url = SingletonGestorAPI.getInstance(this).getBaseApiUrl() + "/medicos";
+        String url = SingletonGestorAPI.getInstance(this).getBaseApiUrl(this) + "/medicos";
 
         SingletonGestorAPI.getInstance(this).getMedicoEspecialidade(url, new SingletonGestorAPI.MedicoEspecialidadeListener() {
             @Override

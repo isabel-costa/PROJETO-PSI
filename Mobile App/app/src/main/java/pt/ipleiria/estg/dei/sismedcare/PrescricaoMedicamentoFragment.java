@@ -127,8 +127,8 @@ public class PrescricaoMedicamentoFragment extends Fragment {
                                 adapterHolder[0] = new RegistoTomaAdapter(listaPendentes, toma -> {
 
                                     SingletonGestorAPI.getInstance(getContext())
-                                            .marcarTomaComoTomada(toma, new SingletonGestorAPI.TomaTomadaListener() {
-                                                @Override
+                                            .marcarTomaComoTomada(getContext(), toma, new SingletonGestorAPI.TomaTomadaListener(){
+                                    @Override
                                                 public void onSuccess() {
                                                     int pos = listaPendentes.indexOf(toma);
                                                     if (pos != -1) {

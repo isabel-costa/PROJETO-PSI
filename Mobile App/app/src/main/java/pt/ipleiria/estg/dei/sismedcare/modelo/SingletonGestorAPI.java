@@ -45,7 +45,7 @@ public class SingletonGestorAPI {
     private Paciente pacienteAutenticado;
 
     // Credenciais BearerAuth
-    private  String authToken;
+    private String authToken;
 
     private SingletonGestorAPI(Context context) {
         volleyQueue = Volley.newRequestQueue(context.getApplicationContext());
@@ -119,7 +119,8 @@ public class SingletonGestorAPI {
         String caminhoAPI = prefs.getString("CAMINHO_API", "/SisMedCare/backend/web/api");
 
         // Garantir que não sobra "/" duplo
-        if (urlServidor.endsWith("/")) urlServidor = urlServidor.substring(0, urlServidor.length() - 1);
+        if (urlServidor.endsWith("/"))
+            urlServidor = urlServidor.substring(0, urlServidor.length() - 1);
         if (caminhoAPI.startsWith("/")) caminhoAPI = caminhoAPI.substring(1);
 
         return urlServidor + "/" + caminhoAPI;
@@ -343,6 +344,7 @@ public class SingletonGestorAPI {
 
     public interface MedicoEspecialidadeListener {
         void onSuccess(org.json.JSONArray response);
+
         void onError(String erro);
     }
 
@@ -427,7 +429,7 @@ public class SingletonGestorAPI {
         ) {
             @Override
             public Map<String, String> getHeaders() {
-                Map<String,String> h = new HashMap<>();
+                Map<String, String> h = new HashMap<>();
                 h.put("Authorization", getAuthHeader());
                 return h;
             }
@@ -443,7 +445,8 @@ public class SingletonGestorAPI {
         if (!NetworkUtils.hasInternet(context)) {
             // 🔴 OFFLINE
             Prescricao p = bd.getPrescricaoById(prescricaoId);
-            if (p == null || p.getMedicamentos().isEmpty()) listener.onError("Sem ligação à internet");
+            if (p == null || p.getMedicamentos().isEmpty())
+                listener.onError("Sem ligação à internet");
             else listener.onSuccess(p);
             return;
         }
@@ -462,7 +465,7 @@ public class SingletonGestorAPI {
                             JSONObject obj = response.getJSONObject(i);
 
                             if (obj.has("prescricao")) {
-                                dataPrescricao = obj.getJSONObject("prescricao").optString("data_prescricao","");
+                                dataPrescricao = obj.getJSONObject("prescricao").optString("data_prescricao", "");
                             }
 
                             JSONObject medObj = obj.getJSONObject("medicamento");
@@ -492,8 +495,8 @@ public class SingletonGestorAPI {
                 error -> listener.onError("Erro de ligação ao servidor")
         ) {
             @Override
-            public Map<String,String> getHeaders() {
-                Map<String,String> h = new HashMap<>();
+            public Map<String, String> getHeaders() {
+                Map<String, String> h = new HashMap<>();
                 h.put("Authorization", getAuthHeader());
                 return h;
             }
@@ -614,7 +617,7 @@ public class SingletonGestorAPI {
 
                             lista.add(toma);
 
-                            String urlPrescricao = getBaseApiUrl()
+                            String urlPrescricao = getBaseApiUrl(context)
                                     + "/prescricao-medicamento/"
                                     + prescricaoMedicamentoId;
 
@@ -678,52 +681,31 @@ public class SingletonGestorAPI {
         volleyQueue.add(request);
     }
 
-    public interface PerfilListener {
-        void onSuccess(Paciente paciente);
-        void onError(String erro);
-    }
+    public void marcarTomaComoTomada(Context context, RegistoToma toma, TomaTomadaListener listener) {
+        String url = getBaseApiUrl(context) + "/registo-toma/marcar/" + toma.getId();
 
-    public void getPerfilPaciente(Context context, PerfilListener listener) {
-        String url = getBaseApiUrl(context) + "/paciente";
+    JSONObject body = new JSONObject();
+        try {
+            body.put("id", toma.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            listener.onError("Erro ao criar solicitação");
+            return;
+        }
 
         JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.GET,
+                Request.Method.POST,
                 url,
-                null,
-                response -> {
-                    try {
-                        // Preenche paciente com os dados da API
-                        Paciente paciente = new Paciente(
-                                0, // id (não é usado aqui)
-                                0, // userId
-                                response.optString("nome_completo", ""),
-                                response.optString("data_nascimento", ""),
-                                response.optString("sexo", ""),
-                                response.optString("numero_utente", ""),
-                                response.optString("telemovel", ""),
-                                response.optString("morada", ""),
-                                0, // altura
-                                0, // peso
-                                "", // alergias
-                                "", // doencasCronicas
-                                "", // dataRegisto
-                                null
-                        );
-                        paciente.setEmail(response.optString("email", ""));
-                        listener.onSuccess(paciente);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        listener.onError("Erro ao processar perfil");
-                    }
-                },
-                error -> listener.onError("Erro ao carregar perfil")
+                body,
+                response -> listener.onSuccess(),
+                error -> listener.onError("Erro ao marcar medicação como tomada")
         ) {
             @Override
             public Map<String, String> getHeaders() {
-                Map<String,String> h = new HashMap<>();
-                h.put("Authorization", getAuthHeader());
-                return h;
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", getAuthHeader());
+                headers.put("Content-Type", "application/json");
+                return headers;
             }
         };
 
@@ -748,7 +730,7 @@ public class SingletonGestorAPI {
 
     public void getRegistoTomasTomadas(Context context, RegistoTomaListener listener) {
 
-        String url = getBaseApiUrl() + "/registo-toma/tomadas";
+        String url = getBaseApiUrl(context) + "/registo-toma/tomadas";
 
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
@@ -778,7 +760,7 @@ public class SingletonGestorAPI {
 
                             lista.add(toma);
 
-                            String urlPrescricao = getBaseApiUrl()
+                            String urlPrescricao = getBaseApiUrl(context)
                                     + "/prescricao-medicamento/"
                                     + prescricaoMedicamentoId;
 
@@ -838,13 +820,67 @@ public class SingletonGestorAPI {
         };
         volleyQueue.add(request);
     }
-}
-    public interface PerfilUpdateListener {
-        void onSuccess();
+
+    public interface PerfilListener {
+        void onSuccess(Paciente paciente);
+
         void onError(String erro);
     }
 
-    public void atualizarPerfil(Context context, Map<String,String> dados, PerfilUpdateListener listener) {
+    public void getPerfilPaciente(Context context, PerfilListener listener) {
+        String url = getBaseApiUrl(context) + "/paciente";
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                response -> {
+                    try {
+                        // Preenche paciente com os dados da API
+                        Paciente paciente = new Paciente(
+                                0, // id (não é usado aqui)
+                                0, // userId
+                                response.optString("nome_completo", ""),
+                                response.optString("data_nascimento", ""),
+                                response.optString("sexo", ""),
+                                response.optString("numero_utente", ""),
+                                response.optString("telemovel", ""),
+                                response.optString("morada", ""),
+                                0, // altura
+                                0, // peso
+                                "", // alergias
+                                "", // doencasCronicas
+                                "", // dataRegisto
+                                null
+                        );
+                        paciente.setEmail(response.optString("email", ""));
+                        listener.onSuccess(paciente);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        listener.onError("Erro ao processar perfil");
+                    }
+                },
+                error -> listener.onError("Erro ao carregar perfil")
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> h = new HashMap<>();
+                h.put("Authorization", getAuthHeader());
+                return h;
+            }
+        };
+
+        volleyQueue.add(request);
+    }
+
+    public interface PerfilUpdateListener {
+        void onSuccess();
+
+        void onError(String erro);
+    }
+
+    public void atualizarPerfil(Context context, Map<String, String> dados, PerfilUpdateListener listener) {
         String url = getBaseApiUrl(context) + "/paciente";
 
         JsonObjectRequest request = new JsonObjectRequest(
@@ -862,8 +898,8 @@ public class SingletonGestorAPI {
                 }
         ) {
             @Override
-            public Map<String,String> getHeaders() {
-                Map<String,String> h = new HashMap<>();
+            public Map<String, String> getHeaders() {
+                Map<String, String> h = new HashMap<>();
                 String auth = getAuthHeader();
                 if (auth != null) h.put("Authorization", auth);
                 return h;
