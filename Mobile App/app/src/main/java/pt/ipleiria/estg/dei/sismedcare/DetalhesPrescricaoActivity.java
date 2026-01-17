@@ -2,9 +2,13 @@ package pt.ipleiria.estg.dei.sismedcare;
 
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +28,21 @@ public class DetalhesPrescricaoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes_prescricao);
+
+        RelativeLayout containerPadding = findViewById(R.id.containerPadding);
+
+        ViewCompat.setOnApplyWindowInsetsListener(containerPadding, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+            v.setPadding(
+                    v.getPaddingLeft(),
+                    systemBars.top,
+                    v.getPaddingRight(),
+                    v.getPaddingBottom()
+            );
+
+            return insets;
+        });
 
         rvMedicamentos = findViewById(R.id.rvMedicamentos);
         rvMedicamentos.setLayoutManager(new LinearLayoutManager(this));

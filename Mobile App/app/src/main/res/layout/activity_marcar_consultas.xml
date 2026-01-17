@@ -5,54 +5,58 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <!-- Top Bar (fundo verde) -->
+    <!-- Fundo topo -->
     <View
         android:id="@+id/bg_topo"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="150dp"
         android:background="@drawable/bg_gradiente_topo_activity"
         android:layout_alignParentTop="true" />
 
-    <!-- Drawable arredondado -->
-    <View
-        android:id="@+id/topo_marcar_consultas_arredondado"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/bg_topoactivityarredondado"
-        android:layout_marginTop="60dp" />
-
-    <!-- Conteúdo da Top Bar (em cima do fundo) -->
     <RelativeLayout
+        android:id="@+id/containerPadding"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
 
-        <ImageView
-            android:id="@+id/btnVoltar"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_voltar" />
+        <!-- Drawable arredondado -->
+        <View
+            android:id="@+id/topo_marcar_consultas_arredondado"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_topoactivityarredondado"
+            android:layout_marginTop="50dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Marcação de Consultas"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/Cor_Textos"
-            android:layout_centerInParent="true"
-            android:paddingTop="16dp" />
+        <!-- botão voltar e título -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/btnVoltar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_voltar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Marcação de Consultas"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/Cor_Textos"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
     </RelativeLayout>
 
-    <!-- CONTEÚDO PRINCIPAL (por cima do arredondado) -->
+    <!-- Conteúdo principal -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
-        android:layout_alignParentTop="true"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="24dp"
+        android:layout_marginTop="120dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,7 +77,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/bg_txt_redondo"
-            android:padding="8dp"
+            android:padding="12dp"
             android:layout_marginTop="24dp">
 
             <Spinner
@@ -81,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dropdown"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent" />
         </LinearLayout>
 
         <LinearLayout
@@ -89,7 +93,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/bg_txt_redondo"
-            android:padding="8dp"
+            android:padding="12dp"
             android:layout_marginTop="16dp">
 
             <Spinner
@@ -97,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dropdown"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent" />
         </LinearLayout>
 
         <TextView
