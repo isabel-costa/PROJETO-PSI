@@ -138,15 +138,7 @@ class AuthController extends Controller
             'auth_key' => $user->auth_key,
             'paciente' => [
                 'nome_completo' => $paciente->nome_completo,
-                'sexo' => $paciente->sexo,
                 'numero_utente' => $paciente->numero_utente,
-                'telemovel' => $paciente->telemovel,
-                'morada' => $paciente->morada,
-                'altura' => $paciente->altura,
-                'peso' => $paciente->peso,
-                'alergias' => $paciente->alergias,
-                'doencas_cronicas' => $paciente->doencas_cronicas,
-                'data_registo' => $paciente->data_registo,
             ]
         ]
     ];

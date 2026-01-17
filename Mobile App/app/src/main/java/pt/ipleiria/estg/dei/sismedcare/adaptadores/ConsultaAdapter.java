@@ -30,8 +30,7 @@ public class ConsultaAdapter extends RecyclerView.Adapter<ConsultaAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_consulta_card, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_consulta_card, parent, false);
         return new ViewHolder(v);
     }
 
@@ -39,7 +38,7 @@ public class ConsultaAdapter extends RecyclerView.Adapter<ConsultaAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Consulta c = consultas.get(position);
 
-        // Exemplo data: 2026-01-17 10:00:00
+        // Exemplo se a data for 2026-01-17 10:00:00
         String[] partes = c.getDataConsulta().split(" ");
         String[] data = partes[0].split("-");
 
@@ -58,26 +57,37 @@ public class ConsultaAdapter extends RecyclerView.Adapter<ConsultaAdapter.ViewHo
             holder.btnDelete.setVisibility(View.GONE);
         }
 
-        // Listener do delete
+        // Listener do delete com AlertDialog
         holder.btnDelete.setOnClickListener(v -> {
-            int pos = holder.getAdapterPosition(); // pega a posição atual
-            if (pos == RecyclerView.NO_POSITION) return; // posição inválida, não faz nada
+            int pos = holder.getAdapterPosition();
+            if (pos == RecyclerView.NO_POSITION) return;
 
             Consulta cAtual = consultas.get(pos);
 
-            SingletonGestorAPI api = SingletonGestorAPI.getInstance(v.getContext());
-            api.cancelarPedidoConsulta(cAtual.getId(), new SingletonGestorAPI.ConsultaDeleteListener() {
-                @Override
-                public void onSuccess() {
-                    consultas.remove(pos); // remove usando a posição atual
-                    notifyItemRemoved(pos);
-                }
+            // Mostrar confirmação
+            new androidx.appcompat.app.AlertDialog.Builder(v.getContext())
+                    .setTitle("Cancelar consulta")
+                    .setMessage("Tem a certeza que quer cancelar esta consulta?")
+                    .setPositiveButton("Sim", (dialog, which) -> {
 
-                @Override
-                public void onError(String erro) {
-                    Toast.makeText(v.getContext(), "Erro ao cancelar pedido de consulta: " + erro, Toast.LENGTH_LONG).show();
-                }
-            });
+                        SingletonGestorAPI api = SingletonGestorAPI.getInstance(v.getContext());
+                        api.cancelarPedidoConsulta(cAtual.getId(), new SingletonGestorAPI.ConsultaDeleteListener() {
+                            @Override
+                            public void onSuccess() {
+                                // Remove do RecyclerView
+                                consultas.remove(pos);
+                                notifyItemRemoved(pos);
+                                Toast.makeText(v.getContext(), "Consulta cancelada com sucesso", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onError(String erro) {
+                                // Mostrar erro da API
+                                Toast.makeText(v.getContext(), "Erro ao cancelar pedido de consulta: " + erro, Toast.LENGTH_LONG).show();
+                            }
+                        }, v.getContext());
+
+                    }).setNegativeButton("Não", null).show();
         });
     }
 

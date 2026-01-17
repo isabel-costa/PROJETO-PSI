@@ -15,6 +15,9 @@ public class Medico {
     public String getNome() {
         return nome;
     }
+    public String getEspecialidade() {
+        return especialidade;
+    }
 
     public static Medico fromJson(JSONObject obj) throws JSONException {
         return new Medico(

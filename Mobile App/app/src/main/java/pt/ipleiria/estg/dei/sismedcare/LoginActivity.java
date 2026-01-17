@@ -1,28 +1,15 @@
 package pt.ipleiria.estg.dei.sismedcare;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Patterns;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import pt.ipleiria.estg.dei.sismedcare.MainActivity;
-import pt.ipleiria.estg.dei.sismedcare.R;
 import pt.ipleiria.estg.dei.sismedcare.modelo.SingletonGestorAPI;
 
 public class LoginActivity extends AppCompatActivity {
-
-    private static final String PREFS = "DADOS_USER";
-    private static final String KEY_USERNAME = "USERNAME";
-    private static final String KEY_LOGGED = "LOGGED";
 
     private EditText etUsername, etPassword;
 
@@ -75,9 +62,10 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.txt_Registar).setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, RegistarContaActivity.class));
         });
+        findViewById(R.id.txt_Registar).setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegistarContaActivity.class)));
     }
 
-    public void onClickLogin(View view) {
+    public void onClickLogin(android.view.View view) {
         String username = etUsername.getText().toString().trim();
         String pass = etPassword.getText().toString().trim();
 
@@ -91,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Chama o Singleton
+        // Chama o Singleton para login → retorna token que será guardado
         SingletonGestorAPI.getInstance(this).login(username, pass, this);
     }
 

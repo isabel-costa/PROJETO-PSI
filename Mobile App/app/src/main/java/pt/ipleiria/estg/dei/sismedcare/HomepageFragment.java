@@ -46,15 +46,16 @@ public class HomepageFragment extends Fragment {
         btnPerfil.setOnClickListener(v -> startActivity(new Intent(getContext(), PerfilActivity.class)));
 
         // Outras navegações
-        view.findViewById(R.id.ll_doencas_cronicas).setOnClickListener(v -> startActivity(new Intent(getContext(), DoencasCronicasActivity.class)));
-
-        view.findViewById(R.id.ll_prescricao).setOnClickListener(v -> startActivity(new Intent(getContext(), PrescricoesActivity.class)));
-
-        view.findViewById(R.id.ll_alergias).setOnClickListener(v -> startActivity(new Intent(getContext(), AlergiasActivity.class)));
-
-        view.findViewById(R.id.ll_marcacao_consultas).setOnClickListener(v -> startActivity(new Intent(getContext(), MarcarConsultasActivity.class)));
-
-        view.findViewById(R.id.ll_ver_consultas).setOnClickListener(v -> startActivity(new Intent(getContext(), ConsultasVerConsultasActivity.class)));
+        view.findViewById(R.id.ll_doencas_cronicas).setOnClickListener(v ->
+                startActivity(new Intent(getContext(), DoencasCronicasActivity.class)));
+        view.findViewById(R.id.ll_prescricao).setOnClickListener(v ->
+                startActivity(new Intent(getContext(), PrescricoesActivity.class)));
+        view.findViewById(R.id.ll_alergias).setOnClickListener(v ->
+                startActivity(new Intent(getContext(), AlergiasActivity.class)));
+        view.findViewById(R.id.ll_marcacao_consultas).setOnClickListener(v ->
+                startActivity(new Intent(getContext(), MarcarConsultasActivity.class)));
+        view.findViewById(R.id.ll_ver_consultas).setOnClickListener(v ->
+                startActivity(new Intent(getContext(), ConsultasVerConsultasActivity.class)));
 
         // Preencher dados do paciente
         Paciente paciente = SingletonGestorAPI.getInstance(requireContext()).getPacienteAutenticado();
@@ -69,20 +70,6 @@ public class HomepageFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // Garantir login do paciente
-        SingletonGestorAPI api = SingletonGestorAPI.getInstance(requireContext());
-        if (api.getPacienteAutenticado() == null) {
-            String username = api.getAuthUsername();
-            String password = api.getAuthPassword();
-            if (username != null && password != null) {
-                api.login(username, password, requireActivity());
-            }
-        }
-    }
-
     private void carregarProximasConsultas() {
         SingletonGestorAPI api = SingletonGestorAPI.getInstance(requireContext());
 
@@ -90,7 +77,6 @@ public class HomepageFragment extends Fragment {
             @Override
             public void onSuccess(List<Consulta> consultas) {
                 if (consultas != null && !consultas.isEmpty()) {
-                    // Preencher RecyclerView
                     rvProximasConsultas.setAdapter(new ConsultaAdapter(consultas));
                 }
             }
