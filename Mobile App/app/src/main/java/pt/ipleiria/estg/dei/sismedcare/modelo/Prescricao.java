@@ -8,6 +8,8 @@ public class Prescricao {
     private String nomeMedico;
     private List<PrescricaoMedicamento> medicamentos;
 
+    public Prescricao() { }
+
     public Prescricao(int id, String dataPrescricao, String nomeMedico, List<PrescricaoMedicamento> medicamentos) {
         this.id = id;
         this.dataPrescricao = dataPrescricao;
@@ -21,4 +23,7 @@ public class Prescricao {
     public List<PrescricaoMedicamento> getMedicamentos() { return medicamentos; }
 
     public void setId(int id) { this.id = id; }
+    public void setDataPrescricao(String dataPrescricao) { this.dataPrescricao = dataPrescricao; }
+    public void setNomeMedico(String nomeMedico) { this.nomeMedico = nomeMedico; }
+    public void setMedicamentos(List<PrescricaoMedicamento> medicamentos) { this.medicamentos = medicamentos; }
 }

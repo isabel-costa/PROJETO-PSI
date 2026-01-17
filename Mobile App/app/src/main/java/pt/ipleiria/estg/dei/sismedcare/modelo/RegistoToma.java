@@ -23,4 +23,16 @@ public class RegistoToma {
     public String getQuantidade() { return quantidade; }
     public String getHora() { return hora; }
     public boolean isFoiTomado() { return foiTomado; }
+
+    public void setFoiTomado(boolean foiTomado) {
+        this.foiTomado = foiTomado;
+    }
+
+    public void setNomeMedicamento(String nomeMedicamento) {
+        this.nomeMedicamento = nomeMedicamento;
+    }
+
+    public void setQuantidade(String quantidade) {
+        this.quantidade = quantidade;
+    }
 }
