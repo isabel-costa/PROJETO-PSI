@@ -19,4 +19,6 @@ public class Prescricao {
     public String getDataPrescricao() { return dataPrescricao; }
     public String getNomeMedico() { return nomeMedico; }
     public List<PrescricaoMedicamento> getMedicamentos() { return medicamentos; }
+
+    public void setId(int id) { this.id = id; }
 }

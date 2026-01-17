@@ -2,7 +2,6 @@ package pt.ipleiria.estg.dei.sismedcare;
 
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +12,7 @@ import java.util.List;
 
 import pt.ipleiria.estg.dei.sismedcare.adaptadores.PrescricaoMedicamentoAdapter;
 import pt.ipleiria.estg.dei.sismedcare.modelo.Prescricao;
+import pt.ipleiria.estg.dei.sismedcare.modelo.PrescricaoMedicamento;
 import pt.ipleiria.estg.dei.sismedcare.modelo.SingletonGestorAPI;
 
 public class DetalhesPrescricaoActivity extends AppCompatActivity {
@@ -39,23 +39,40 @@ public class DetalhesPrescricaoActivity extends AppCompatActivity {
         }
 
         // Buscar detalhes da prescrição
-        SingletonGestorAPI.getInstance(this).getPrescricaoDetalhes(prescricaoId, new SingletonGestorAPI.PrescricaoDetalhesListener() {
-            @Override
-            public void onSuccess(Prescricao prescricao) {
+        SingletonGestorAPI.getInstance(this)
+                .getPrescricaoDetalhes(
+                        this,
+                        prescricaoId,
+                        new SingletonGestorAPI.PrescricaoDetalhesListener() {
 
-                List<pt.ipleiria.estg.dei.sismedcare.modelo.PrescricaoMedicamento> meds = prescricao.getMedicamentos();
-                if (meds == null || meds.isEmpty()) {
-                    Toast.makeText(DetalhesPrescricaoActivity.this, "Sem medicamentos", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                adapter = new PrescricaoMedicamentoAdapter(meds);
-                rvMedicamentos.setAdapter(adapter);
-            }
+                            @Override
+                            public void onSuccess(Prescricao prescricao) {
 
-            @Override
-            public void onError(String erro) {
-                Toast.makeText(DetalhesPrescricaoActivity.this, erro, Toast.LENGTH_SHORT).show();
-            }
-        });
+                                List<PrescricaoMedicamento> meds =
+                                        prescricao.getMedicamentos();
+
+                                if (meds == null || meds.isEmpty()) {
+                                    Toast.makeText(
+                                            DetalhesPrescricaoActivity.this,
+                                            "Sem medicamentos",
+                                            Toast.LENGTH_SHORT
+                                    ).show();
+                                    return;
+                                }
+
+                                adapter = new PrescricaoMedicamentoAdapter(meds);
+                                rvMedicamentos.setAdapter(adapter);
+                            }
+
+                            @Override
+                            public void onError(String erro) {
+                                Toast.makeText(
+                                        DetalhesPrescricaoActivity.this,
+                                        erro,
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                            }
+                        }
+                );
     }
 }

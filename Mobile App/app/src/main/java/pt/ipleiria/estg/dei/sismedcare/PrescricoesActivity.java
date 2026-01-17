@@ -17,6 +17,7 @@ import java.util.List;
 
 import pt.ipleiria.estg.dei.sismedcare.adaptadores.PrescricaoAdapter;
 import pt.ipleiria.estg.dei.sismedcare.modelo.Prescricao;
+import pt.ipleiria.estg.dei.sismedcare.modelo.PrescricaoBDHelper;
 import pt.ipleiria.estg.dei.sismedcare.modelo.SingletonGestorAPI;
 
 public class PrescricoesActivity extends AppCompatActivity {
@@ -53,18 +54,39 @@ public class PrescricoesActivity extends AppCompatActivity {
     }
 
     private void carregarPrescricoes() {
-        SingletonGestorAPI.getInstance(this).getPrescricoes(this, new SingletonGestorAPI.PrescricoesListener() {
-            @Override
-            public void onSuccess(List<Prescricao> prescricoes) {
-                listaPrescricoes.clear();
-                listaPrescricoes.addAll(prescricoes);
-                adapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onError(String erro) {
-                Toast.makeText(PrescricoesActivity.this, erro, Toast.LENGTH_SHORT).show();
-            }
-        });
+        PrescricaoBDHelper bd = new PrescricaoBDHelper(this);
+
+        SingletonGestorAPI.getInstance(this).getPrescricoes(this,
+                new SingletonGestorAPI.PrescricoesListener() {
+
+                    @Override
+                    public void onSuccess(List<Prescricao> prescricoes) {
+
+                        bd.guardarPrescricoes(prescricoes);
+
+                        listaPrescricoes.clear();
+                        listaPrescricoes.addAll(prescricoes);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(String erro) {
+
+                        // 🔥 OFFLINE
+                        List<Prescricao> offline = bd.getAllPrescricoes();
+
+                        listaPrescricoes.clear();
+                        listaPrescricoes.addAll(offline);
+                        adapter.notifyDataSetChanged();
+
+                        Toast.makeText(
+                                PrescricoesActivity.this,
+                                "Modo offline",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                });
     }
+
 }

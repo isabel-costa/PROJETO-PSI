@@ -24,6 +24,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import pt.ipleiria.estg.dei.sismedcare.utils.NetworkUtils;
+
 
 public class SingletonGestorAPI {
 
@@ -339,130 +341,125 @@ public class SingletonGestorAPI {
     }
 
     public void getPrescricoes(Context context, PrescricoesListener listener) {
-        String url = getBaseApiUrl() + "/prescricao";
 
+        PrescricaoBDHelper bd = new PrescricaoBDHelper(context);
+
+        if (!NetworkUtils.hasInternet(context)) {
+            // 🔴 OFFLINE
+            List<Prescricao> lista = bd.getAllPrescricoes();
+            if (lista.isEmpty()) listener.onError("Sem ligação à internet");
+            else listener.onSuccess(lista);
+            return;
+        }
+
+        // 🌐 ONLINE
+        String url = getBaseApiUrl() + "/prescricao";
         JsonArrayRequest request = new JsonArrayRequest(
-                Request.Method.GET,
                 url,
-                null,
                 response -> {
-                    List<Prescricao> lista = new ArrayList<>();
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
+                    try {
+                        List<Prescricao> lista = new ArrayList<>();
+
+                        for (int i = 0; i < response.length(); i++) {
                             JSONObject obj = response.getJSONObject(i);
+
                             Prescricao p = new Prescricao(
                                     obj.getInt("id"),
                                     obj.getString("data_prescricao"),
                                     obj.getJSONObject("medico").optString("nome", "Desconhecido"),
                                     new ArrayList<>()
                             );
+
                             lista.add(p);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+
+                            // 🔒 salva offline
+                            bd.guardarPrescricao(p);
                         }
+
+                        listener.onSuccess(lista);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        listener.onError("Erro ao processar prescrições");
                     }
-                    listener.onSuccess(lista);
                 },
-                error -> listener.onError("Erro ao carregar prescrições")
+                error -> listener.onError("Erro de ligação à API")
         ) {
             @Override
             public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                String auth = getAuthHeader();
-                if (auth != null) {
-                    headers.put("Authorization", auth);
-                }
-                return headers;
+                Map<String,String> h = new HashMap<>();
+                h.put("Authorization", getAuthHeader());
+                return h;
             }
         };
 
         volleyQueue.add(request);
     }
 
-    public void getPrescricaoDetalhes(int prescricaoId, PrescricaoDetalhesListener listener) {
-        String urlPrescricao = getBaseApiUrl() + "/prescricao/" + prescricaoId;
-        String urlMedicamentos = getBaseApiUrl() + "/prescricao-medicamento/prescricao/" + prescricaoId;
+    public void getPrescricaoDetalhes(Context context, int prescricaoId, PrescricaoDetalhesListener listener) {
 
-        // 1️⃣ Buscar a prescrição
-        JsonObjectRequest requestPrescricao = new JsonObjectRequest(
-                Request.Method.GET,
-                urlPrescricao,
-                null,
+        PrescricaoBDHelper bd = new PrescricaoBDHelper(context);
+
+        if (!NetworkUtils.hasInternet(context)) {
+            // 🔴 OFFLINE
+            Prescricao p = bd.getPrescricaoById(prescricaoId);
+            if (p == null || p.getMedicamentos().isEmpty()) listener.onError("Sem ligação à internet");
+            else listener.onSuccess(p);
+            return;
+        }
+
+        // 🌐 ONLINE
+        String url = getBaseApiUrl() + "/prescricao-medicamento/prescricao/" + prescricaoId;
+
+        JsonArrayRequest request = new JsonArrayRequest(
+                url,
                 response -> {
                     try {
-                        // Nome do médico e data da prescrição
-                        String data = response.getString("data_prescricao");
-                        JSONObject medicoObj = response.getJSONObject("medico");
-                        String nomeMedico = medicoObj.optString("nome", "Desconhecido");
+                        List<PrescricaoMedicamento> meds = new ArrayList<>();
+                        String dataPrescricao = "";
 
-                        // 2️⃣ Buscar os medicamentos associados
-                        JsonArrayRequest requestMeds = new JsonArrayRequest(
-                                Request.Method.GET,
-                                urlMedicamentos,
-                                null,
-                                medsArray -> {
-                                    try {
-                                        List<PrescricaoMedicamento> listaMeds = new ArrayList<>();
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject obj = response.getJSONObject(i);
 
-                                        for (int i = 0; i < medsArray.length(); i++) {
-                                            JSONObject m = medsArray.getJSONObject(i);
-                                            JSONObject med = m.getJSONObject("medicamento");
-
-                                            // Criar PrescricaoMedicamento
-                                            PrescricaoMedicamento pm = new PrescricaoMedicamento(
-                                                    med.getString("nome"),
-                                                    m.getString("posologia"),
-                                                    m.getString("frequencia"),
-                                                    m.getInt("duracao_dias"),
-                                                    m.getString("instrucoes")
-                                            );
-
-                                            listaMeds.add(pm);
-                                        }
-
-                                        // Criar objeto Prescricao final
-                                        Prescricao prescricao = new Prescricao(
-                                                response.getInt("id"),
-                                                data,
-                                                nomeMedico,
-                                                listaMeds
-                                        );
-
-                                        listener.onSuccess(prescricao);
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                        listener.onError("Erro ao processar medicamentos");
-                                    }
-                                },
-                                error -> listener.onError("Erro ao carregar medicamentos")
-                        ) {
-                            @Override
-                            public Map<String, String> getHeaders() {
-                                Map<String, String> headers = new HashMap<>();
-                                headers.put("Authorization", getAuthHeader());
-                                return headers;
+                            if (obj.has("prescricao")) {
+                                dataPrescricao = obj.getJSONObject("prescricao").optString("data_prescricao","");
                             }
-                        };
 
-                        volleyQueue.add(requestMeds);
+                            JSONObject medObj = obj.getJSONObject("medicamento");
 
-                    } catch (JSONException e) {
+                            PrescricaoMedicamento pm = new PrescricaoMedicamento(
+                                    medObj.optString("nome"),
+                                    obj.optString("posologia"),
+                                    obj.optString("frequencia"),
+                                    obj.optInt("duracao_dias"),
+                                    obj.optString("instrucoes")
+                            );
+
+                            meds.add(pm);
+                        }
+
+                        // 🔒 salva offline
+                        Prescricao pOffline = new Prescricao(prescricaoId, dataPrescricao, "", meds);
+                        bd.guardarPrescricao(pOffline);
+
+                        listener.onSuccess(pOffline);
+
+                    } catch (Exception e) {
                         e.printStackTrace();
-                        listener.onError("Erro ao processar prescrição");
+                        listener.onError("Erro ao processar medicamentos");
                     }
                 },
-                error -> listener.onError("Erro ao carregar prescrição")
+                error -> listener.onError("Erro de ligação ao servidor")
         ) {
             @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", getAuthHeader());
-                return headers;
+            public Map<String,String> getHeaders() {
+                Map<String,String> h = new HashMap<>();
+                h.put("Authorization", getAuthHeader());
+                return h;
             }
         };
 
-        volleyQueue.add(requestPrescricao);
+        volleyQueue.add(request);
     }
 
     public interface DoencasListener {

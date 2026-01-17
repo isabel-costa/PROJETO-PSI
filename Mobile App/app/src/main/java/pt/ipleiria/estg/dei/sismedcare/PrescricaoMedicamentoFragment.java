@@ -117,7 +117,7 @@ public class PrescricaoMedicamentoFragment extends Fragment {
                                 RegistoTomaAdapter adapter =
                                         new RegistoTomaAdapter(lista, null);
 
-                                rvMedicacaoPendente.setAdapter(adapter); // ✅ AQUI
+                                rvMedicacaoPendente.setAdapter(adapter);
                             }
 
                             @Override
