@@ -85,7 +85,7 @@ public class ConsultaAdapter extends RecyclerView.Adapter<ConsultaAdapter.ViewHo
                                 // Mostrar erro da API
                                 Toast.makeText(v.getContext(), "Erro ao cancelar pedido de consulta: " + erro, Toast.LENGTH_LONG).show();
                             }
-                        });
+                        }, v.getContext());
 
                     }).setNegativeButton("Não", null).show();
         });

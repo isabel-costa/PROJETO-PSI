@@ -39,9 +39,6 @@ public class Paciente {
     }
 
     public int getId() { return id; }
-    public int getUserId() { return userId; }
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
     public String getNomeCompleto() { return nomeCompleto; }
@@ -50,25 +47,6 @@ public class Paciente {
     public String getNumeroUtente() { return numeroUtente; }
     public String getTelemovel() { return telemovel; }
     public String getMorada() { return morada; }
-    public float getAltura() { return altura; }
-    public float getPeso() { return peso; }
-    public String getAlergias() { return alergias; }
-    public String getDoencasCronicas() { return doencasCronicas; }
-    public String getDataRegisto() { return dataRegisto; }
-    public User getUser() { return user; }
 
     public void setId(int id) { this.id = id; }
-    public void setUserId(int userId) { this.userId = userId; }
-    public void setNomeCompleto(String nomeCompleto) { this.nomeCompleto = nomeCompleto; }
-    public void setDataNascimento(String dataNascimento) { this.dataNascimento = dataNascimento; }
-    public void setSexo(String sexo) { this.sexo = sexo; }
-    public void setNumeroUtente(String numeroUtente) { this.numeroUtente = numeroUtente; }
-    public void setTelemovel(String telemovel) { this.telemovel = telemovel; }
-    public void setMorada(String morada) { this.morada = morada; }
-    public void setAltura(float altura) { this.altura = altura; }
-    public void setPeso(float peso) { this.peso = peso; }
-    public void setAlergias(String alergias) { this.alergias = alergias; }
-    public void setDoencasCronicas(String doencasCronicas) { this.doencasCronicas = doencasCronicas; }
-    public void setDataRegisto(String dataRegisto) { this.dataRegisto = dataRegisto; }
-    public void setUser(User user) { this.user = user; }
 }

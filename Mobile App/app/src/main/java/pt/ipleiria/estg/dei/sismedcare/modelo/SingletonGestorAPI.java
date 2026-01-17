@@ -42,9 +42,7 @@ public class SingletonGestorAPI {
 
     private Paciente pacienteAutenticado;
 
-    // Credenciais BasicAuth
-    private String authUsername;
-    private String authPassword;
+    // Credenciais BearerAuth
     private  String authToken;
 
     private SingletonGestorAPI(Context context) {
@@ -113,12 +111,20 @@ public class SingletonGestorAPI {
         return pacienteAutenticado;
     }
 
-    public String getBaseApiUrl() {
-        return "http://10.0.2.2/PROJETO-PSI/Web%20App/SisMedCare/backend/web/api";
+    public String getBaseApiUrl(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("CONFIG_APP", Context.MODE_PRIVATE);
+        String urlServidor = prefs.getString("URL_SERVIDOR", "http://172.22.21.215");
+        String caminhoAPI = prefs.getString("CAMINHO_API", "/SisMedCare/backend/web/api");
+
+        // Garantir que não sobra "/" duplo
+        if (urlServidor.endsWith("/")) urlServidor = urlServidor.substring(0, urlServidor.length() - 1);
+        if (caminhoAPI.startsWith("/")) caminhoAPI = caminhoAPI.substring(1);
+
+        return urlServidor + "/" + caminhoAPI;
     }
 
     public void login(String username, String password, Context context) {
-        String url = getBaseApiUrl() + "/auth/login";
+        String url = getBaseApiUrl(context) + "/auth/login";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -182,7 +188,7 @@ public class SingletonGestorAPI {
             Map<String, String> dados,
             RegistarContaActivity activity
     ) {
-        String url = getBaseApiUrl() + "/auth/registar";
+        String url = getBaseApiUrl(context) + "/auth/registar";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -215,20 +221,12 @@ public class SingletonGestorAPI {
         volleyQueue.add(request);
     }
 
-    public String getConsultasFuturasUrl() {
-        return getBaseApiUrl() + "/consultas/futuras";
+    public String getConsultasFuturasUrl(Context context) {
+        return getBaseApiUrl(context) + "/consultas/futuras";
     }
 
-    public String getConsultasPassadasUrl() {
-        return getBaseApiUrl() + "/consultas/passadas";
-    }
-
-    public String getAuthUsername() {
-        return authUsername;
-    }
-
-    public String getAuthPassword() {
-        return authPassword;
+    public String getConsultasPassadasUrl(Context context) {
+        return getBaseApiUrl(context) + "/consultas/passadas";
     }
 
     public interface ConsultasListener {
@@ -237,9 +235,13 @@ public class SingletonGestorAPI {
     }
 
     public void getConsultasFuturas(Context context, ConsultasListener listener) {
+
+        /* String baseUrl = getBaseApiUrl(context);
+        Log.d("SingletonGestorAPI", "Base URL atual: " + baseUrl); */
+
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
-                getConsultasFuturasUrl(),
+                getConsultasFuturasUrl(context),
                 null,
                 response -> listener.onSuccess(parseConsultas(response)),
                 error -> listener.onError("Erro ao carregar consultas futuras")
@@ -258,7 +260,7 @@ public class SingletonGestorAPI {
     public void getConsultasPassadas(Context context, ConsultasListener listener) {
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
-                getConsultasPassadasUrl(),
+                getConsultasPassadasUrl(context),
                 null,
                 response -> listener.onSuccess(parseConsultas(response)),
                 error -> listener.onError("Erro ao carregar consultas passadas")
@@ -302,8 +304,8 @@ public class SingletonGestorAPI {
         void onError(String erro);
     }
 
-    public void cancelarPedidoConsulta(int consultaId, ConsultaDeleteListener listener) {
-        String url = getBaseApiUrl() + "/consultas/" + consultaId;
+    public void cancelarPedidoConsulta(int consultaId, ConsultaDeleteListener listener, Context context) {
+        String url = getBaseApiUrl(context) + "/consultas/" + consultaId;
 
         // Usar StringRequest para não parsear JSON
         StringRequest request = new StringRequest(
@@ -358,7 +360,7 @@ public class SingletonGestorAPI {
         }
 
         // 🌐 ONLINE
-        String url = getBaseApiUrl() + "/prescricao";
+        String url = getBaseApiUrl(context) + "/prescricao";
         JsonArrayRequest request = new JsonArrayRequest(
                 url,
                 response -> {
@@ -414,7 +416,7 @@ public class SingletonGestorAPI {
         }
 
         // 🌐 ONLINE
-        String url = getBaseApiUrl() + "/prescricao-medicamento/prescricao/" + prescricaoId;
+        String url = getBaseApiUrl(context) + "/prescricao-medicamento/prescricao/" + prescricaoId;
 
         JsonArrayRequest request = new JsonArrayRequest(
                 url,
@@ -473,7 +475,7 @@ public class SingletonGestorAPI {
     }
 
     public void getDoencas(Context context, DoencasListener listener) {
-        String url = getBaseApiUrl() + "/paciente/doencas";
+        String url = getBaseApiUrl(context) + "/paciente/doencas";
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -514,7 +516,7 @@ public class SingletonGestorAPI {
     }
 
     public void getAlergias(Context context, AlergiasListener listener) {
-        String url = getBaseApiUrl() + "/paciente/alergias";
+        String url = getBaseApiUrl(context) + "/paciente/alergias";
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -542,10 +544,9 @@ public class SingletonGestorAPI {
         void onError(String erro);
     }
 
-    public void getRegistoTomasPendentes(Context context,
-                                         RegistoTomaListener listener) {
+    public void getRegistoTomasPendentes(Context context, RegistoTomaListener listener) {
 
-        String url = getBaseApiUrl() + "/registo-toma/pendentes";
+        String url = getBaseApiUrl(context) + "/registo-toma/pendentes";
 
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
@@ -602,7 +603,7 @@ public class SingletonGestorAPI {
     }
 
     public void getPerfilPaciente(Context context, PerfilListener listener) {
-        String url = getBaseApiUrl() + "/paciente";
+        String url = getBaseApiUrl(context) + "/paciente";
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -654,7 +655,7 @@ public class SingletonGestorAPI {
     }
 
     public void atualizarPerfil(Context context, Map<String,String> dados, PerfilUpdateListener listener) {
-        String url = getBaseApiUrl() + "/paciente";
+        String url = getBaseApiUrl(context) + "/paciente";
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.PUT,

@@ -19,7 +19,4 @@ public class Consulta {
     public String getObservacoes() { return observacoes; }
 
     public void setId(int id) { this.id = id; }
-    public void setDataConsulta(String dataConsulta) { this.dataConsulta = dataConsulta; }
-    public void setEstado(String estado) { this.estado = estado; }
-    public void setObservacoes(String observacoes) { this.observacoes = observacoes; }
 }
