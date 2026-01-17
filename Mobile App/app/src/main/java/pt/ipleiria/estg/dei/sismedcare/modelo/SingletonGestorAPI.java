@@ -305,24 +305,29 @@ public class SingletonGestorAPI {
     public void cancelarPedidoConsulta(int consultaId, ConsultaDeleteListener listener) {
         String url = getBaseApiUrl() + "/consultas/" + consultaId;
 
-        JsonObjectRequest request = new JsonObjectRequest(
+        // Usar StringRequest para não parsear JSON
+        StringRequest request = new StringRequest(
                 Request.Method.DELETE,
                 url,
-                null,
                 response -> {
+                    // A API devolve 204 No Content → response vazio
                     if (listener != null) listener.onSuccess();
                 },
                 error -> {
-                    if (listener != null) listener.onError(error.toString());
+                    if (listener != null) {
+                        // passa o status ou mensagem
+                        String msg = (error.networkResponse != null)
+                                ? "Código: " + error.networkResponse.statusCode
+                                : error.toString();
+                        listener.onError(msg);
+                    }
                 }
         ) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 String auth = getAuthHeader();
-                if (auth != null) {
-                    headers.put("Authorization", auth);
-                }
+                if (auth != null) headers.put("Authorization", auth);
                 return headers;
             }
         };
@@ -585,6 +590,92 @@ public class SingletonGestorAPI {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", getAuthHeader());
                 return headers;
+            }
+        };
+
+        volleyQueue.add(request);
+    }
+
+    public interface PerfilListener {
+        void onSuccess(Paciente paciente);
+        void onError(String erro);
+    }
+
+    public void getPerfilPaciente(Context context, PerfilListener listener) {
+        String url = getBaseApiUrl() + "/paciente";
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                response -> {
+                    try {
+                        // Preenche paciente com os dados da API
+                        Paciente paciente = new Paciente(
+                                0, // id (não é usado aqui)
+                                0, // userId
+                                response.optString("nome_completo", ""),
+                                response.optString("data_nascimento", ""),
+                                response.optString("sexo", ""),
+                                response.optString("numero_utente", ""),
+                                response.optString("telemovel", ""),
+                                response.optString("morada", ""),
+                                0, // altura
+                                0, // peso
+                                "", // alergias
+                                "", // doencasCronicas
+                                "", // dataRegisto
+                                null
+                        );
+                        paciente.setEmail(response.optString("email", ""));
+                        listener.onSuccess(paciente);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        listener.onError("Erro ao processar perfil");
+                    }
+                },
+                error -> listener.onError("Erro ao carregar perfil")
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String,String> h = new HashMap<>();
+                h.put("Authorization", getAuthHeader());
+                return h;
+            }
+        };
+
+        volleyQueue.add(request);
+    }
+
+    public interface PerfilUpdateListener {
+        void onSuccess();
+        void onError(String erro);
+    }
+
+    public void atualizarPerfil(Context context, Map<String,String> dados, PerfilUpdateListener listener) {
+        String url = getBaseApiUrl() + "/paciente";
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.PUT,
+                url,
+                new JSONObject(dados),
+                response -> {
+                    listener.onSuccess();
+                },
+                error -> {
+                    String msg = (error.networkResponse != null)
+                            ? "Código: " + error.networkResponse.statusCode
+                            : error.toString();
+                    listener.onError(msg);
+                }
+        ) {
+            @Override
+            public Map<String,String> getHeaders() {
+                Map<String,String> h = new HashMap<>();
+                String auth = getAuthHeader();
+                if (auth != null) h.put("Authorization", auth);
+                return h;
             }
         };
 

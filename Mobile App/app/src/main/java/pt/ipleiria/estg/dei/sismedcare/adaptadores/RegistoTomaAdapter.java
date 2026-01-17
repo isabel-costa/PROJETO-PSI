@@ -33,8 +33,7 @@ public class RegistoTomaAdapter
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_acompanhamento_medicacao_card, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_acompanhamento_medicacao_card, parent, false);
         return new ViewHolder(v);
     }
 

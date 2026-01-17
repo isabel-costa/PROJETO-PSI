@@ -38,7 +38,6 @@ public class Paciente {
         this.user = user;
     }
 
-    // Getters e Setters
     public int getId() { return id; }
     public int getUserId() { return userId; }
     public String getUsername() { return username; }
