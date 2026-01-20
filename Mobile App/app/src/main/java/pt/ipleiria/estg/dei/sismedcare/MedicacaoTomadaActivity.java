@@ -19,6 +19,7 @@ import pt.ipleiria.estg.dei.sismedcare.adaptadores.MedicacaoTomadaAdapter;
 import pt.ipleiria.estg.dei.sismedcare.modelo.PrescricaoMedicamento;
 import pt.ipleiria.estg.dei.sismedcare.modelo.RegistoToma;
 import pt.ipleiria.estg.dei.sismedcare.modelo.SingletonGestorAPI;
+import android.content.Intent;
 
 public class MedicacaoTomadaActivity extends AppCompatActivity {
 
@@ -30,6 +31,9 @@ public class MedicacaoTomadaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_medicacao_tomada);
+
+        ImageView ivVoltar = findViewById(R.id.btnVoltar);
+        ivVoltar.setOnClickListener(v -> finish());
 
         RelativeLayout containerPadding = findViewById(R.id.containerPadding);
         ViewCompat.setOnApplyWindowInsetsListener(containerPadding, (v, insets) -> {

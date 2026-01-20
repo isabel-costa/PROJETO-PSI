@@ -908,4 +908,52 @@ public class SingletonGestorAPI {
 
         volleyQueue.add(request);
     }
+
+    public interface MarcarConsultaListener {
+        void onSuccess(String mensagem);
+        void onError(String erro);
+    }
+
+    public void marcarConsulta(
+            Context context,
+            String medicoId,
+            String data,
+            String hora,
+            MarcarConsultaListener listener
+    ) {
+        String url = getBaseApiUrl(context) + "/consulta/solicitar";
+
+        String dataConsulta = data + " " + hora;
+
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                url,
+                response -> {
+                    listener.onSuccess("Consulta marcada com sucesso");
+                },
+                error -> {
+                    String msg = (error.networkResponse != null)
+                            ? "Erro " + error.networkResponse.statusCode
+                            : "Erro de ligação ao servidor";
+                    listener.onError(msg);
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("medico_id", medicoId);
+                params.put("data_consulta", dataConsulta);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", getAuthHeader());
+                return headers;
+            }
+        };
+
+        volleyQueue.add(request);
+    }
 }

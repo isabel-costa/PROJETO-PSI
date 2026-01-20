@@ -72,6 +72,50 @@ public class MarcarConsultasActivity extends AppCompatActivity {
         inputHora.setOnClickListener(v -> mostrarTimePicker());
 
         carregarEspecialidades();
+
+        btnMarcar.setOnClickListener(v -> {
+
+            String data = inputData.getText().toString().trim();
+            String hora = inputHora.getText().toString().trim();
+
+            if (medicoSelecionadoId == null || medicoSelecionadoId.isEmpty()) {
+                Toast.makeText(this, "Selecione um médico", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (data.isEmpty()) {
+                Toast.makeText(this, "Selecione a data", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (hora.isEmpty()) {
+                Toast.makeText(this, "Selecione a hora", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            SingletonGestorAPI.getInstance(this).marcarConsulta(
+                    this,
+                    medicoSelecionadoId,
+                    data,
+                    hora,
+                    new SingletonGestorAPI.MarcarConsultaListener() {
+                        @Override
+                        public void onSuccess(String mensagem) {
+                            Toast.makeText(MarcarConsultasActivity.this,
+                                    mensagem,
+                                    Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+
+                        @Override
+                        public void onError(String erro) {
+                            Toast.makeText(MarcarConsultasActivity.this,
+                                    erro,
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+            );
+        });
     }
 
     private void mostrarDatePicker() {
