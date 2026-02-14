@@ -7,6 +7,7 @@ use yii\filters\auth\HttpHeaderAuth;
 use yii\rest\ActiveController;
 use Yii;
 use common\models\Consulta;
+use common\models\Paciente;
 use common\components\MqttService;
 
 class ConsultaController extends ActiveController
@@ -83,6 +84,12 @@ class ConsultaController extends ActiveController
         $medico = Medico::findOne($request['medico_id']);
         if (!$medico) {
             return ['error' => 'Médico inválido'];
+        }
+
+        $paciente = Paciente::findOne(['user_id' => Yii::$app->user->id]);
+
+        if (!$paciente) {
+            throw new \yii\web\ForbiddenHttpException("Apenas pacientes podem solicitar consultas.");
         }
 
         $consulta = new Consulta();
