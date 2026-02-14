@@ -115,7 +115,7 @@ public class SingletonGestorAPI {
 
     public String getBaseApiUrl(Context context) {
         SharedPreferences prefs = context.getSharedPreferences("CONFIG_APP", Context.MODE_PRIVATE);
-        String urlServidor = prefs.getString("URL_SERVIDOR", "http://172.22.21.215");
+        String urlServidor = prefs.getString("URL_SERVIDOR", "http://172.22.21.219");
         String caminhoAPI = prefs.getString("CAMINHO_API", "/SisMedCare/backend/web/api");
 
         // Garantir que não sobra "/" duplo
