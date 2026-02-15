@@ -11,6 +11,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * ConsultaController implements the CRUD actions for Consulta model.
@@ -25,8 +26,21 @@ class ConsultaController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['index', 'view', 'create', 'update'],
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['doctor'],
+                        ],
+                    ],
+                    'denyCallback' => function () {
+                        return $this->redirect(['site/index']);
+                    },
+                ],
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
