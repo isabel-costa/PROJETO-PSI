@@ -5,9 +5,38 @@ use Yii;
 use common\models\Medico;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 
 class MedicoController extends Controller
 {
+    public function behaviors()
+    {
+        return array_merge(
+            parent::behaviors(),
+            [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['view', 'perfil'],
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['doctor'],
+                        ],
+                    ],
+                    'denyCallback' => function () {
+                        return $this->redirect(['site/index']);
+                    },
+                ],
+                'verbs' => [
+                    'class' => VerbFilter::class,
+                    'actions' => [
+                        'delete' => ['POST'],
+                    ],
+                ],
+            ]
+        );
+    }
+
     public function actionView($id)
     {
         $model = Medico::findOne($id);
