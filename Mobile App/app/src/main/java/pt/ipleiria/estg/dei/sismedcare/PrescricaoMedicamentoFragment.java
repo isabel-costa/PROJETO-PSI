@@ -130,6 +130,7 @@ public class PrescricaoMedicamentoFragment extends Fragment {
                                             .marcarTomaComoTomada(getContext(), toma, new SingletonGestorAPI.TomaTomadaListener(){
                                     @Override
                                                 public void onSuccess() {
+                                                    Toast.makeText(getContext(), "Medicação marcada como tomada", Toast.LENGTH_SHORT).show();
                                                     int pos = listaPendentes.indexOf(toma);
                                                     if (pos != -1) {
                                                         listaPendentes.remove(pos);
